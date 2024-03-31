@@ -1,11 +1,12 @@
-import React, { Fragment } from "react";
+import React, {Fragment, useState} from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
-import { Grid, Typography, Card, Button, Hidden, Box } from "@mui/material";
+import {Grid, Typography, Card, Button, Hidden, Box, Modal} from "@mui/material";
 import withStyles from "@mui/styles/withStyles";
 import WaveBorder from "../../../shared/components/WaveBorder";
 import ZoomImage from "../../../shared/components/ZoomImage";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import InputModal from "./InputModal";
 
 const styles = (theme) => ({
   extraLargeButtonLabel: {
@@ -93,6 +94,11 @@ const styles = (theme) => ({
 function HeadSection(props) {
   const { classes, theme } = props;
   const isWidthUpLg = useMediaQuery(theme.breakpoints.up("lg"));
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const handleModalOpen = () => {
+    setModalOpen(true);
+  }
 
   return (
     <Fragment>
@@ -115,8 +121,7 @@ function HeadSection(props) {
                     >
                       <Box mb={4}>
                         <Typography variant={isWidthUpLg ? "h3" : "h4"}>
-                          Free Template for building a SaaS app using
-                          Material-UI
+                          You can find all the sound effects you want.
                         </Typography>
                       </Box>
                       <div>
@@ -135,9 +140,10 @@ function HeadSection(props) {
                           fullWidth
                           className={classes.extraLargeButton}
                           classes={{ label: classes.extraLargeButtonLabel }}
-                          href="https://github.com/dunky11/react-saas-template"
+                          onClick={handleModalOpen}
+                          // href="https://github.com/dunky11/react-saas-template"
                         >
-                          Download from GitHub
+                          Start Searching Side Effect sound
                         </Button>
                       </div>
                     </Box>
@@ -162,6 +168,10 @@ function HeadSection(props) {
         lowerColor="#FFFFFF"
         className={classes.waveBorder}
         animationNegativeDelay={2}
+      />
+      <InputModal
+        modalOpen={modalOpen}
+        setModalOpen={setModalOpen}
       />
     </Fragment>
   );
