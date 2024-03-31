@@ -1,6 +1,7 @@
 import {Box, Button, Modal, TextField, Typography} from "@mui/material";
 import React, {useState} from "react";
 import withStyles from "@mui/styles/withStyles";
+import axios from "axios";
 
 const styles = (theme) => ({
   modalStyle: {
@@ -23,16 +24,28 @@ const styles = (theme) => ({
 const InputModal = (props) => {
   const {classes, modalOpen, setModalOpen} = props;
   const [youtubeURL, setYoutubeURL] = useState('');
+  const [youtubeStart, setYoutubeStart] = useState('');
+  const [youtubeEnd, setYoutubeEnd] = useState('');
 
-  const handleModalClose = () => {
-    setModalOpen(false);
-  }
+  const handleModalClose = () => setModalOpen(false);
+  const handleURLChange = (e) => setYoutubeURL(e.target.value);
+  const handleStartChange = (e) => setYoutubeStart(e.target.value);
+  const handleEndChange = (e) => setYoutubeEnd(e.target.value);
 
-  const handleChange = (e) => {
-    setYoutubeURL(e.target.value);
-  }
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e)=> {
     e.preventDefault();
+    const body = {
+      title: youtubeURL
+    };
+    //https://dummyjson.com/docs/posts
+    // const res = await axios.get('https://dummyjson.com/posts/1');
+    // console.dir(res.data);
+    const res = await axios.post('https://dummyjson.com/products/add', body,{
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    console.dir(res.data);
   };
 
   return (
@@ -48,23 +61,21 @@ const InputModal = (props) => {
         onSubmit={handleSubmit}
         className={classes.modalStyle}
       >
-        <Typography id="modal-title" variant="h6" component="h2">
+        <Typography variant="h6" component="h2">
           Youtube Full URL
         </Typography>
-        <TextField
-          id="outlined-search"
-          label="Search field"
-          type="search"
-          value={youtubeURL}
-          onChange={handleChange}
-        />
+        <TextField label="youtube URL" type="search"
+                   value={youtubeURL} onChange={handleURLChange}/>
+        <Box>
+          <TextField label="start index" type="search"
+                     value={youtubeStart} onChange={handleStartChange}/>
+          <TextField label="Search field" type="search"
+                     value={youtubeEnd} onChange={handleEndChange}/>
+        </Box>
         <Typography id="modal-description" sx={{mt: 2}}>
           모달 내용
         </Typography>
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained">
+        <Button type="submit" fullWidth variant="contained">
           Submit
         </Button>
         <Button onClick={handleModalClose}>닫기</Button>
