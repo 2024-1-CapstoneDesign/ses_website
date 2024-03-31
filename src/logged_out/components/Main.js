@@ -32,7 +32,7 @@ function Main(props) {
   const selectHome = useCallback(() => {
     smoothScrollTop();
     document.title =
-      "WaVer - Free template for building a SaaS or admin application";
+      "SES - Awesome Side effect sound Search WebSite";
     setSelectedTab("Home");
   }, [setSelectedTab]);
 
@@ -120,7 +120,7 @@ function Main(props) {
       />
       <NavBar
         selectedTab={selectedTab}
-        selectTab={setSelectedTab}
+        selectTab={setSelectedTab} // 여기서 확인하는듯
         openLoginDialog={openLoginDialog}
         openRegisterDialog={openRegisterDialog}
         mobileDrawerOpen={isMobileDrawerOpen}
