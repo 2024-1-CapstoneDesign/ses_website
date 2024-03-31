@@ -34,7 +34,7 @@ const styles = theme => ({
 
 function NavBar(props) {
   const {
-    classes,
+    classes, //위에 있는 style을 추가로 default 내보낼때 사용함
     openRegisterDialog,
     openLoginDialog,
     handleMobileDrawerOpen,
