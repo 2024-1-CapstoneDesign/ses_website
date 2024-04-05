@@ -9,15 +9,30 @@ const styles = (theme) => ({
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
+    borderRadius: theme.shape.borderRadius,
     boxShadow: theme.shadows[4],
     backgroundColor: theme.palette.background.default,
     width: '50vh',
     height: '50vh',
     overflow: 'auto',
     display: 'flex',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     alignItems: 'center',
     flexDirection: 'column'
+  },
+  modalTopContainer: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    border: '2px solid transparent',
+    width: '100%',
+    height: '20%',
+  },
+  wideTextFieldStyle: {
+    width: '100%',
+  },
+  testBorder: {
+    border: '2px solid red',
   }
 });
 
@@ -61,15 +76,18 @@ const InputModal = (props) => {
         onSubmit={handleSubmit}
         className={classes.modalStyle}
       >
-        <Typography variant="h6" component="h2">
-          Youtube Full URL
-        </Typography>
-        <TextField label="youtube URL" type="search"
+        <Box className={classes.modalTopContainer}>
+          <Typography variant="h6" component="h2">
+            Youtube Full URL
+          </Typography>
+          <Button onClick={handleModalClose}>닫기</Button>
+        </Box>
+        <TextField label="youtube URL" type="search" classes={classes.wideTextFieldStyle}
                    value={youtubeURL} onChange={handleURLChange}/>
         <Box>
-          <TextField label="start index" type="search"
+          <TextField label="start time" type="search"
                      value={youtubeStart} onChange={handleStartChange}/>
-          <TextField label="Search field" type="search"
+          <TextField label="end time" type="search"
                      value={youtubeEnd} onChange={handleEndChange}/>
         </Box>
         <Typography id="modal-description" sx={{mt: 2}}>
@@ -78,7 +96,6 @@ const InputModal = (props) => {
         <Button type="submit" fullWidth variant="contained">
           Submit
         </Button>
-        <Button onClick={handleModalClose}>닫기</Button>
       </Box>
     </Modal>
   );
