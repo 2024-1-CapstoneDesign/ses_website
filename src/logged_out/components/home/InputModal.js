@@ -16,20 +16,35 @@ const styles = (theme) => ({
     height: '50vh',
     overflow: 'auto',
     display: 'flex',
-    justifyContent: 'space-between',
+    justifyContent: 'space-evenly',
     alignItems: 'center',
     flexDirection: 'column'
   },
-  modalTopContainer: {
+  modalTopTextContainer: {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
     border: '2px solid transparent',
     width: '100%',
     height: '20%',
+    padding: theme.spacing(2),
+  },
+  modalTopContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+    width: '100%',
+  },
+  modalMiddleContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    height: '20%',
   },
   wideTextFieldStyle: {
-    width: '100%',
+    width: '90%',
   },
   testBorder: {
     border: '2px solid red',
@@ -77,22 +92,31 @@ const InputModal = (props) => {
         className={classes.modalStyle}
       >
         <Box className={classes.modalTopContainer}>
-          <Typography variant="h6" component="h2">
-            Youtube Full URL
-          </Typography>
-          <Button onClick={handleModalClose}>닫기</Button>
+          <Box className={classes.modalTopTextContainer}>
+            <Typography variant="h6" component="h2">
+              Youtube Full URL
+            </Typography>
+            <Button onClick={handleModalClose} sx={{bottom: '2rem'}}>닫기</Button>
+          </Box>
+          <TextField label="youtube URL" type="search" className={classes.wideTextFieldStyle}
+                     value={youtubeURL} onChange={handleURLChange}/>
         </Box>
-        <TextField label="youtube URL" type="search" classes={classes.wideTextFieldStyle}
-                   value={youtubeURL} onChange={handleURLChange}/>
-        <Box>
-          <TextField label="start time" type="search"
-                     value={youtubeStart} onChange={handleStartChange}/>
-          <TextField label="end time" type="search"
-                     value={youtubeEnd} onChange={handleEndChange}/>
+        <Box className={classes.modalMiddleContainer}>
+          <Box className={classes.modalTopTextContainer}>
+            <Typography variant="h6" component="h2" sx={{textAlign: 'right'}}>
+              Youtube Start to end
+            </Typography>
+          </Box>
+          <Box sx={{mt: '1rem'}}>
+            <TextField label="start time" type="search"
+                       value={youtubeStart} onChange={handleStartChange}/>
+            <TextField label="end time" type="search"
+                       value={youtubeEnd} onChange={handleEndChange}/>
+          </Box>
         </Box>
-        <Typography id="modal-description" sx={{mt: 2}}>
-          모달 내용
-        </Typography>
+        {/*<Typography id="modal-description" sx={{mt: 2}}>*/}
+        {/*  모달 내용*/}
+        {/*</Typography>*/}
         <Button type="submit" fullWidth variant="contained">
           Submit
         </Button>
