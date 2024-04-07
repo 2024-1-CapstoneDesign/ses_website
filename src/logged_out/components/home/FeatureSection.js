@@ -1,5 +1,5 @@
-import React from "react";
-import { Grid, Typography } from "@mui/material";
+import React, {useEffect, useState} from "react";
+import {Grid, Typography} from "@mui/material";
 import CodeIcon from "@mui/icons-material/Code";
 import BuildIcon from "@mui/icons-material/Build";
 import ComputerIcon from "@mui/icons-material/Computer";
@@ -11,9 +11,12 @@ import MeassageIcon from "@mui/icons-material/Message";
 import CancelIcon from "@mui/icons-material/Cancel";
 import calculateSpacing from "./calculateSpacing";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import { withTheme } from "@mui/styles";
+import {withTheme} from "@mui/styles";
 import FeatureCard from "./FeatureCard";
 import useWidth from "../../../shared/functions/useWidth";
+import data from "../../../logged_in/dummy_data/persons";
+import axios from "axios";
+import {useQuery} from "react-query";
 
 const iconSize = 30;
 
@@ -92,10 +95,29 @@ const features = [
   },
 ];
 
+const fetchSoundList = async () => {
+  const url = "http://soundeffect-search.kro.kr:8080/api/v1/test"
+  try {
+    const res = await axios.get(url);
+    return res.data;
+  } catch (e){
+    console.error(e);
+    throw e;
+  }
+}
+
+
 function FeatureSection(props) {
   const { theme } = props;
   const width = useWidth();
   const isWidthUpMd = useMediaQuery(theme.breakpoints.up("md"));
+  const {
+    isLoading,
+    isError,
+    data: response
+  } = useQuery('soundList', fetchSoundList, {
+    refetchOnWindowFocus: false
+  });
 
   return (
     <div style={{ backgroundColor: "#FFFFFF" }}>
