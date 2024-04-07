@@ -96,8 +96,12 @@ const InputModal = (props) => {
       >
         <Box className={classes.modalTopContainer}>
           <Box className={classes.modalTopTextContainer}>
-            <Typography variant="h6" component="h2">Youtube Full URL</Typography>
-            <IconButton onClick={handleModalClose} sx={{bottom: '2rem'}}><CloseIcon/></IconButton>
+            <Typography variant="h6" component="h2">
+              Youtube Full URL
+            </Typography>
+            <IconButton onClick={handleModalClose} sx={{bottom: '2rem'}}>
+              <CloseIcon/>
+            </IconButton>
           </Box>
           <TextField label="youtube URL" type="search" className={classes.wideTextFieldStyle}
                      value={youtubeURL} onChange={handleURLChange}/>
