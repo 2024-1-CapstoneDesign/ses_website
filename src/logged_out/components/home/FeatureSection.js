@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import {Grid, Typography} from "@mui/material";
 import CodeIcon from "@mui/icons-material/Code";
 import BuildIcon from "@mui/icons-material/Build";
@@ -125,6 +125,9 @@ function FeatureSection(props) {
         <Typography variant="h3" align="center" className="lg-mg-bottom">
           Features
         </Typography>
+        {isLoading && <strong>Loading....</strong>}
+        {isError && <strong>{response?.errorMessage}</strong>}
+        {/*https://jinyisland.kr/post/react-awesome-fetching/*/}
         <div className="container-fluid">
           <Grid container spacing={calculateSpacing(width, theme)}>
             {features.map((element) => (
