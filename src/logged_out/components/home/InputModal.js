@@ -1,7 +1,8 @@
-import {Box, Button, Modal, TextField, Typography} from "@mui/material";
-import React, {useState} from "react";
+import {Box, Button, IconButton, Modal, TextField, Typography} from "@mui/material";
+import React, {Fragment, useState} from "react";
 import withStyles from "@mui/styles/withStyles";
 import axios from "axios";
+import CloseIcon from "@mui/icons-material/Close";
 
 const styles = (theme) => ({
   modalStyle: {
@@ -95,10 +96,8 @@ const InputModal = (props) => {
       >
         <Box className={classes.modalTopContainer}>
           <Box className={classes.modalTopTextContainer}>
-            <Typography variant="h6" component="h2">
-              Youtube Full URL
-            </Typography>
-            <Button onClick={handleModalClose} sx={{bottom: '2rem'}}>닫기</Button>
+            <Typography variant="h6" component="h2">Youtube Full URL</Typography>
+            <IconButton onClick={handleModalClose} sx={{bottom: '2rem'}}><CloseIcon/></IconButton>
           </Box>
           <TextField label="youtube URL" type="search" className={classes.wideTextFieldStyle}
                      value={youtubeURL} onChange={handleURLChange}/>
