@@ -67,15 +67,17 @@ const InputModal = (props) => {
     const body = {
       title: youtubeURL
     };
-    //https://dummyjson.com/docs/posts
-    // const res = await axios.get('https://dummyjson.com/posts/1');
-    // console.dir(res.data);
-    const res = await axios.post('https://dummyjson.com/products/add', body,{
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
-    console.dir(res.data);
+    const regex = /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/;
+    if (regex.test(youtubeStart) && regex.test(youtubeEnd)) {
+      const res = await axios.post('https://dummyjson.com/products/add', body,{
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      console.dir(res.data);
+    } else {
+      alert("start and end need to HH:MM:SS format")
+    }
   };
 
   return (
@@ -102,8 +104,8 @@ const InputModal = (props) => {
                      value={youtubeURL} onChange={handleURLChange}/>
         </Box>
         <Box className={classes.modalMiddleContainer}>
-          <Box className={classes.modalTopTextContainer}>
-            <Typography variant="h6" component="h2" sx={{textAlign: 'right'}}>
+          <Box sx={{textAlign: 'left', width: '100%'}}>
+            <Typography variant="h6" component="h2">
               Youtube Start to end
             </Typography>
           </Box>
@@ -114,10 +116,7 @@ const InputModal = (props) => {
                        value={youtubeEnd} onChange={handleEndChange}/>
           </Box>
         </Box>
-        {/*<Typography id="modal-description" sx={{mt: 2}}>*/}
-        {/*  모달 내용*/}
-        {/*</Typography>*/}
-        <Button type="submit" fullWidth variant="contained">
+        <Button type="submit" fullWidth variant="contained" sx={{top: '2.6rem'}}>
           Submit
         </Button>
       </Box>
