@@ -128,6 +128,7 @@ function FeatureSection(props) {
         {isLoading && <strong>Loading....</strong>}
         {isError && <strong>{response?.errorMessage}</strong>}
         {/*https://jinyisland.kr/post/react-awesome-fetching/*/}
+        {/*https://wavesurfer.xyz/examples/?react.js*/}
         <div className="container-fluid">
           <Grid container spacing={calculateSpacing(width, theme)}>
             {features.map((element) => (
