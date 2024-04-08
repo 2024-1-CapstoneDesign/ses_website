@@ -1,5 +1,5 @@
 function calculateSpacing(width, theme) {
-  console.log(theme["breakpoints"]);
+  // console.log(theme["breakpoints"]);
   const currentWidth = theme["breakpoints"]["values"][width];
   if (currentWidth >= theme["breakpoints"]["values"]["lg"]) {
     return 10;
