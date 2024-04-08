@@ -14,7 +14,6 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import {withTheme} from "@mui/styles";
 import FeatureCard from "./FeatureCard";
 import useWidth from "../../../shared/functions/useWidth";
-import data from "../../../logged_in/dummy_data/persons";
 import axios from "axios";
 import {useQuery} from "react-query";
 
@@ -96,9 +95,11 @@ const features = [
 ];
 
 const fetchSoundList = async () => {
-  const url = "http://soundeffect-search.kro.kr:8080/api/v1/test"
+  // const url = "http://soundeffect-search.kro.kr:8080/api/v1/test"
+  const url = "http://soundeffect-search.kro.kr:8080/api/v1/soundeffect"
   try {
     const res = await axios.get(url);
+    console.dir(res)
     return res.data;
   } catch (e){
     console.error(e);
