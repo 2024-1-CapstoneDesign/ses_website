@@ -28,7 +28,7 @@
     "react-query": "^3.39.3",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "5.0.0",
+    "react-scripts": "5.0.1",
     "recharts": "^2.1.2",
     "wavesurfer.js": "^7.7.10",
     "workbox-background-sync": "^6.2.4",
