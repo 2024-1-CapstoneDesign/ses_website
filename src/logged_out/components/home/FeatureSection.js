@@ -95,8 +95,7 @@ const features = [
 ];
 
 const fetchSoundList = async () => {
-  // const url = "http://soundeffect-search.kro.kr:8080/api/v1/test"
-  const url = "http://soundeffect-search.kro.kr:8080/api/v1/soundeffect"
+  const url = "https://soundeffect-search.p-e.kr/api/v1/test/download"
   try {
     const res = await axios.get(url);
     console.dir(res)
@@ -129,8 +128,6 @@ function FeatureSection(props) {
         </Typography>
         {isLoading && <strong>Loading....</strong>}
         {isError && <strong>{response?.errorMessage}</strong>}
-        {/*https://jinyisland.kr/post/react-awesome-fetching/*/}
-        {/*https://wavesurfer.xyz/examples/?react.js*/}
         <div className="container-fluid">
           <Grid container spacing={calculateSpacing(width, theme)}>
             {features.map((element) => (
