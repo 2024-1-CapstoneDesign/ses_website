@@ -120,6 +120,7 @@ function FeatureSection(props) {
     refetchOnWindowFocus: false
   });
 
+
   return (
     <div style={{ backgroundColor: "#FFFFFF" }}>
       <div className="container-fluid lg-p-top">
