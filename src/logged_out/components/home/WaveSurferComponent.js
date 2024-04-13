@@ -1,9 +1,19 @@
 import {Fragment, useEffect, useRef, useState} from "react";
 import WaveSurfer from "wavesurfer.js";
-import {IconButton} from "@mui/material";
+import {Box, IconButton} from "@mui/material";
 import {PauseCircle, PlayCircle} from "@mui/icons-material";
 
-const WaveSurferComponent = ({audioURL}) => {
+import withStyles from "@mui/styles/withStyles";
+
+const styles = (theme) => ({
+  waveSurferContainer: {
+    border: "2px solid green",
+    width: "100%"
+  }
+});
+
+const WaveSurferComponent = (props) => {
+  const {classes, audioURL} = props
   const waveform = useRef(null);
   const wavesurfer = useRef(null);
   const [colorType, setColorType] = useState(null);
@@ -20,7 +30,7 @@ const WaveSurferComponent = ({audioURL}) => {
           barGap: 2,
           progressColor: colorType,
           waveColor: '#FF00FF',
-          width: '50%'
+          width: '100%'
         });
       wavesurfer.current.load(audioURL);
       wavesurfer.current.on('ready', () => {
@@ -49,14 +59,13 @@ const WaveSurferComponent = ({audioURL}) => {
   }
 
   return (
-    <Fragment>
-      <div ref={waveform}>
+      <Box ref={waveform} className={classes.waveSurferContainer}>
         <IconButton onClick={buttonClick}>
           {isPlaying ? <PauseCircle/> : <PlayCircle/>}
         </IconButton>
-      </div>
-    </Fragment>
+      </Box>
   );
 }
 
-export default WaveSurferComponent;
+
+export default withStyles(styles, { withTheme: true })(WaveSurferComponent);

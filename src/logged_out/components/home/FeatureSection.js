@@ -1,14 +1,5 @@
 import React from "react";
 import {Grid, Typography} from "@mui/material";
-import CodeIcon from "@mui/icons-material/Code";
-import BuildIcon from "@mui/icons-material/Build";
-import ComputerIcon from "@mui/icons-material/Computer";
-import BarChartIcon from "@mui/icons-material/BarChart";
-import HeadsetMicIcon from "@mui/icons-material/HeadsetMic";
-import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
-import CloudIcon from "@mui/icons-material/Cloud";
-import MeassageIcon from "@mui/icons-material/Message";
-import CancelIcon from "@mui/icons-material/Cancel";
 import calculateSpacing from "./calculateSpacing";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import {withTheme} from "@mui/styles";
@@ -17,84 +8,6 @@ import useWidth from "../../../shared/functions/useWidth";
 import axios from "axios";
 import {useQuery} from "react-query";
 import SoundCard from "./SoundCard";
-
-const iconSize = 30;
-
-const features = [
-  {
-    color: "#00C853",
-    headline: "Feature 1",
-    text: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et.",
-    icon: <BuildIcon style={{ fontSize: iconSize }} />,
-    mdDelay: "0",
-    smDelay: "0",
-  },
-  {
-    color: "#6200EA",
-    headline: "Feature 2",
-    text: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et.",
-    icon: <CalendarTodayIcon style={{ fontSize: iconSize }} />,
-    mdDelay: "200",
-    smDelay: "200",
-  },
-  {
-    color: "#0091EA",
-    headline: "Feature 3",
-    text: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et.",
-    icon: <MeassageIcon style={{ fontSize: iconSize }} />,
-    mdDelay: "400",
-    smDelay: "0",
-  },
-  {
-    color: "#d50000",
-    headline: "Feature 4",
-    text: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et.",
-    icon: <ComputerIcon style={{ fontSize: iconSize }} />,
-    mdDelay: "0",
-    smDelay: "200",
-  },
-  {
-    color: "#DD2C00",
-    headline: "Feature 5",
-    text: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et.",
-    icon: <BarChartIcon style={{ fontSize: iconSize }} />,
-    mdDelay: "200",
-    smDelay: "0",
-  },
-  {
-    color: "#64DD17",
-    headline: "Feature 6",
-    text: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et.",
-    icon: <HeadsetMicIcon style={{ fontSize: iconSize }} />,
-    mdDelay: "400",
-    smDelay: "200",
-  },
-  {
-    color: "#304FFE",
-    headline: "Feature 7",
-    text: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et.",
-    icon: <CloudIcon style={{ fontSize: iconSize }} />,
-    mdDelay: "0",
-    smDelay: "0",
-  },
-  {
-    color: "#C51162",
-    headline: "Feature 8",
-    text: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et.",
-    icon: <CodeIcon style={{ fontSize: iconSize }} />,
-    mdDelay: "200",
-    smDelay: "200",
-  },
-  {
-    color: "#00B8D4",
-    headline: "Feature 9",
-    text: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et.",
-    icon: <CancelIcon style={{ fontSize: iconSize }} />,
-    mdDelay: "400",
-    smDelay: "0",
-  },
-];
-
 
 const fetchResult = {
     "result": "SUCCESS",
@@ -136,7 +49,8 @@ const fetchResult = {
 
 
 
-
+const mdDelayList = ["0", "200", "400"]
+const smDelayList = ["0", "200"]
 
 
 const fetchSoundList = async () => {
@@ -146,13 +60,15 @@ const fetchSoundList = async () => {
     const resData = axiosRes.data; //fetchResult
     if (resData.result === "SUCCESS"){
       const resSoundList = resData.data;
-      return resSoundList.map(({soundEffectId, soundEffectName, soundEffectTags, soundEffectTypes}) => {
+      return resSoundList.map(({soundEffectId, soundEffectName, soundEffectTags, soundEffectTypes}, idx) => {
         return {
           soundId: soundEffectId,
           soundName: soundEffectName,
           soundTagList: soundEffectTags,
           soundURL: soundEffectTypes[0].url,
           soundLength: soundEffectTypes[0].length,
+          mdDelay: mdDelayList[idx % mdDelayList.length],
+          smDelay: smDelayList[idx % smDelayList.length],
         }
       })
     }
@@ -196,6 +112,7 @@ function FeatureSection(props) {
                 data-aos="zoom-in-up"
                 data-aos-delay={isWidthUpMd ? element.mdDelay : element.smDelay}
                 key={element.soundId.toString()}
+                sx={{ border: '2px solid red' }}
               >
                 <SoundCard
                   soundName={element.soundName}

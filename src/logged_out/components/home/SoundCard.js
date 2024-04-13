@@ -1,26 +1,34 @@
 import React, { Fragment } from "react";
 import PropTypes from "prop-types";
-import { Typography } from "@mui/material";
+import {Box, Typography} from "@mui/material";
 
 import withStyles from "@mui/styles/withStyles";
 import WaveSurferComponent from "./WaveSurferComponent";
 
 const styles = (theme) => ({
-
+  soundCardContainer: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    border: "2px solid blue",
+    width: "100%",
+    height: "100%",
+    flexDirection: "column",
+  },
 });
 
 function SoundCard(props) {
   const { classes, soundName, soundTagList, soundURL, soundLength } = props;
   return (
-    <Fragment>
-      <WaveSurferComponent audioURL={soundURL} />
+    <Box className={classes.soundCardContainer}>
+      <WaveSurferComponent audioURL={soundURL} className={classes.waveSurferContainer} />
       <Typography variant="h5" paragraph>
         {soundName}
       </Typography>
       <Typography variant="body1" color="textSecondary">
         {soundLength}
       </Typography>
-    </Fragment>
+    </Box>
   );
 }
 
