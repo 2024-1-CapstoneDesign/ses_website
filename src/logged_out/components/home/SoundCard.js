@@ -10,20 +10,32 @@ const styles = (theme) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
-    border: "2px solid blue",
     width: "100%",
     height: "100%",
     flexDirection: "column",
   },
   chipContainer: {
-    display: "flex", // 가로 방향으로 배치되도록 설정
+    display: "flex",
     flexWrap: "wrap", // 요소가 넘치면 다음 줄로 넘어가도록 설정
+  },
+  chipGroup: {
+    width: "100%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
     gap: theme.spacing(1), // 요소 사이의 간격 설정
   },
   chip: {
     margin: theme.spacing(0.5),
-  },
+  }
 });
+
+function convertSecondToMMSS(seconds) {
+  const minutes = Math.floor(seconds / 60);
+  const remainingSeconds = seconds % 60;
+  const paddedSeconds = remainingSeconds < 10 ? `0${remainingSeconds}` : remainingSeconds;
+  return `${minutes}:${paddedSeconds}`;
+}
 
 function SoundCard(props) {
   const { classes, soundName, soundTagList, soundURL, soundLength } = props;
@@ -34,14 +46,16 @@ function SoundCard(props) {
       <Typography variant="h5" paragraph>
         {soundName}
       </Typography>
-      <Box className={classes.chipContainer}>
-        {soundTagList.map(({tagId, tagName}) => (
-          <Chip key={tagId} label={tagName} variant="outlined" className={classes.chip} />
-        ))}
+      <Box className={classes.chipGroup}>
+        <Box className={classes.chipContainer}>
+          {soundTagList.map(({ tagId, tagName }) => (
+            <Chip key={tagId} label={tagName} variant="outlined" className={classes.chip} />
+          ))}
+        </Box>
+        <Typography variant="body1" color="textSecondary">
+          {convertSecondToMMSS(soundLength)}
+        </Typography>
       </Box>
-      <Typography variant="body1" color="textSecondary">
-        {soundLength}
-      </Typography>
     </Box>
   );
 }

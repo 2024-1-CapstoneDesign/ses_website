@@ -71,7 +71,6 @@ function FeatureSection(props) {
                 data-aos="zoom-in-up"
                 data-aos-delay={isWidthUpMd ? element.mdDelay : element.smDelay}
                 key={element.soundId.toString()}
-                sx={{ border: '2px solid red' }}
               >
                 <SoundCard
                   soundName={element.soundName}

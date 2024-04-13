@@ -7,7 +7,6 @@ import withStyles from "@mui/styles/withStyles";
 
 const styles = () => ({
   waveSurferContainer: {
-    border: "2px solid green",
     width: "100%"
   }
 });
@@ -27,8 +26,8 @@ const WaveSurferComponent = (props) => {
           barWidth: 4, // 막대 하나의 width값
           barHeight: 1,
           barGap: 2,
-          progressColor: "#FFFF00",
-          waveColor: '#FF00FF',
+          progressColor: "#FA7070",
+          waveColor: '#A1C398',
           width: '100%'
         });
       wavesurfer.current.load(audioURL);
