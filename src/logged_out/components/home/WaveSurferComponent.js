@@ -1,4 +1,4 @@
-import {Fragment, useEffect, useRef, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import WaveSurfer from "wavesurfer.js";
 import {Box, IconButton} from "@mui/material";
 import {PauseCircle, PlayCircle} from "@mui/icons-material";
@@ -16,7 +16,6 @@ const WaveSurferComponent = (props) => {
   const {classes, audioURL} = props
   const waveform = useRef(null);
   const wavesurfer = useRef(null);
-  const [colorType, setColorType] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
   // https://wavesurfer-js.org/docs/methods.html
   useEffect(() => {
@@ -28,7 +27,7 @@ const WaveSurferComponent = (props) => {
           barWidth: 4, // 막대 하나의 width값
           barHeight: 1,
           barGap: 2,
-          progressColor: colorType,
+          progressColor: "#FFFF00",
           waveColor: '#FF00FF',
           width: '100%'
         });
@@ -45,7 +44,7 @@ const WaveSurferComponent = (props) => {
         }
       };
     }
-  },[audioURL, colorType])
+  },[audioURL])
 
   const buttonClick = () => {
     if (wavesurfer.current) {

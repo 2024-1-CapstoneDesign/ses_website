@@ -3,51 +3,10 @@ import {Grid, Typography} from "@mui/material";
 import calculateSpacing from "./calculateSpacing";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import {withTheme} from "@mui/styles";
-import FeatureCard from "./FeatureCard";
 import useWidth from "../../../shared/functions/useWidth";
 import axios from "axios";
 import {useQuery} from "react-query";
 import SoundCard from "./SoundCard";
-
-const fetchResult = {
-    "result": "SUCCESS",
-    "data": [
-      {
-        "soundEffectId": 1,
-        "soundEffectName": "test",
-        "description": null,
-        "createBy": null,
-        "createdAt": null,
-        "soundEffectTags": [
-          {
-            "tagId": 1,
-            "tagName": "sunny"
-          },
-          {
-            "tagId": 2,
-            "tagName": "happy"
-          },
-          {
-            "tagId": 3,
-            "tagName": "funny"
-          }
-        ],
-        "soundEffectTypes": [
-          {
-            "url": "https://soundeffectsearch.s3.ap-northeast-2.amazonaws.com/ILLIT+(%E1%84%8B%E1%85%A1%E1%84%8B%E1%85%B5%E1%86%AF%E1%84%85%E1%85%B5%E1%86%BA)+%E2%80%98Magnetic%E2%80%99+Visual+Teaser.wav",
-            "soundEffectTypeName": "wav",
-            "length": null
-          }
-        ]
-      }
-    ],
-    "message": null,
-    "code": null,
-    "errors": null
-}
-
-
-
 
 const mdDelayList = ["0", "200", "400"]
 const smDelayList = ["0", "200"]
