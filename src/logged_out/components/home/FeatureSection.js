@@ -16,6 +16,7 @@ import FeatureCard from "./FeatureCard";
 import useWidth from "../../../shared/functions/useWidth";
 import axios from "axios";
 import {useQuery} from "react-query";
+import SoundCard from "./SoundCard";
 
 const iconSize = 30;
 
@@ -95,8 +96,7 @@ const features = [
 ];
 
 
-const fetchResult =
-  {
+const fetchResult = {
     "result": "SUCCESS",
     "data": [
       {
@@ -131,35 +131,35 @@ const fetchResult =
     "message": null,
     "code": null,
     "errors": null
-  }
-/**
- * 필요한것? soundEffectName, url, tagList, length
- * url = https://soundeffect-search.p-e.kr/api/v1/soundeffect
- * */
+}
+
+
+
+
+
+
 
 const fetchSoundList = async () => {
   const url = "https://soundeffect-search.p-e.kr/api/v1/soundeffect"
   try {
-    const getRequestData = fetchResult.data
-    const soundList = getRequestData.map(({
-      soundEffectName,
-      soundEffectTags,
-      soundEffectTypes
-    }) => {
-      return {
-        soundName: soundEffectName,
-        soundTagList: soundEffectTags,
-        soundURL: soundEffectTypes[0].url,
-        soundLength: soundEffectTypes[0].length,
-      }
-    })
-    const res = await axios.get(url);
-    if (res.data.result === "SUCCESS"){
-      return res.data;
+    const axiosRes = await axios.get(url);
+    const resData = axiosRes.data; //fetchResult
+    if (resData.result === "SUCCESS"){
+      const resSoundList = resData.data;
+      return resSoundList.map(({soundEffectId, soundEffectName, soundEffectTags, soundEffectTypes}) => {
+        return {
+          soundId: soundEffectId,
+          soundName: soundEffectName,
+          soundTagList: soundEffectTags,
+          soundURL: soundEffectTypes[0].url,
+          soundLength: soundEffectTypes[0].length,
+        }
+      })
     }
-    return null;
+    return {
+      errorMessage: "Server Error",
+    };
   } catch (e){
-    console.log("!!!")
     console.error(e);
     throw e;
   }
@@ -177,32 +177,31 @@ function FeatureSection(props) {
   } = useQuery('soundList', fetchSoundList, {
     refetchOnWindowFocus: false
   });
-  const audioURL = "https://soundeffectsearch.s3.ap-northeast-2.amazonaws.com/ILLIT+(%E1%84%8B%E1%85%A1%E1%84%8B%E1%85%B5%E1%86%AF%E1%84%85%E1%85%B5%E1%86%BA)+%E2%80%98Magnetic%E2%80%99+Visual+Teaser.wav"
 
   return (
     <div style={{ backgroundColor: "#FFFFFF" }}>
       <div className="container-fluid lg-p-top">
         <Typography variant="h3" align="center" className="lg-mg-bottom">
-          Features
+          SoundList
         </Typography>
         {isLoading && <strong>Loading....</strong>}
         {isError && <strong>{response?.errorMessage}</strong>}
         <div className="container-fluid">
           <Grid container spacing={calculateSpacing(width, theme)}>
-            {features.map((element) => (
+            {!isLoading && response.map((element) => (
               <Grid
                 item
                 xs={6}
                 md={4}
                 data-aos="zoom-in-up"
                 data-aos-delay={isWidthUpMd ? element.mdDelay : element.smDelay}
-                key={element.headline}
+                key={element.soundId.toString()}
               >
-                <FeatureCard
-                  Icon={element.icon}
-                  color={element.color}
-                  headline={element.headline}
-                  text={element.text}
+                <SoundCard
+                  soundName={element.soundName}
+                  soundTagList={element.soundTagList}
+                  soundURL={element.soundURL}
+                  soundLength={element.soundLength}
                 />
               </Grid>
             ))}
