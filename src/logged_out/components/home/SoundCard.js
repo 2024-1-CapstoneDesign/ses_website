@@ -43,7 +43,7 @@ function SoundCard(props) {
   return (
     <Box className={classes.soundCardContainer}>
       <WaveSurferComponent audioURL={soundURL} className={classes.waveSurferContainer} />
-      <Typography variant="h5" paragraph>
+      <Typography variant="h5" paragraph sx={{margin: '5px'}}>
         {soundName}
       </Typography>
       <Box className={classes.chipGroup}>
