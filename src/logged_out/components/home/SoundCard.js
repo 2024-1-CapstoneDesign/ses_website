@@ -49,7 +49,7 @@ function SoundCard(props) {
       <Box className={classes.chipGroup}>
         <Box className={classes.chipContainer}>
           {soundTagList.map(({ tagId, tagName }) => (
-            <Chip key={tagId} label={tagName} variant="outlined" className={classes.chip} />
+            <Chip key={tagId} label={tagName} variant="outlined" className={classes.chip} color="secondary"/>
           ))}
         </Box>
         <Typography variant="body1" color="textSecondary">

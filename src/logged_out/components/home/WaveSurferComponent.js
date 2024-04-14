@@ -5,6 +5,9 @@ import {PauseCircle, PlayCircle} from "@mui/icons-material";
 
 import withStyles from "@mui/styles/withStyles";
 
+const primary = "#b3294e";
+const secondary = "#4829B2";
+
 const styles = () => ({
   waveSurferContainer: {
     width: "100%",
@@ -27,8 +30,8 @@ const WaveSurferComponent = (props) => {
           barWidth: 4, // 막대 하나의 width값
           barHeight: 1,
           barGap: 2,
-          progressColor: "#FA7070",
-          waveColor: '#A1C398',
+          progressColor: primary,
+          waveColor: secondary,
           width: '100%'
         });
       wavesurfer.current.load(audioURL);
