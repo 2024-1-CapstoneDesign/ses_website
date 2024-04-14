@@ -36,6 +36,13 @@ const WaveSurferComponent = (props) => {
         wavesurfer.current.setVolume(0.5);
         wavesurfer.current.pause();
       });
+
+      wavesurfer.current.on("finish", () => {
+        // 오디오가 끝나면 처음부터 재생
+        wavesurfer.current.seekTo(0);
+        wavesurfer.current.pause();
+        setIsPlaying(false);
+      });
       // 컴포넌트 언마운트 시 정리 작업 수행
       return () => {
         if (wavesurfer.current) {
