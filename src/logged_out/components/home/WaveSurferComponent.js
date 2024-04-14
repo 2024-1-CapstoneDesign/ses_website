@@ -4,7 +4,6 @@ import {Box, IconButton} from "@mui/material";
 import {PauseCircle, PlayCircle} from "@mui/icons-material";
 
 import withStyles from "@mui/styles/withStyles";
-import theme from "../../../theme";
 
 const styles = () => ({
   waveSurferContainer: {
