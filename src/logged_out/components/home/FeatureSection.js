@@ -7,10 +7,10 @@ import useWidth from "../../../shared/functions/useWidth";
 import axios from "axios";
 import {useQuery} from "react-query";
 import SoundCard from "./SoundCard";
+import MoreButton from "./MoreButton";
 
 const mdDelayList = ["0", "200", "400"]
 const smDelayList = ["0", "200"]
-
 
 const fetchSoundList = async () => {
   const url = "https://soundeffect-search.p-e.kr/api/v1/soundeffect"
@@ -18,8 +18,7 @@ const fetchSoundList = async () => {
     const axiosRes = await axios.get(url);
     const resData = axiosRes.data; //fetchResult
     if (resData.result === "SUCCESS"){
-      const resSoundList = resData.data;
-      return resSoundList.map(({soundEffectId, soundEffectName, soundEffectTags, soundEffectTypes}, idx) => {
+      const resSoundList = resData.data.map(({soundEffectId, soundEffectName, soundEffectTags, soundEffectTypes}, idx) => {
         return {
           soundId: soundEffectId,
           soundName: soundEffectName,
@@ -29,7 +28,10 @@ const fetchSoundList = async () => {
           mdDelay: mdDelayList[idx % mdDelayList.length],
           smDelay: smDelayList[idx % smDelayList.length],
         }
-      })
+      });
+      return resSoundList.slice(0, 5).concat({
+        soundId: -1
+      });
     }
     return {
       errorMessage: "Server Error",
@@ -63,23 +65,31 @@ function FeatureSection(props) {
         {isError && <strong>{response?.errorMessage}</strong>}
         <div className="container-fluid">
           <Grid container spacing={calculateSpacing(width, theme)}>
-            {!isLoading && response.map((element) => (
-              <Grid
-                item
-                xs={6}
-                md={4}
-                data-aos="zoom-in-up"
-                data-aos-delay={isWidthUpMd ? element.mdDelay : element.smDelay}
-                key={element.soundId.toString()}
-              >
-                <SoundCard
-                  soundName={element.soundName}
-                  soundTagList={element.soundTagList}
-                  soundURL={element.soundURL}
-                  soundLength={element.soundLength}
-                />
-              </Grid>
-            ))}
+            {!isLoading && response.map((element) => {
+              if (element.soundId === -1){
+                return (
+                  <Grid item xs={6} md={4} data-aos="zoom-in-up"
+                              data-aos-delay={isWidthUpMd ? element.mdDelay : element.smDelay}
+                              key={element.soundId.toString()}
+                  >
+                    <MoreButton />
+                  </Grid>
+                )
+              }
+              return (
+                <Grid item xs={6} md={4} data-aos="zoom-in-up"
+                      data-aos-delay={isWidthUpMd ? element.mdDelay : element.smDelay}
+                      key={element.soundId.toString()}
+                >
+                  <SoundCard
+                    soundName={element.soundName}
+                    soundTagList={element.soundTagList}
+                    soundURL={element.soundURL}
+                    soundLength={element.soundLength}
+                  />
+                </Grid>
+              )}
+            )}
           </Grid>
         </div>
       </div>
