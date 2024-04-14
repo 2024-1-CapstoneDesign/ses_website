@@ -10,7 +10,6 @@ const styles = () => ({
   waveSurferContainer: {
     width: "100%",
     display: 'flex',
-    border: "1px solid ".concat(theme.palette.common.darkBlack),
   }
 });
 
