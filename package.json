@@ -19,7 +19,7 @@
     "@wavesurfer/react": "^1.0.5",
     "aos": "^2.3.4",
     "axios": "^1.6.8",
-    "classnames": "^2.3.1",
+    "classnames": "^2.5.1",
     "emoji-mart": "^3.0.1",
     "js-cookie": "^3.0.1",
     "prop-types": "^15.7.2",
