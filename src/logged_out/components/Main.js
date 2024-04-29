@@ -7,7 +7,7 @@ import Footer from "./footer/Footer";
 import "aos/dist/aos.css";
 import CookieRulesDialog from "./cookies/CookieRulesDialog";
 import CookieConsent from "./cookies/CookieConsent";
-import dummyBlogPosts from "../dummy_data/blogPosts";
+import dummySoundListPosts from "../dummy_data/soundListPosts";
 import DialogSelector from "./register_login/DialogSelector";
 import Routing from "./Routing";
 import smoothScrollTop from "../../shared/functions/smoothScrollTop";
@@ -73,7 +73,7 @@ function Main(props) {
   }, [setDialogOpen]);
 
   const fetchSoundListPosts = useCallback(() => {
-    const soundListPosts = dummyBlogPosts.map((soundListPost) => {
+    const soundListPosts = dummySoundListPosts.map((soundListPost) => {
       let title = soundListPost.title;
       title = title.toLowerCase();
       /* Remove unwanted characters, only accept alphanumeric and space */
@@ -128,7 +128,7 @@ function Main(props) {
         handleMobileDrawerClose={handleMobileDrawerClose}
       />
       <Routing
-        blogPosts={soundListPosts}
+        soundListPosts={soundListPosts}
         selectHome={selectHome}
         selectSoundList={selectSoundList}
       />

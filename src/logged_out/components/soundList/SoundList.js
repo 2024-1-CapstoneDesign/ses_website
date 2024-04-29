@@ -25,7 +25,7 @@ const styles = (theme) => ({
   },
 });
 
-function getVerticalBlogPosts(isWidthUpSm, isWidthUpMd, blogPosts) {
+function getVerticalSoundListPosts(isWidthUpSm, isWidthUpMd, soundListPosts) {
   const gridRows = [[], [], []];
   let rows;
   let xs;
@@ -39,16 +39,16 @@ function getVerticalBlogPosts(isWidthUpSm, isWidthUpMd, blogPosts) {
     rows = 1;
     xs = 12;
   }
-  blogPosts.forEach((blogPost, index) => {
+  soundListPosts.forEach((soundListPost, index) => {
     gridRows[index % rows].push(
-      <Grid key={blogPost.id} item xs={12}>
+      <Grid key={soundListPost.id} item xs={12}>
         <Box mb={3}>
           <SoundListCard
-            src={blogPost.src}
-            title={blogPost.title}
-            snippet={blogPost.snippet}
-            date={blogPost.date}
-            url={blogPost.url}
+            src={soundListPost.src}
+            title={soundListPost.title}
+            snippet={soundListPost.snippet}
+            date={soundListPost.date}
+            url={soundListPost.url}
           />
         </Box>
       </Grid>
@@ -62,7 +62,7 @@ function getVerticalBlogPosts(isWidthUpSm, isWidthUpMd, blogPosts) {
 }
 
 function SoundList(props) {
-  const { classes, blogPosts, selectSoundList, theme } = props;
+  const { classes, soundListPosts, selectSoundList, theme } = props;
 
   const isWidthUpSm = useMediaQuery(theme.breakpoints.up("sm"));
   const isWidthUpMd = useMediaQuery(theme.breakpoints.up("md"));
@@ -79,7 +79,7 @@ function SoundList(props) {
     >
       <div className={classes.blogContentWrapper}>
         <Grid container spacing={3}>
-          {getVerticalBlogPosts(isWidthUpSm, isWidthUpMd, blogPosts)}
+          {getVerticalSoundListPosts(isWidthUpSm, isWidthUpMd, soundListPosts)}
         </Grid>
       </div>
     </Box>
@@ -89,7 +89,7 @@ function SoundList(props) {
 SoundList.propTypes = {
   selectSoundList: PropTypes.func.isRequired,
   classes: PropTypes.object.isRequired,
-  blogPosts: PropTypes.arrayOf(PropTypes.object),
+  soundListPosts: PropTypes.arrayOf(PropTypes.object),
 };
 
 export default withStyles(styles, { withTheme: true })(SoundList);
