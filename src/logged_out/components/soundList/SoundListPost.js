@@ -32,7 +32,7 @@ const styles = (theme) => ({
   },
 });
 
-function BlogPost(props) {
+function SoundListPost(props) {
   const { classes, date, title, src, content, otherArticles } = props;
 
   useEffect(() => {
@@ -108,7 +108,7 @@ function BlogPost(props) {
   );
 }
 
-BlogPost.propTypes = {
+SoundListPost.propTypes = {
   classes: PropTypes.object.isRequired,
   title: PropTypes.string.isRequired,
   date: PropTypes.number.isRequired,
@@ -117,4 +117,4 @@ BlogPost.propTypes = {
   otherArticles: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
-export default withStyles(styles, { withTheme: true })(BlogPost);
+export default withStyles(styles, { withTheme: true })(SoundListPost);

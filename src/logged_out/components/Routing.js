@@ -4,7 +4,7 @@ import { Switch } from "react-router-dom";
 import PropsRoute from "../../shared/components/PropsRoute";
 import Home from "./home/Home";
 import SoundList from "./soundList/SoundList";
-import BlogPost from "./soundList/BlogPost";
+import SoundListPost from "./soundList/SoundListPost";
 import useLocationBlocker from "../../shared/functions/useLocationBlocker";
 
 function Routing(props) {
@@ -15,7 +15,7 @@ function Routing(props) {
       {blogPosts.map((post) => (
         <PropsRoute
           path={post.url}
-          component={BlogPost}
+          component={SoundListPost}
           title={post.title}
           key={post.title}
           src={post.src}
