@@ -82,7 +82,7 @@ function Main(props) {
       title = title.replace(/\s{2,}/g, " ");
       /* Replace space with a '-' symbol */
       title = title.replace(/\s/g, "-");
-      blogPost.url = `/blog/post/${title}`;
+      blogPost.url = `/soundList/card/${title}`;
       blogPost.params = `?id=${blogPost.id}`;
       return blogPost;
     });
