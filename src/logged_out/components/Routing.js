@@ -8,7 +8,7 @@ import SoundListPost from "./soundList/SoundListPost";
 import useLocationBlocker from "../../shared/functions/useLocationBlocker";
 
 function Routing(props) {
-  const { blogPosts, selectBlog, selectHome } = props;
+  const { blogPosts, selectSoundList, selectHome } = props;
   useLocationBlocker();
   return (
     <Switch>
@@ -30,7 +30,7 @@ function Routing(props) {
         exact
         path="/soundList"
         component={SoundList}
-        selectBlog={selectBlog}
+        selectSoundList={selectSoundList}
         blogPosts={blogPosts}
       />
       <PropsRoute path="/" component={Home} selectHome={selectHome} />
@@ -41,7 +41,7 @@ function Routing(props) {
 Routing.propTypes = {
   blogposts: PropTypes.arrayOf(PropTypes.object),
   selectHome: PropTypes.func.isRequired,
-  selectBlog: PropTypes.func.isRequired,
+  selectSoundList: PropTypes.func.isRequired,
 };
 
 export default memo(Routing);

@@ -62,14 +62,14 @@ function getVerticalBlogPosts(isWidthUpSm, isWidthUpMd, blogPosts) {
 }
 
 function SoundList(props) {
-  const { classes, blogPosts, selectBlog, theme } = props;
+  const { classes, blogPosts, selectSoundList, theme } = props;
 
   const isWidthUpSm = useMediaQuery(theme.breakpoints.up("sm"));
   const isWidthUpMd = useMediaQuery(theme.breakpoints.up("md"));
 
   useEffect(() => {
-    selectBlog();
-  }, [selectBlog]);
+    selectSoundList();
+  }, [selectSoundList]);
 
   return (
     <Box
@@ -87,7 +87,7 @@ function SoundList(props) {
 }
 
 SoundList.propTypes = {
-  selectBlog: PropTypes.func.isRequired,
+  selectSoundList: PropTypes.func.isRequired,
   classes: PropTypes.object.isRequired,
   blogPosts: PropTypes.arrayOf(PropTypes.object),
 };

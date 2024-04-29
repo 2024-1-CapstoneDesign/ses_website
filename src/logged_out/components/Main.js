@@ -25,7 +25,7 @@ function Main(props) {
   const { classes } = props;
   const [selectedTab, setSelectedTab] = useState(null);
   const [isMobileDrawerOpen, setIsMobileDrawerOpen] = useState(false);
-  const [blogPosts, setBlogPosts] = useState([]);
+  const [soundListPosts, setSoundListPosts] = useState([]);
   const [dialogOpen, setDialogOpen] = useState(null);
   const [isCookieRulesDialogOpen, setIsCookieRulesDialogOpen] = useState(false);
 
@@ -36,7 +36,7 @@ function Main(props) {
     setSelectedTab("Home");
   }, [setSelectedTab]);
 
-  const selectBlog = useCallback(() => {
+  const selectSoundList = useCallback(() => {
     smoothScrollTop();
     document.title = "WaVer - Blog";
     setSelectedTab("Blog");
@@ -86,8 +86,8 @@ function Main(props) {
       blogPost.params = `?id=${blogPost.id}`;
       return blogPost;
     });
-    setBlogPosts(blogPosts);
-  }, [setBlogPosts]);
+    setSoundListPosts(blogPosts);
+  }, [setSoundListPosts]);
 
   const handleCookieRulesDialogOpen = useCallback(() => {
     setIsCookieRulesDialogOpen(true);
@@ -128,9 +128,9 @@ function Main(props) {
         handleMobileDrawerClose={handleMobileDrawerClose}
       />
       <Routing
-        blogPosts={blogPosts}
+        blogPosts={soundListPosts}
         selectHome={selectHome}
-        selectBlog={selectBlog}
+        selectSoundList={selectSoundList}
       />
       <Footer />
     </div>
