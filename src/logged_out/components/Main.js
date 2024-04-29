@@ -38,8 +38,8 @@ function Main(props) {
 
   const selectSoundList = useCallback(() => {
     smoothScrollTop();
-    document.title = "WaVer - Blog";
-    setSelectedTab("Blog");
+    document.title = "WaVer - SoundList";
+    setSelectedTab("SoundList");
   }, [setSelectedTab]);
 
   const openLoginDialog = useCallback(() => {
@@ -72,9 +72,9 @@ function Main(props) {
     setDialogOpen("changePassword");
   }, [setDialogOpen]);
 
-  const fetchBlogPosts = useCallback(() => {
-    const blogPosts = dummyBlogPosts.map((blogPost) => {
-      let title = blogPost.title;
+  const fetchSoundListPosts = useCallback(() => {
+    const soundListPosts = dummyBlogPosts.map((soundListPost) => {
+      let title = soundListPost.title;
       title = title.toLowerCase();
       /* Remove unwanted characters, only accept alphanumeric and space */
       title = title.replace(/[^A-Za-z0-9 ]/g, "");
@@ -82,11 +82,11 @@ function Main(props) {
       title = title.replace(/\s{2,}/g, " ");
       /* Replace space with a '-' symbol */
       title = title.replace(/\s/g, "-");
-      blogPost.url = `/soundList/card/${title}`;
-      blogPost.params = `?id=${blogPost.id}`;
-      return blogPost;
+      soundListPost.url = `/soundList/card/${title}`;
+      soundListPost.params = `?id=${soundListPost.id}`;
+      return soundListPost;
     });
-    setSoundListPosts(blogPosts);
+    setSoundListPosts(soundListPosts);
   }, [setSoundListPosts]);
 
   const handleCookieRulesDialogOpen = useCallback(() => {
@@ -97,7 +97,7 @@ function Main(props) {
     setIsCookieRulesDialogOpen(false);
   }, [setIsCookieRulesDialogOpen]);
 
-  useEffect(fetchBlogPosts, [fetchBlogPosts]);
+  useEffect(fetchSoundListPosts, [fetchSoundListPosts]);
 
   return (
     <div className={classes.wrapper}>
