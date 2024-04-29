@@ -4,7 +4,7 @@ import classNames from "classnames";
 import format from "date-fns/format";
 import { Grid, Typography, Card, Box } from "@mui/material";
 import withStyles from '@mui/styles/withStyles';
-import BlogCard from "./BlogCard";
+import SoundListCard from "./SoundListCard";
 import ShareButton from "../../../shared/components/ShareButton";
 import ZoomImage from "../../../shared/components/ZoomImage";
 import smoothScrollTop from "../../../shared/functions/smoothScrollTop";
@@ -93,7 +93,7 @@ function SoundListPost(props) {
             </Typography>
             {otherArticles.map((blogPost) => (
               <Box key={blogPost.id} mb={3}>
-                <BlogCard
+                <SoundListCard
                   title={blogPost.title}
                   snippet={blogPost.snippet}
                   date={blogPost.date}

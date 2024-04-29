@@ -51,7 +51,7 @@ const styles = (theme) => ({
   },
 });
 
-function BlogCard(props) {
+function SoundListCard(props) {
   const { classes, url, src, date, title, snippet } = props;
 
   return (
@@ -86,7 +86,7 @@ function BlogCard(props) {
   );
 }
 
-BlogCard.propTypes = {
+SoundListCard.propTypes = {
   classes: PropTypes.object.isRequired,
   url: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
@@ -95,4 +95,4 @@ BlogCard.propTypes = {
   src: PropTypes.string,
 };
 
-export default withStyles(styles, { withTheme: true })(BlogCard);
+export default withStyles(styles, { withTheme: true })(SoundListCard);

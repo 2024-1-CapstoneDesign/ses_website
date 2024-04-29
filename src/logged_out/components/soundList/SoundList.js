@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import classNames from "classnames";
 import { Grid, Box } from "@mui/material";
 import withStyles from "@mui/styles/withStyles";
-import BlogCard from "./BlogCard";
+import SoundListCard from "./SoundListCard";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
 const styles = (theme) => ({
@@ -43,7 +43,7 @@ function getVerticalBlogPosts(isWidthUpSm, isWidthUpMd, blogPosts) {
     gridRows[index % rows].push(
       <Grid key={blogPost.id} item xs={12}>
         <Box mb={3}>
-          <BlogCard
+          <SoundListCard
             src={blogPost.src}
             title={blogPost.title}
             snippet={blogPost.snippet}
