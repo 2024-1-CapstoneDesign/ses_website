@@ -5,6 +5,7 @@ import { Grid, Box } from "@mui/material";
 import withStyles from "@mui/styles/withStyles";
 import SoundListCard from "./SoundListCard";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import MySideBar from "../home/MySideBar";
 
 const styles = (theme) => ({
   blogContentWrapper: {
@@ -77,6 +78,7 @@ function SoundList(props) {
       justifyContent="center"
       className={classNames(classes.wrapper, "lg-p-top")}
     >
+      <MySideBar/>
       <div className={classes.blogContentWrapper}>
         <Grid container spacing={3}>
           {getVerticalSoundListPosts(isWidthUpSm, isWidthUpMd, soundListPosts)}
