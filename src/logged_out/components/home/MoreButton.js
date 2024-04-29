@@ -79,7 +79,7 @@ const ImageMarked = styled('span')(({ theme }) => ({
 
 export default function MoreButton() {
   return (
-    <Link to="/blog">
+    <Link to="/soundList">
       <Box sx={{ display: 'flex', flexWrap: 'wrap', minWidth: 300, width: '100%' }}>
         <ImageButton
           focusRipple
