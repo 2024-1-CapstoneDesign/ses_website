@@ -49,7 +49,7 @@ function NavBar(props) {
       icon: <HomeIcon className="text-white" />
     },
     {
-      link: "/blog",
+      link: "/soundList",
       name: "Blog",
       icon: <BookIcon className="text-white" />
     },

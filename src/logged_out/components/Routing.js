@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import { Switch } from "react-router-dom";
 import PropsRoute from "../../shared/components/PropsRoute";
 import Home from "./home/Home";
-import Blog from "./blog/Blog";
-import BlogPost from "./blog/BlogPost";
+import Blog from "./soundList/Blog";
+import BlogPost from "./soundList/BlogPost";
 import useLocationBlocker from "../../shared/functions/useLocationBlocker";
 
 function Routing(props) {
@@ -28,7 +28,7 @@ function Routing(props) {
       ))}
       <PropsRoute
         exact
-        path="/blog"
+        path="/soundList"
         component={Blog}
         selectBlog={selectBlog}
         blogPosts={blogPosts}
