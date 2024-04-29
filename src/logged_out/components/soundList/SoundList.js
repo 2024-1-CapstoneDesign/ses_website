@@ -61,7 +61,7 @@ function getVerticalBlogPosts(isWidthUpSm, isWidthUpMd, blogPosts) {
   ));
 }
 
-function Blog(props) {
+function SoundList(props) {
   const { classes, blogPosts, selectBlog, theme } = props;
 
   const isWidthUpSm = useMediaQuery(theme.breakpoints.up("sm"));
@@ -86,10 +86,10 @@ function Blog(props) {
   );
 }
 
-Blog.propTypes = {
+SoundList.propTypes = {
   selectBlog: PropTypes.func.isRequired,
   classes: PropTypes.object.isRequired,
   blogPosts: PropTypes.arrayOf(PropTypes.object),
 };
 
-export default withStyles(styles, { withTheme: true })(Blog);
+export default withStyles(styles, { withTheme: true })(SoundList);
