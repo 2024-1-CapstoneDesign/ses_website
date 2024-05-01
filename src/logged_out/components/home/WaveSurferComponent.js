@@ -6,9 +6,6 @@ import {PauseCircle, PlayCircle} from "@mui/icons-material";
 import withStyles from "@mui/styles/withStyles";
 import theme from "../../../theme";
 
-const primary = "#b3294e";
-const secondary = "#4829B2";
-
 const styles = () => ({
   waveSurferContainer: {
     width: "100%",
