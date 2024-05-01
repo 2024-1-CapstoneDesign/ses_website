@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 import format from "date-fns/format";
 import classNames from "classnames";
 import { Typography, Card, Box } from "@mui/material";
-
 import withStyles from '@mui/styles/withStyles';
+import WaveSurferComponent from "../home/WaveSurferComponent";
 
 const styles = (theme) => ({
   img: {
@@ -49,16 +49,26 @@ const styles = (theme) => ({
       color: theme.palette.secondary.dark,
     },
   },
+  gradientContainer: {
+    inset: "0",
+    background: "linear-gradient(to right, #4c51bf, #6b46c1)",
+    opacity: "0.5",
+    width: "100%",
+    height: "100%",
+    marginBottom: 8,
+  },
 });
 
 function SoundListCard(props) {
-  const { classes, url, src, date, title, snippet } = props;
-
+  const { classes, url, src, date, title, snippet, audioURL } = props;
   return (
     <Card className={classes.card}>
       {src && (
         <Link to={url} tabIndex={-1}>
-          <img src={src} className={classes.img} alt="" />
+          {/*<img src={src} className={classes.img} alt="" />*/}
+          <div className={classes.gradientContainer}>
+            {audioURL && <WaveSurferComponent audioURL={audioURL}/>}
+          </div>
         </Link>
       )}
       <Box p={2}>

@@ -48,15 +48,17 @@ const WaveSurferComponent = (props) => {
         setIsPlaying(false);
       });
       // 컴포넌트 언마운트 시 정리 작업 수행
+      // 계속 버그 생계서 정리 작업 안하는 방향으로 해봅시다.
       return () => {
-        if (wavesurfer.current) {
-          wavesurfer.current.destroy();
-        }
+        // if (wavesurfer.current) {
+        //   wavesurfer.current.destroy();
+        // }
       };
     }
   },[audioURL])
 
-  const buttonClick = () => {
+  const buttonClick = (event) => {
+    event.preventDefault();
     if (wavesurfer.current) {
       if (isPlaying) {
         wavesurfer.current.pause();
