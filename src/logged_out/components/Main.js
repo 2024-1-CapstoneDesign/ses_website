@@ -11,6 +11,7 @@ import dummySoundListPosts from "../dummy_data/soundListPosts";
 import DialogSelector from "./register_login/DialogSelector";
 import Routing from "./Routing";
 import smoothScrollTop from "../../shared/functions/smoothScrollTop";
+import axios from "axios";
 
 AOS.init({ once: true });
 
@@ -72,8 +73,36 @@ function Main(props) {
     setDialogOpen("changePassword");
   }, [setDialogOpen]);
 
-  const fetchSoundListPosts = useCallback(() => {
-    const soundListPosts = dummySoundListPosts.map((soundListPost) => {
+  const fetchSoundList = async () => {
+    const url = "https://soundeffect-search.p-e.kr/api/v1/soundeffect"
+    try {
+      const axiosRes = await axios.get(url);
+      const resData = axiosRes.data; //fetchResult
+      if (resData.result === "SUCCESS"){
+        const resSoundList = resData.data.map(({soundEffectId, soundEffectName, soundEffectTags, soundEffectTypes}, idx) => {
+          return {
+            soundId: soundEffectId,
+            soundName: soundEffectName,
+            soundTagList: soundEffectTags,
+            soundURL: soundEffectTypes[0].url,
+            soundLength: soundEffectTypes[0].length,
+          }
+        });
+        return resSoundList;
+      }
+      return {
+        errorMessage: "Server Error",
+      };
+    } catch (e){
+      console.error(e);
+      throw e;
+    }
+  }
+
+  const fetchSoundListPosts = useCallback(async () => {
+    const resSoundList = await fetchSoundList();
+    const soundListPosts = dummySoundListPosts.map((soundListPost, index) => {
+      soundListPost.title = resSoundList[index % resSoundList.length].soundName;
       let title = soundListPost.title;
       title = title.toLowerCase();
       /* Remove unwanted characters, only accept alphanumeric and space */
@@ -84,7 +113,7 @@ function Main(props) {
       title = title.replace(/\s/g, "-");
       soundListPost.url = `/soundList/card/${title}`;
       soundListPost.params = `?id=${soundListPost.id}`;
-      return soundListPost;
+      return {...soundListPost, ...resSoundList[index % resSoundList.length]};
     });
     setSoundListPosts(soundListPosts);
   }, [setSoundListPosts]);

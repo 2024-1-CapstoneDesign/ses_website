@@ -6,8 +6,6 @@ import withStyles from "@mui/styles/withStyles";
 import SoundListCard from "./SoundListCard";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import MySideBar from "../home/MySideBar";
-import axios from "axios";
-import {useQuery} from "react-query";
 import data from "../../../logged_in/dummy_data/persons";
 
 const styles = (theme) => ({
@@ -29,7 +27,7 @@ const styles = (theme) => ({
   },
 });
 
-function getVerticalSoundListPosts(isWidthUpSm, isWidthUpMd, soundListPosts, soundLists) {
+function getVerticalSoundListPosts(isWidthUpSm, isWidthUpMd, soundListPosts) {
   const gridRows = [[], [], []];
   let rows;
   let xs;
@@ -53,7 +51,7 @@ function getVerticalSoundListPosts(isWidthUpSm, isWidthUpMd, soundListPosts, sou
             snippet={soundListPost.snippet}
             date={soundListPost.date}
             url={soundListPost.url}
-            audioURL={soundLists[index % soundLists.length].soundURL}
+            audioURL={soundListPost.soundURL}
           />
         </Box>
       </Grid>
@@ -66,45 +64,11 @@ function getVerticalSoundListPosts(isWidthUpSm, isWidthUpMd, soundListPosts, sou
   ));
 }
 
-const fetchSoundList = async (getURLPost) => {
-  const url = "https://soundeffect-search.p-e.kr/api/v1/soundeffect"
-  try {
-    const axiosRes = await axios.get(url);
-    const resData = axiosRes.data; //fetchResult
-    if (resData.result === "SUCCESS"){
-      const resSoundList = resData.data.map(({soundEffectId, soundEffectName, soundEffectTags, soundEffectTypes}, idx) => {
-        return {
-          soundId: soundEffectId,
-          soundName: soundEffectName,
-          soundTagList: soundEffectTags,
-          soundURL: soundEffectTypes[0].url,
-          soundLength: soundEffectTypes[0].length,
-        }
-      });
-      return resSoundList;
-    }
-    return {
-      errorMessage: "Server Error",
-    };
-  } catch (e){
-    console.error(e);
-    throw e;
-  }
-}
-
 function SoundList(props) {
   const { classes, soundListPosts, selectSoundList, theme } = props;
 
   const isWidthUpSm = useMediaQuery(theme.breakpoints.up("sm"));
   const isWidthUpMd = useMediaQuery(theme.breakpoints.up("md"));
-
-  const {
-    isLoading,
-    isError,
-    data: soundLists
-  } = useQuery('soundList', fetchSoundList, {
-    refetchOnWindowFocus: false
-  });
 
   useEffect(() => {
     selectSoundList();
@@ -119,7 +83,7 @@ function SoundList(props) {
       <MySideBar/>
       <div className={classes.blogContentWrapper}>
         <Grid container spacing={3}>
-          {!isLoading && getVerticalSoundListPosts(isWidthUpSm, isWidthUpMd, soundListPosts, soundLists)}
+          {getVerticalSoundListPosts(isWidthUpSm, isWidthUpMd, soundListPosts)}
         </Grid>
       </div>
     </Box>
