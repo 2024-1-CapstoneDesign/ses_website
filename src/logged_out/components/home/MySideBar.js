@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@mui/styles";
 import { Box, Typography, Chip } from "@mui/material";
@@ -57,8 +57,8 @@ const styles = (theme) => ({
   },
 });
 
-function MySiderBar(props) {
-  const { classes } = props;
+function MySideBar(props) {
+  const { classes, soundListPosts, selectSoundList, theme } = props;
   const [checked, setChecked] = useState([false, false, false, false, false]);
 
   const handleChange = (index) => {
@@ -66,6 +66,21 @@ function MySiderBar(props) {
     newChecked[index] = !newChecked[index];
     setChecked(newChecked);
   };
+
+  useEffect(() => {
+    selectSoundList();
+  }, [selectSoundList]);
+
+  const uniqueTagList = [...new Set(
+    soundListPosts.map(
+      ({soundTagList}) => {
+        return {...soundTagList};
+      }).flatMap(
+        obj => Object.values(obj)
+    ).map(
+      tag => tag.tagName
+    )
+  )];
 
   return (
     <Box className={classes.sidebarContainer}>
@@ -95,23 +110,24 @@ function MySiderBar(props) {
       <Box className={classes.sidebarFooter}>
         <Typography variant="h6" className={`font-semibold uppercase mt-6 mb-2 text-[#4829B2] text-gray-900 ${classes.fullWidth}`}>Tags</Typography>
         <div style={{ display: "flex", flexWrap: "wrap" }}>
-          <Chip label="multisample" variant="outlined" className={classes.chip} />
-          <Chip label="field-recording" variant="outlined" className={classes.chip} />
-          <Chip label="single-note" variant="outlined" className={classes.chip} />
-          <Chip label="synthesizer" variant="outlined" className={classes.chip} />
-          <Chip label="drum" variant="outlined" className={classes.chip} />
-          <Chip label="loop" variant="outlined" className={classes.chip} />
-          <Chip label="synth" variant="outlined" className={classes.chip} />
-          <Chip label="noise" variant="outlined" className={classes.chip} />
-          <Chip label="ambient" variant="outlined" className={classes.chip} />
+          {uniqueTagList.map((tagName, index) => {
+            return (
+              <Chip
+                label={tagName}
+                variant="outlined"
+                size="small"
+                className={classes.chip}
+                key={index}
+              />);
+          })}
         </div>
       </Box>
     </Box>
   );
 }
 
-MySiderBar.propTypes = {
+MySideBar.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(MySiderBar);
+export default withStyles(styles)(MySideBar);

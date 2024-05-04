@@ -80,7 +80,10 @@ function SoundList(props) {
       justifyContent="center"
       className={classNames(classes.wrapper, "lg-p-top")}
     >
-      <MySideBar/>
+      <MySideBar
+        selectSoundList={selectSoundList}
+        soundListPosts={soundListPosts}
+      />
       <div className={classes.blogContentWrapper}>
         <Grid container spacing={3}>
           {getVerticalSoundListPosts(isWidthUpSm, isWidthUpMd, soundListPosts)}
