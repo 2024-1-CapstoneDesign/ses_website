@@ -51,6 +51,7 @@ function getVerticalSoundListPosts(isWidthUpSm, isWidthUpMd, soundListPosts) {
             date={soundListPost.soundCreateAt}
             url={soundListPost.url}
             src={soundListPost.soundURL}
+            tagList={soundListPost.soundTagList}
           />
         </Box>
       </Grid>

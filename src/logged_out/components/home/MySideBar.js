@@ -57,7 +57,7 @@ const styles = (theme) => ({
   },
 });
 
-function Component(props) {
+function MySiderBar(props) {
   const { classes } = props;
   const [checked, setChecked] = useState([false, false, false, false, false]);
 
@@ -110,8 +110,8 @@ function Component(props) {
   );
 }
 
-Component.propTypes = {
+MySiderBar.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Component);
+export default withStyles(styles)(MySiderBar);

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import format from "date-fns/format";
 import classNames from "classnames";
-import { Typography, Card, Box } from "@mui/material";
+import {Typography, Card, Box, Chip} from "@mui/material";
 import withStyles from '@mui/styles/withStyles';
 import WaveSurferComponent from "../home/WaveSurferComponent";
 
@@ -57,10 +57,16 @@ const styles = (theme) => ({
     height: "100%",
     marginBottom: 8,
   },
+  chip: {
+    backgroundColor: theme.palette.secondary.main,
+    color: "white",
+    marginRight: "8px",
+    marginBottom: "8px",
+  },
 });
 
 function SoundListCard(props) {
-  const { classes, url, src, date, title, snippet } = props;
+  const { classes, url, src, date, title, snippet, tagList } = props;
   return (
     <Card className={classes.card}>
       <div className={classes.gradientContainer}>
@@ -68,6 +74,18 @@ function SoundListCard(props) {
       </div>
       <Link to={url} tabIndex={-1} className={classes.noDecoration}>
         <Box p={2}>
+          <Box>
+            {tagList.map(({tagId, tagName}) => {
+              return (
+                <Chip
+                  label={tagName}
+                  variant="outlined"
+                  size="small"
+                  className={classes.chip}
+                  key={tagId}
+              />);
+            })}
+          </Box>
           <Link
             to={url}
             className={classNames(classes.noDecoration, classes.showFocus)}
