@@ -43,15 +43,14 @@ function getVerticalSoundListPosts(isWidthUpSm, isWidthUpMd, soundListPosts) {
   }
   soundListPosts.forEach((soundListPost, index) => {
     gridRows[index % rows].push(
-      <Grid key={soundListPost.id} item xs={12}>
+      <Grid key={soundListPost.soundId} item xs={12}>
         <Box mb={3}>
           <SoundListCard
-            src={soundListPost.src}
-            title={soundListPost.title}
-            snippet={soundListPost.snippet}
-            date={soundListPost.date}
+            title={soundListPost.soundName}
+            snippet={soundListPost.soundSnippet}
+            date={soundListPost.soundCreateAt}
             url={soundListPost.url}
-            audioURL={soundListPost.soundURL}
+            src={soundListPost.soundURL}
           />
         </Box>
       </Grid>

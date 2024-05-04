@@ -16,13 +16,13 @@ function Routing(props) {
         <PropsRoute
           path={post.url}
           component={SoundListPost}
-          title={post.title}
-          key={post.title}
-          src={post.src}
-          date={post.date}
-          content={post.content}
+          title={post.soundName}
+          key={post.soundName}
+          src={post.soundURL}
+          date={post.soundCreateAt}
+          content={post.soundContents}
           otherArticles={soundListPosts.filter(
-            (soundListPost) => soundListPost.id !== post.id
+            (soundListPost) => soundListPost.soundId !== post.soundId
           )}
         />
       ))}

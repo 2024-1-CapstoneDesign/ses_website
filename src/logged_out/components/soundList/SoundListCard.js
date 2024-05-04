@@ -60,17 +60,14 @@ const styles = (theme) => ({
 });
 
 function SoundListCard(props) {
-  const { classes, url, src, date, title, snippet, audioURL } = props;
+  const { classes, url, src, date, title, snippet } = props;
   return (
     <Card className={classes.card}>
-      {src && (
-        <Link to={url} tabIndex={-1}>
-          {/*<img src={src} className={classes.img} alt="" />*/}
-          <div className={classes.gradientContainer}>
-            {audioURL && <WaveSurferComponent audioURL={audioURL}/>}
-          </div>
-        </Link>
-      )}
+      <Link to={url} tabIndex={-1}>
+        <div className={classes.gradientContainer}>
+          {src && <WaveSurferComponent audioURL={src}/>}
+        </div>
+      </Link>
       <Box p={2}>
         <Typography variant="body2" color="textSecondary">
           {format(new Date(date * 1000), "PPP", {

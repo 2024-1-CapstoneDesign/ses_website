@@ -1,4 +1,4 @@
-import React, { memo, useState, useEffect, useCallback } from "react";
+import React, {memo, useState, useEffect, useCallback, Fragment} from "react";
 import PropTypes from "prop-types";
 import AOS from "aos/dist/aos";
 import withStyles from '@mui/styles/withStyles';
@@ -12,8 +12,92 @@ import DialogSelector from "./register_login/DialogSelector";
 import Routing from "./Routing";
 import smoothScrollTop from "../../shared/functions/smoothScrollTop";
 import axios from "axios";
+import {Typography} from "@mui/material";
 
 AOS.init({ once: true });
+
+const content = (
+  <Fragment>
+    <Typography variant="h6" paragraph>
+      Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
+      eirmod tempor invidunt ut labore.
+    </Typography>
+    <Typography paragraph>
+      Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
+      eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
+      voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
+      clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit
+      amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+      nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed
+      diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
+      Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor
+      sit amet.
+    </Typography>
+    <Typography paragraph>
+      Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
+      eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
+      voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
+      clita kasd gubergren, no sea takimata sanctus est Lorem.
+    </Typography>
+    <Typography variant="h6" paragraph>
+      Title
+    </Typography>
+    <Typography paragraph>
+      Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
+      eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
+      voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
+      clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit
+      amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+      nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed
+      diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
+      Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor
+      sit amet.
+    </Typography>
+    <Typography paragraph>
+      Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
+      eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
+      voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
+      clita kasd gubergren, no sea takimata sanctus est Lorem.
+    </Typography>
+    <Typography paragraph>
+      Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
+      eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
+      voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
+      clita kasd gubergren, no sea takimata sanctus est Lorem.
+    </Typography>
+    <Typography paragraph>
+      Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
+      eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
+      voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
+      clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit
+      amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+      nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed
+      diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
+      Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor
+      sit amet.
+    </Typography>
+    <Typography variant="h6" paragraph>
+      Title
+    </Typography>
+    <Typography paragraph>
+      Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
+      eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
+      voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
+      clita kasd gubergren, no sea takimata sanctus est Lorem.
+    </Typography>
+    <Typography paragraph>
+      Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
+      eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
+      voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
+      clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit
+      amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+      nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed
+      diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
+      Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor
+      sit amet.
+    </Typography>
+  </Fragment>
+);
 
 const styles = (theme) => ({
   wrapper: {
@@ -79,13 +163,19 @@ function Main(props) {
       const axiosRes = await axios.get(url);
       const resData = axiosRes.data; //fetchResult
       if (resData.result === "SUCCESS"){
-        const resSoundList = resData.data.map(({soundEffectId, soundEffectName, soundEffectTags, soundEffectTypes}, idx) => {
+        const resSoundList = resData.data.map((soundEffect) => {
           return {
-            soundId: soundEffectId,
-            soundName: soundEffectName,
-            soundTagList: soundEffectTags,
-            soundURL: soundEffectTypes[0].url,
-            soundLength: soundEffectTypes[0].length,
+            soundId: soundEffect.soundEffectId,
+            soundName: soundEffect.soundEffectName,
+            soundTagList: soundEffect.soundEffectTags,
+            soundURL: soundEffect.soundEffectTypes[0].url,
+            soundLength: soundEffect.soundEffectTypes[0].length,
+            soundDescription: soundEffect.description,
+            soundCreateBy: soundEffect.createBy,
+            // soundCreateAt: soundEffect.createAt,
+            soundSnippet: "this is sound",
+            soundCreateAt: 1576281600,
+            soundContents: content,
           }
         });
         return resSoundList;
@@ -101,9 +191,8 @@ function Main(props) {
 
   const fetchSoundListPosts = useCallback(async () => {
     const resSoundList = await fetchSoundList();
-    const soundListPosts = dummySoundListPosts.map((soundListPost, index) => {
-      soundListPost.title = resSoundList[index % resSoundList.length].soundName;
-      let title = soundListPost.title;
+    const soundListPosts = resSoundList.map((soundListPost, index) => {
+      let title = soundListPost.soundName;
       title = title.toLowerCase();
       /* Remove unwanted characters, only accept alphanumeric and space */
       title = title.replace(/[^A-Za-z0-9 ]/g, "");
@@ -112,8 +201,8 @@ function Main(props) {
       /* Replace space with a '-' symbol */
       title = title.replace(/\s/g, "-");
       soundListPost.url = `/soundList/card/${title}`;
-      soundListPost.params = `?id=${soundListPost.id}`;
-      return {...soundListPost, ...resSoundList[index % resSoundList.length]};
+      soundListPost.params = `?id=${soundListPost.soundId}`;
+      return soundListPost;
     });
     setSoundListPosts(soundListPosts);
   }, [setSoundListPosts]);
