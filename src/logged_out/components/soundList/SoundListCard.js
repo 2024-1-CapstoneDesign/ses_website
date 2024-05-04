@@ -68,11 +68,6 @@ function SoundListCard(props) {
       </div>
       <Link to={url} tabIndex={-1} className={classes.noDecoration}>
         <Box p={2}>
-          <Typography variant="body2" color="textSecondary">
-            {format(new Date(date * 1000), "PPP", {
-              awareOfUnicodeTokens: true,
-            })}
-          </Typography>
           <Link
             to={url}
             className={classNames(classes.noDecoration, classes.showFocus)}
@@ -86,6 +81,11 @@ function SoundListCard(props) {
             <Link to={url} className={classes.noDecoration} tabIndex={-1}>
               <span className={classes.link}> read more...</span>
             </Link>
+          </Typography>
+          <Typography variant="body2" color="textSecondary">
+            {format(new Date(date * 1000), "PPP", {
+              awareOfUnicodeTokens: true,
+            })}
           </Typography>
         </Box>
       </Link>
