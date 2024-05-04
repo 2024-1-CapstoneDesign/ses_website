@@ -6,7 +6,6 @@ import withStyles from "@mui/styles/withStyles";
 import SoundListCard from "./SoundListCard";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import MySideBar from "../home/MySideBar";
-import data from "../../../logged_in/dummy_data/persons";
 
 const styles = (theme) => ({
   blogContentWrapper: {

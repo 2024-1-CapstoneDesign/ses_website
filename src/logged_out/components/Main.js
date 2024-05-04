@@ -7,7 +7,6 @@ import Footer from "./footer/Footer";
 import "aos/dist/aos.css";
 import CookieRulesDialog from "./cookies/CookieRulesDialog";
 import CookieConsent from "./cookies/CookieConsent";
-import dummySoundListPosts from "../dummy_data/soundListPosts";
 import DialogSelector from "./register_login/DialogSelector";
 import Routing from "./Routing";
 import smoothScrollTop from "../../shared/functions/smoothScrollTop";
@@ -163,7 +162,7 @@ function Main(props) {
       const axiosRes = await axios.get(url);
       const resData = axiosRes.data; //fetchResult
       if (resData.result === "SUCCESS"){
-        const resSoundList = resData.data.map((soundEffect) => {
+        return resData.data.map((soundEffect) => {
           return {
             soundId: soundEffect.soundEffectId,
             soundName: soundEffect.soundEffectName,
@@ -178,7 +177,6 @@ function Main(props) {
             soundContents: content,
           }
         });
-        return resSoundList;
       }
       return {
         errorMessage: "Server Error",
@@ -191,7 +189,7 @@ function Main(props) {
 
   const fetchSoundListPosts = useCallback(async () => {
     const resSoundList = await fetchSoundList();
-    const soundListPosts = resSoundList.map((soundListPost, index) => {
+    const soundListPosts = resSoundList.map((soundListPost) => {
       let title = soundListPost.soundName;
       title = title.toLowerCase();
       /* Remove unwanted characters, only accept alphanumeric and space */

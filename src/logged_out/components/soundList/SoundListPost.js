@@ -6,7 +6,7 @@ import { Grid, Typography, Card, Box } from "@mui/material";
 import withStyles from '@mui/styles/withStyles';
 import SoundListCard from "./SoundListCard";
 import ShareButton from "../../../shared/components/ShareButton";
-import ZoomImage from "../../../shared/components/ZoomImage";
+// import ZoomImage from "../../../shared/components/ZoomImage";
 import smoothScrollTop from "../../../shared/functions/smoothScrollTop";
 import WaveSurferComponent from "../home/WaveSurferComponent";
 
