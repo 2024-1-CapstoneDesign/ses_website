@@ -63,32 +63,32 @@ function SoundListCard(props) {
   const { classes, url, src, date, title, snippet } = props;
   return (
     <Card className={classes.card}>
-      <Link to={url} tabIndex={-1}>
-        <div className={classes.gradientContainer}>
-          {src && <WaveSurferComponent audioURL={src}/>}
-        </div>
-      </Link>
-      <Box p={2}>
-        <Typography variant="body2" color="textSecondary">
-          {format(new Date(date * 1000), "PPP", {
-            awareOfUnicodeTokens: true,
-          })}
-        </Typography>
-        <Link
-          to={url}
-          className={classNames(classes.noDecoration, classes.showFocus)}
-        >
-          <Typography variant="h6">
-            <span className={classes.title}>{title}</span>
+      <div className={classes.gradientContainer}>
+        {src && <WaveSurferComponent audioURL={src}/>}
+      </div>
+      <Link to={url} tabIndex={-1} className={classes.noDecoration}>
+        <Box p={2}>
+          <Typography variant="body2" color="textSecondary">
+            {format(new Date(date * 1000), "PPP", {
+              awareOfUnicodeTokens: true,
+            })}
           </Typography>
-        </Link>
-        <Typography variant="body1" color="textSecondary">
-          {snippet}
-          <Link to={url} className={classes.noDecoration} tabIndex={-1}>
-            <span className={classes.link}> read more...</span>
+          <Link
+            to={url}
+            className={classNames(classes.noDecoration, classes.showFocus)}
+          >
+            <Typography variant="h6">
+              <span className={classes.title}>{title}</span>
+            </Typography>
           </Link>
-        </Typography>
-      </Box>
+          <Typography variant="body1" color="textSecondary">
+            {snippet}
+            <Link to={url} className={classes.noDecoration} tabIndex={-1}>
+              <span className={classes.link}> read more...</span>
+            </Link>
+          </Typography>
+        </Box>
+      </Link>
     </Card>
   );
 }
