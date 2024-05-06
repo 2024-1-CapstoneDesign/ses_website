@@ -1,36 +1,37 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@mui/styles";
 import { Box, Typography, Chip } from "@mui/material";
 import Checkbox from "@mui/material/Checkbox";
+import ButtonBase from "@mui/material/ButtonBase";
 
 const styles = (theme) => ({
   sidebarContainer: {
-    width: '30%',
-    display: 'flex',
-    flexDirection: 'column',
+    width: "30%",
+    display: "flex",
+    flexDirection: "column",
     backgroundColor: "white",
     color: "text.primary",
     borderRight: "1px solid rgba(0, 0, 0, 0.12)",
   },
   sidebarHeader: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: '64px',
-    borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    height: "64px",
+    borderBottom: "1px solid rgba(0, 0, 0, 0.12)",
   },
   sidebarBody: {
-    padding: '16px',
-    borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
+    padding: "16px",
+    borderBottom: "1px solid rgba(0, 0, 0, 0.12)",
   },
   sidebarFooter: {
-    padding: '16px',
+    padding: "16px",
   },
   sidebarFooterButton: {
-    width: '100%',
+    width: "100%",
     backgroundColor: "#b3294e",
-    color: 'white',
+    color: "white",
     "&:hover": {
       backgroundColor: "#9c2345",
     },
@@ -41,7 +42,7 @@ const styles = (theme) => ({
     marginBottom: "8px",
     "&:hover": {
       color: "#b3294e",
-      cursor: "pointer", // 클릭 가능한 상태로 설정
+      cursor: "pointer",
     },
     display: "flex",
     alignItems: "center",
@@ -51,15 +52,30 @@ const styles = (theme) => ({
     color: "white",
     marginRight: "8px",
     marginBottom: "8px",
+    cursor: "pointer",
+    "&:hover": {
+      backgroundColor: theme.palette.secondary.main,
+    },
+  },
+  chipSelected: {
+    backgroundColor: theme.palette.primary.main,
+    color: "white",
+    marginRight: "8px",
+    marginBottom: "8px",
+    cursor: "pointer",
+    "&:hover": {
+      backgroundColor: theme.palette.primary.main,
+    },
   },
   fullWidth: {
-    width: '100%',
+    width: "100%",
   },
 });
 
 function MySideBar(props) {
-  const { classes, soundListPosts, selectSoundList, theme } = props;
+  const { classes, soundListPosts, selectSoundList } = props;
   const [checked, setChecked] = useState([false, false, false, false, false]);
+  const [selectedTags, setSelectedTags] = useState(new Set());
 
   const handleChange = (index) => {
     const newChecked = [...checked];
@@ -71,55 +87,78 @@ function MySideBar(props) {
     selectSoundList();
   }, [selectSoundList]);
 
-  const uniqueTagList = [...new Set(
-    soundListPosts.map(
-      ({soundTagList}) => {
-        return {...soundTagList};
-      }).flatMap(
-        obj => Object.values(obj)
-    ).map(
-      tag => tag.tagName
-    )
-  )];
+  const uniqueTagList = [
+    ...new Set(
+      soundListPosts
+        .map(({ soundTagList }) => ({ ...soundTagList }))
+        .flatMap((obj) => Object.values(obj))
+        .map((tag) => tag.tagName)
+    ),
+  ];
+
+  const handleChipClick = (tagName) => {
+    if (selectedTags.has(tagName)) {
+      selectedTags.delete(tagName);
+    } else {
+      selectedTags.add(tagName);
+    }
+    setSelectedTags(new Set(selectedTags));
+  };
 
   return (
     <Box className={classes.sidebarContainer}>
       <Box className={classes.sidebarBody}>
-        <Typography variant="h6" className={`font-semibold uppercase mt-4 mb-2 text-[#4829B2] text-gray-900 ${classes.fullWidth}`}>License</Typography>
-        <Typography component="div" className={`${classes.licenseLink} ${classes.fullWidth}`} role="checkbox" aria-checked={checked[0]} onClick={() => handleChange(0)}>
-          <Checkbox checked={checked[0]} onChange={() => handleChange(0)} />
-          <Box component="span" display="block">Approved for Free (544,282)</Box>
+        <Typography
+          variant="h6"
+          className={`font-semibold uppercase mt-4 mb-2 text-[#4829B2] text-gray-900 ${classes.fullWidth}`}
+        >
+          License
         </Typography>
-        <Typography component="div" className={`${classes.licenseLink} ${classes.fullWidth}`} role="checkbox" aria-checked={checked[1]} onClick={() => handleChange(1)}>
-          <Checkbox checked={checked[1]} onChange={() => handleChange(1)} />
-          <Box component="span" display="block">Creative Commons (321,890)</Box>
-        </Typography>
-        <Typography component="div" className={`${classes.licenseLink} ${classes.fullWidth}`} role="checkbox" aria-checked={checked[2]} onClick={() => handleChange(2)}>
-          <Checkbox checked={checked[2]} onChange={() => handleChange(2)} />
-          <Box component="span" display="block">Attribution (222,392)</Box>
-        </Typography>
-        <Typography component="div" className={`${classes.licenseLink} ${classes.fullWidth}`} role="checkbox" aria-checked={checked[3]} onClick={() => handleChange(3)}>
-          <Checkbox checked={checked[3]} onChange={() => handleChange(3)} />
-          <Box component="span" display="block">Attribution NonCommercial (74,513)</Box>
-        </Typography>
-        <Typography component="div" className={`${classes.licenseLink} ${classes.fullWidth}`} role="checkbox" aria-checked={checked[4]} onClick={() => handleChange(4)}>
-          <Checkbox checked={checked[4]} onChange={() => handleChange(4)} />
-          <Box component="span" display="block">Sampling+ (11,475)</Box>
-        </Typography>
+        {[
+          "Approved for Free (544,282)",
+          "Creative Commons (321,890)",
+          "Attribution (222,392)",
+          "Attribution NonCommercial (74,513)",
+          "Sampling+ (11,475)",
+        ].map((label, index) => (
+          <Typography
+            key={index}
+            component="div"
+            className={`${classes.licenseLink} ${classes.fullWidth}`}
+            role="checkbox"
+            aria-checked={checked[index]}
+            onClick={() => handleChange(index)}
+          >
+            <Checkbox
+              checked={checked[index]}
+              onChange={() => handleChange(index)}
+            />
+            <Box component="span" display="block">
+              {label}
+            </Box>
+          </Typography>
+        ))}
       </Box>
       <Box className={classes.sidebarFooter}>
-        <Typography variant="h6" className={`font-semibold uppercase mt-6 mb-2 text-[#4829B2] text-gray-900 ${classes.fullWidth}`}>Tags</Typography>
+        <Typography
+          variant="h6"
+          className={`font-semibold uppercase mt-6 mb-2 text-[#4829B2] text-gray-900 ${classes.fullWidth}`}
+        >
+          Tags
+        </Typography>
         <div style={{ display: "flex", flexWrap: "wrap" }}>
-          {uniqueTagList.map((tagName, index) => {
-            return (
+          {uniqueTagList.map((tagName, index) => (
+            <ButtonBase key={index} onClick={() => handleChipClick(tagName)}>
               <Chip
                 label={tagName}
                 variant="outlined"
                 size="small"
-                className={classes.chip}
-                key={index}
-              />);
-          })}
+                className={
+                  selectedTags.has(tagName) ? classes.chipSelected : classes.chip
+                }
+              />
+            </ButtonBase>
+          ))}
         </div>
       </Box>
     </Box>
