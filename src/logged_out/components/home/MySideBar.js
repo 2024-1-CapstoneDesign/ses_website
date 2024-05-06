@@ -124,14 +124,16 @@ function MySideBar(props) {
     }
     setSelectedTags(newSelectedTags);
     const updatedSoundListPosts = soundListPosts.map(sound => {
-      const isTagSelected = sound.soundTagList.some((element) => newSelectedTags.has(element.tagName))
+      let isTagSelected = sound.soundTagList.some((element) => newSelectedTags.has(element.tagName))
+      if (newSelectedTags.size === 0){ // 만약 모든 tag가 비어있다면 다시 전체 soundCard가 보이게 만들기
+        isTagSelected = true
+      }
       return {
         ...sound,
         soundVisible: isTagSelected
       };
     });
     setSoundListPosts(updatedSoundListPosts);
-    console.dir(selectSoundList)
   };
 
   return (
