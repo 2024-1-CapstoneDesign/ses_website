@@ -47,11 +47,13 @@ const styles = (theme) => ({
     display: "flex",
     alignItems: "center",
   },
+  chipWrapper: {
+    marginRight: theme.spacing(1),
+    marginBottom: theme.spacing(1),
+  },
   chip: {
     backgroundColor: theme.palette.secondary.main,
     color: "white",
-    marginRight: "8px",
-    marginBottom: "8px",
     cursor: "pointer",
     "&:hover": {
       backgroundColor: theme.palette.secondary.main,
@@ -60,8 +62,6 @@ const styles = (theme) => ({
   chipSelected: {
     backgroundColor: theme.palette.primary.main,
     color: "white",
-    marginRight: "8px",
-    marginBottom: "8px",
     cursor: "pointer",
     "&:hover": {
       backgroundColor: theme.palette.primary.main,
@@ -148,16 +148,20 @@ function MySideBar(props) {
         </Typography>
         <div style={{ display: "flex", flexWrap: "wrap" }}>
           {uniqueTagList.map((tagName, index) => (
-            <ButtonBase key={index} onClick={() => handleChipClick(tagName)}>
-              <Chip
-                label={tagName}
-                variant="outlined"
-                size="small"
-                className={
-                  selectedTags.has(tagName) ? classes.chipSelected : classes.chip
-                }
-              />
-            </ButtonBase>
+            <div key={index} className={classes.chipWrapper}>
+              <ButtonBase onClick={() => handleChipClick(tagName)}>
+                <Chip
+                  label={tagName}
+                  variant="outlined"
+                  size="small"
+                  className={
+                    selectedTags.has(tagName)
+                      ? classes.chipSelected
+                      : classes.chip
+                  }
+                />
+              </ButtonBase>
+            </div>
           ))}
         </div>
       </Box>
