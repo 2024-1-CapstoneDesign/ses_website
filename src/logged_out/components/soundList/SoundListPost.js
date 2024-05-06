@@ -41,6 +41,8 @@ function SoundListPost(props) {
     smoothScrollTop();
   }, [title]);
 
+  const sliceOtherArticles = otherArticles.slice(0, 5) // up to 5 element
+
   return (
     <Box
       className={classNames("lg-p-top", classes.wrapper)}
@@ -93,12 +95,13 @@ function SoundListPost(props) {
             <Typography variant="h6" paragraph>
               Other articles
             </Typography>
-            {otherArticles.map((blogPost) => (
+            {sliceOtherArticles.map((blogPost) => (
               <Box key={blogPost.soundId} mb={3}>
                 <SoundListCard
                   title={blogPost.soundName}
                   snippet={blogPost.soundSnippet}
                   date={blogPost.soundCreateAt}
+                  src={blogPost.soundURL}
                   url={`${blogPost.url}${blogPost.params}`}
                 />
               </Box>
