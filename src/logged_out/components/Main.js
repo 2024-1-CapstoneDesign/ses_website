@@ -175,6 +175,7 @@ function Main(props) {
             soundSnippet: "this is sound",
             soundCreateAt: 1576281600,
             soundContents: content,
+            soundVisible: true
           }
         });
       }
@@ -247,6 +248,7 @@ function Main(props) {
         soundListPosts={soundListPosts}
         selectHome={selectHome}
         selectSoundList={selectSoundList}
+        setSoundListPosts={setSoundListPosts}
       />
       <Footer />
     </div>

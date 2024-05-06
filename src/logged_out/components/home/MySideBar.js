@@ -5,6 +5,31 @@ import { Box, Typography, Chip } from "@mui/material";
 import Checkbox from "@mui/material/Checkbox";
 import ButtonBase from "@mui/material/ButtonBase";
 
+function shadeColor(color, percent) {
+
+  let R = parseInt(color.substring(1,3),16);
+  let G = parseInt(color.substring(3,5),16);
+  let B = parseInt(color.substring(5,7),16);
+
+  R = parseInt(R * (100 + percent) / 100);
+  G = parseInt(G * (100 + percent) / 100);
+  B = parseInt(B * (100 + percent) / 100);
+
+  R = (R<255)?R:255;
+  G = (G<255)?G:255;
+  B = (B<255)?B:255;
+
+  R = Math.round(R)
+  G = Math.round(G)
+  B = Math.round(B)
+
+  const RR = ((R.toString(16).length===1)?"0"+R.toString(16):R.toString(16));
+  const GG = ((G.toString(16).length===1)?"0"+G.toString(16):G.toString(16));
+  const BB = ((B.toString(16).length===1)?"0"+B.toString(16):B.toString(16));
+
+  return "#"+RR+GG+BB;
+}
+
 const styles = (theme) => ({
   sidebarContainer: {
     width: "30%",
@@ -55,17 +80,11 @@ const styles = (theme) => ({
     backgroundColor: theme.palette.secondary.main,
     color: "white",
     cursor: "pointer",
-    "&:hover": {
-      backgroundColor: theme.palette.secondary.main,
-    },
   },
   chipSelected: {
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: shadeColor(theme.palette.secondary.main, 100),
     color: "white",
     cursor: "pointer",
-    "&:hover": {
-      backgroundColor: theme.palette.primary.main,
-    },
   },
   fullWidth: {
     width: "100%",
@@ -73,7 +92,7 @@ const styles = (theme) => ({
 });
 
 function MySideBar(props) {
-  const { classes, soundListPosts, selectSoundList } = props;
+  const { classes, soundListPosts, selectSoundList, setSoundListPosts } = props;
   const [checked, setChecked] = useState([false, false, false, false, false]);
   const [selectedTags, setSelectedTags] = useState(new Set());
 
@@ -97,12 +116,22 @@ function MySideBar(props) {
   ];
 
   const handleChipClick = (tagName) => {
+    const newSelectedTags = new Set(selectedTags);
     if (selectedTags.has(tagName)) {
-      selectedTags.delete(tagName);
+      newSelectedTags.delete(tagName);
     } else {
-      selectedTags.add(tagName);
+      newSelectedTags.add(tagName);
     }
-    setSelectedTags(new Set(selectedTags));
+    setSelectedTags(newSelectedTags);
+    const updatedSoundListPosts = soundListPosts.map(sound => {
+      const isTagSelected = sound.soundTagList.some((element) => newSelectedTags.has(element.tagName))
+      return {
+        ...sound,
+        soundVisible: isTagSelected
+      };
+    });
+    setSoundListPosts(updatedSoundListPosts);
+    console.dir(selectSoundList)
   };
 
   return (
@@ -152,7 +181,6 @@ function MySideBar(props) {
               <ButtonBase onClick={() => handleChipClick(tagName)}>
                 <Chip
                   label={tagName}
-                  variant="outlined"
                   size="small"
                   className={
                     selectedTags.has(tagName)

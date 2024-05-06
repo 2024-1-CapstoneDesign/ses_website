@@ -40,21 +40,25 @@ function getVerticalSoundListPosts(isWidthUpSm, isWidthUpMd, soundListPosts) {
     rows = 1;
     xs = 12;
   }
-  soundListPosts.forEach((soundListPost, index) => {
-    gridRows[index % rows].push(
-      <Grid key={soundListPost.soundId} item xs={12}>
-        <Box mb={3}>
-          <SoundListCard
-            title={soundListPost.soundName}
-            snippet={soundListPost.soundSnippet}
-            date={soundListPost.soundCreateAt}
-            url={soundListPost.url}
-            src={soundListPost.soundURL}
-            tagList={soundListPost.soundTagList}
-          />
-        </Box>
-      </Grid>
-    );
+  let index = 0;
+  soundListPosts.forEach((soundListPost) => {
+    if (soundListPost.soundVisible){
+      gridRows[index % rows].push(
+        <Grid key={soundListPost.soundId} item xs={12}>
+          <Box mb={3}>
+            <SoundListCard
+              title={soundListPost.soundName}
+              snippet={soundListPost.soundSnippet}
+              date={soundListPost.soundCreateAt}
+              url={soundListPost.url}
+              src={soundListPost.soundURL}
+              tagList={soundListPost.soundTagList}
+            />
+          </Box>
+        </Grid>
+      );
+      index++;
+    }
   });
   return gridRows.map((element, index) => (
     <Grid key={index} item xs={xs}>
@@ -64,7 +68,7 @@ function getVerticalSoundListPosts(isWidthUpSm, isWidthUpMd, soundListPosts) {
 }
 
 function SoundList(props) {
-  const { classes, soundListPosts, selectSoundList, theme } = props;
+  const { classes, soundListPosts, setSoundListPosts,  selectSoundList, theme } = props;
 
   const isWidthUpSm = useMediaQuery(theme.breakpoints.up("sm"));
   const isWidthUpMd = useMediaQuery(theme.breakpoints.up("md"));
@@ -82,6 +86,7 @@ function SoundList(props) {
       <MySideBar
         selectSoundList={selectSoundList}
         soundListPosts={soundListPosts}
+        setSoundListPosts={setSoundListPosts}
       />
       <div className={classes.blogContentWrapper}>
         <Grid container spacing={3}>
