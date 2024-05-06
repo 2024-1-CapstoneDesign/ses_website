@@ -102,10 +102,6 @@ function MySideBar(props) {
     setChecked(newChecked);
   };
 
-  useEffect(() => {
-    selectSoundList();
-  }, [selectSoundList]);
-
   const uniqueTagList = [
     ...new Set(
       soundListPosts
@@ -114,6 +110,22 @@ function MySideBar(props) {
         .map((tag) => tag.tagName)
     ),
   ];
+
+  const resetVisibility = () => {
+    const updatedSoundListPosts = soundListPosts.map(sound => {
+      return {
+        ...sound,
+        soundVisible: true
+      };
+    });
+    setSoundListPosts(updatedSoundListPosts);
+  }
+
+  useEffect(() => {
+    selectSoundList();
+    setSelectedTags(new Set());
+    resetVisibility();
+  }, [selectSoundList]);
 
   const handleChipClick = (tagName) => {
     const newSelectedTags = new Set(selectedTags);
