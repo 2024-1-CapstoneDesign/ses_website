@@ -75,7 +75,7 @@ function SoundListCard(props) {
       <Link to={url} tabIndex={-1} className={classes.noDecoration}>
         <Box p={2}>
           <Box>
-            {tagList.map(({tagId, tagName}) => {
+            {tagList && tagList.map(({tagId, tagName}) => {
               return (
                 <Chip
                   label={tagName}
