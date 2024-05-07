@@ -51,8 +51,8 @@ const styles = (theme) => ({
   },
   gradientContainer: {
     inset: "0",
-    background: "linear-gradient(to right, #4c51bf, #6b46c1)",
-    opacity: "0.5",
+    // background: "linear-gradient(to right, #4c51bf, #6b46c1)",
+    // opacity: "0.5",
     width: "100%",
     height: "100%",
     marginBottom: 8,
