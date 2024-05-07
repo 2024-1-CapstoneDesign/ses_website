@@ -29,6 +29,13 @@ const styles = theme => ({
   },
   noDecoration: {
     textDecoration: "none !important"
+  },
+  logoWrapper:{
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '10wv'
   }
 });
 
@@ -68,27 +75,31 @@ function NavBar(props) {
     <div className={classes.root}>
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar className={classes.toolbar}>
-          <div>
-            <Typography
-              variant="h4"
-              className={classes.brandText}
-              display="inline"
-              color="primary"
-            >
-              Wa
-            </Typography>
-            <Typography
-              variant="h4"
-              className={classes.brandText}
-              display="inline"
-              color="secondary"
-            >
-              Ver
-            </Typography>
+          {/* 2 * 2 pixel size*/}
+          <div className={classes.logoWrapper}>
+            <img src={`${process.env.PUBLIC_URL}/images/logged_out/logo4.png`} alt="logo"/>
+            <div>
+              <Typography
+                variant="h4"
+                className={classes.brandText}
+                display="inline"
+                color="primary"
+              >
+                Au
+              </Typography>
+              <Typography
+                variant="h4"
+                className={classes.brandText}
+                display="inline"
+                color="secondary"
+              >
+                Lo
+              </Typography>
+            </div>
           </div>
           <div>
             <Hidden mdUp>
-              <IconButton
+            <IconButton
                 className={classes.menuButton}
                 onClick={handleMobileDrawerOpen}
                 aria-label="Open Navigation"

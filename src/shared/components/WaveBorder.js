@@ -46,10 +46,10 @@ function WaveBorder(props) {
         shapeRendering="auto"
       >
         <defs>
-          <path
-            id={id}
-            d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"
-          />
+          {/*<path*/}
+          {/*  id={id}*/}
+          {/*  d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"*/}
+          {/*/>*/}
         </defs>
         <g className={classes.parallax}>
           <use href={`#${id}`} x="48" y="0" fill={lowerColor} />
