@@ -4,10 +4,11 @@ import classNames from "classnames";
 import format from "date-fns/format";
 import { Grid, Typography, Card, Box } from "@mui/material";
 import withStyles from '@mui/styles/withStyles';
-import BlogCard from "./BlogCard";
+import SoundListCard from "./SoundListCard";
 import ShareButton from "../../../shared/components/ShareButton";
-import ZoomImage from "../../../shared/components/ZoomImage";
+// import ZoomImage from "../../../shared/components/ZoomImage";
 import smoothScrollTop from "../../../shared/functions/smoothScrollTop";
+import WaveSurferComponent from "../home/WaveSurferComponent";
 
 const styles = (theme) => ({
   blogContentWrapper: {
@@ -32,13 +33,15 @@ const styles = (theme) => ({
   },
 });
 
-function BlogPost(props) {
+function SoundListPost(props) {
   const { classes, date, title, src, content, otherArticles } = props;
 
   useEffect(() => {
     document.title = `WaVer - ${title}`;
     smoothScrollTop();
   }, [title]);
+
+  const sliceOtherArticles = otherArticles.slice(0, 5) // up to 5 element
 
   return (
     <Box
@@ -60,7 +63,8 @@ function BlogPost(props) {
                   })}
                 </Typography>
               </Box>
-              <ZoomImage className={classes.img} src={src} alt="" />
+              {/*<ZoomImage className={classes.img} src={src} alt="" />*/}
+              <WaveSurferComponent audioURL={src}/>
               <Box p={3}>
                 {content}
                 <Box pt={2}>
@@ -91,12 +95,13 @@ function BlogPost(props) {
             <Typography variant="h6" paragraph>
               Other articles
             </Typography>
-            {otherArticles.map((blogPost) => (
-              <Box key={blogPost.id} mb={3}>
-                <BlogCard
-                  title={blogPost.title}
-                  snippet={blogPost.snippet}
-                  date={blogPost.date}
+            {sliceOtherArticles.map((blogPost) => (
+              <Box key={blogPost.soundId} mb={3}>
+                <SoundListCard
+                  title={blogPost.soundName}
+                  snippet={blogPost.soundSnippet}
+                  date={blogPost.soundCreateAt}
+                  src={blogPost.soundURL}
                   url={`${blogPost.url}${blogPost.params}`}
                 />
               </Box>
@@ -108,7 +113,7 @@ function BlogPost(props) {
   );
 }
 
-BlogPost.propTypes = {
+SoundListPost.propTypes = {
   classes: PropTypes.object.isRequired,
   title: PropTypes.string.isRequired,
   date: PropTypes.number.isRequired,
@@ -117,4 +122,4 @@ BlogPost.propTypes = {
   otherArticles: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
-export default withStyles(styles, { withTheme: true })(BlogPost);
+export default withStyles(styles, { withTheme: true })(SoundListPost);

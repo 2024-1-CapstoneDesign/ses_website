@@ -1,4 +1,4 @@
-import React, { memo, useState, useEffect, useCallback } from "react";
+import React, {memo, useState, useEffect, useCallback, Fragment} from "react";
 import PropTypes from "prop-types";
 import AOS from "aos/dist/aos";
 import withStyles from '@mui/styles/withStyles';
@@ -7,12 +7,96 @@ import Footer from "./footer/Footer";
 import "aos/dist/aos.css";
 import CookieRulesDialog from "./cookies/CookieRulesDialog";
 import CookieConsent from "./cookies/CookieConsent";
-import dummyBlogPosts from "../dummy_data/blogPosts";
 import DialogSelector from "./register_login/DialogSelector";
 import Routing from "./Routing";
 import smoothScrollTop from "../../shared/functions/smoothScrollTop";
+import axios from "axios";
+import {Typography} from "@mui/material";
 
 AOS.init({ once: true });
+
+const content = (
+  <Fragment>
+    <Typography variant="h6" paragraph>
+      Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
+      eirmod tempor invidunt ut labore.
+    </Typography>
+    <Typography paragraph>
+      Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
+      eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
+      voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
+      clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit
+      amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+      nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed
+      diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
+      Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor
+      sit amet.
+    </Typography>
+    <Typography paragraph>
+      Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
+      eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
+      voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
+      clita kasd gubergren, no sea takimata sanctus est Lorem.
+    </Typography>
+    <Typography variant="h6" paragraph>
+      Title
+    </Typography>
+    <Typography paragraph>
+      Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
+      eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
+      voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
+      clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit
+      amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+      nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed
+      diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
+      Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor
+      sit amet.
+    </Typography>
+    <Typography paragraph>
+      Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
+      eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
+      voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
+      clita kasd gubergren, no sea takimata sanctus est Lorem.
+    </Typography>
+    <Typography paragraph>
+      Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
+      eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
+      voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
+      clita kasd gubergren, no sea takimata sanctus est Lorem.
+    </Typography>
+    <Typography paragraph>
+      Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
+      eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
+      voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
+      clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit
+      amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+      nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed
+      diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
+      Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor
+      sit amet.
+    </Typography>
+    <Typography variant="h6" paragraph>
+      Title
+    </Typography>
+    <Typography paragraph>
+      Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
+      eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
+      voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
+      clita kasd gubergren, no sea takimata sanctus est Lorem.
+    </Typography>
+    <Typography paragraph>
+      Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
+      eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
+      voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
+      clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit
+      amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+      nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed
+      diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
+      Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor
+      sit amet.
+    </Typography>
+  </Fragment>
+);
 
 const styles = (theme) => ({
   wrapper: {
@@ -25,7 +109,7 @@ function Main(props) {
   const { classes } = props;
   const [selectedTab, setSelectedTab] = useState(null);
   const [isMobileDrawerOpen, setIsMobileDrawerOpen] = useState(false);
-  const [blogPosts, setBlogPosts] = useState([]);
+  const [soundListPosts, setSoundListPosts] = useState([]);
   const [dialogOpen, setDialogOpen] = useState(null);
   const [isCookieRulesDialogOpen, setIsCookieRulesDialogOpen] = useState(false);
 
@@ -36,10 +120,10 @@ function Main(props) {
     setSelectedTab("Home");
   }, [setSelectedTab]);
 
-  const selectBlog = useCallback(() => {
+  const selectSoundList = useCallback(() => {
     smoothScrollTop();
-    document.title = "WaVer - Blog";
-    setSelectedTab("Blog");
+    document.title = "WaVer - SoundList";
+    setSelectedTab("SoundList");
   }, [setSelectedTab]);
 
   const openLoginDialog = useCallback(() => {
@@ -72,9 +156,42 @@ function Main(props) {
     setDialogOpen("changePassword");
   }, [setDialogOpen]);
 
-  const fetchBlogPosts = useCallback(() => {
-    const blogPosts = dummyBlogPosts.map((blogPost) => {
-      let title = blogPost.title;
+  const fetchSoundList = async () => {
+    const url = "https://soundeffect-search.p-e.kr/api/v1/soundeffect"
+    try {
+      const axiosRes = await axios.get(url);
+      const resData = axiosRes.data; //fetchResult
+      if (resData.result === "SUCCESS"){
+        return resData.data.map((soundEffect) => {
+          return {
+            soundId: soundEffect.soundEffectId,
+            soundName: soundEffect.soundEffectName,
+            soundTagList: soundEffect.soundEffectTags,
+            soundURL: soundEffect.soundEffectTypes[0].url,
+            soundLength: soundEffect.soundEffectTypes[0].length,
+            soundDescription: soundEffect.description,
+            soundCreateBy: soundEffect.createBy,
+            // soundCreateAt: soundEffect.createAt,
+            soundSnippet: "this is sound",
+            soundCreateAt: 1576281600,
+            soundContents: content,
+            soundVisible: true
+          }
+        });
+      }
+      return {
+        errorMessage: "Server Error",
+      };
+    } catch (e){
+      console.error(e);
+      throw e;
+    }
+  }
+
+  const fetchSoundListPosts = useCallback(async () => {
+    const resSoundList = await fetchSoundList();
+    const soundListPosts = resSoundList.map((soundListPost) => {
+      let title = soundListPost.soundName;
       title = title.toLowerCase();
       /* Remove unwanted characters, only accept alphanumeric and space */
       title = title.replace(/[^A-Za-z0-9 ]/g, "");
@@ -82,12 +199,12 @@ function Main(props) {
       title = title.replace(/\s{2,}/g, " ");
       /* Replace space with a '-' symbol */
       title = title.replace(/\s/g, "-");
-      blogPost.url = `/blog/post/${title}`;
-      blogPost.params = `?id=${blogPost.id}`;
-      return blogPost;
+      soundListPost.url = `/soundList/card/${title}`;
+      soundListPost.params = `?id=${soundListPost.soundId}`;
+      return soundListPost;
     });
-    setBlogPosts(blogPosts);
-  }, [setBlogPosts]);
+    setSoundListPosts(soundListPosts);
+  }, [setSoundListPosts]);
 
   const handleCookieRulesDialogOpen = useCallback(() => {
     setIsCookieRulesDialogOpen(true);
@@ -97,7 +214,7 @@ function Main(props) {
     setIsCookieRulesDialogOpen(false);
   }, [setIsCookieRulesDialogOpen]);
 
-  useEffect(fetchBlogPosts, [fetchBlogPosts]);
+  useEffect(fetchSoundListPosts, [fetchSoundListPosts]);
 
   return (
     <div className={classes.wrapper}>
@@ -128,9 +245,10 @@ function Main(props) {
         handleMobileDrawerClose={handleMobileDrawerClose}
       />
       <Routing
-        blogPosts={blogPosts}
+        soundListPosts={soundListPosts}
         selectHome={selectHome}
-        selectBlog={selectBlog}
+        selectSoundList={selectSoundList}
+        setSoundListPosts={setSoundListPosts}
       />
       <Footer />
     </div>

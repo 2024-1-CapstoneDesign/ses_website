@@ -3,35 +3,36 @@ import PropTypes from "prop-types";
 import { Switch } from "react-router-dom";
 import PropsRoute from "../../shared/components/PropsRoute";
 import Home from "./home/Home";
-import Blog from "./blog/Blog";
-import BlogPost from "./blog/BlogPost";
+import SoundList from "./soundList/SoundList";
+import SoundListPost from "./soundList/SoundListPost";
 import useLocationBlocker from "../../shared/functions/useLocationBlocker";
 
 function Routing(props) {
-  const { blogPosts, selectBlog, selectHome } = props;
+  const { soundListPosts, setSoundListPosts, selectSoundList, selectHome } = props;
   useLocationBlocker();
   return (
     <Switch>
-      {blogPosts.map((post) => (
+      {soundListPosts.map((post) => (
         <PropsRoute
           path={post.url}
-          component={BlogPost}
-          title={post.title}
-          key={post.title}
-          src={post.src}
-          date={post.date}
-          content={post.content}
-          otherArticles={blogPosts.filter(
-            (blogPost) => blogPost.id !== post.id
+          component={SoundListPost}
+          title={post.soundName}
+          key={post.soundName}
+          src={post.soundURL}
+          date={post.soundCreateAt}
+          content={post.soundContents}
+          otherArticles={soundListPosts.filter(
+            (soundListPost) => soundListPost.soundId !== post.soundId
           )}
         />
       ))}
       <PropsRoute
         exact
-        path="/blog"
-        component={Blog}
-        selectBlog={selectBlog}
-        blogPosts={blogPosts}
+        path="/soundList"
+        component={SoundList}
+        selectSoundList={selectSoundList}
+        soundListPosts={soundListPosts}
+        setSoundListPosts={setSoundListPosts}
       />
       <PropsRoute path="/" component={Home} selectHome={selectHome} />
     </Switch>
@@ -39,9 +40,9 @@ function Routing(props) {
 }
 
 Routing.propTypes = {
-  blogposts: PropTypes.arrayOf(PropTypes.object),
+  soundListPosts: PropTypes.arrayOf(PropTypes.object),
   selectHome: PropTypes.func.isRequired,
-  selectBlog: PropTypes.func.isRequired,
+  selectSoundList: PropTypes.func.isRequired,
 };
 
 export default memo(Routing);

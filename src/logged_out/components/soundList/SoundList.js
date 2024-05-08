@@ -3,8 +3,9 @@ import PropTypes from "prop-types";
 import classNames from "classnames";
 import { Grid, Box } from "@mui/material";
 import withStyles from "@mui/styles/withStyles";
-import BlogCard from "./BlogCard";
+import SoundListCard from "./SoundListCard";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import MySideBar from "../home/MySideBar";
 
 const styles = (theme) => ({
   blogContentWrapper: {
@@ -25,7 +26,7 @@ const styles = (theme) => ({
   },
 });
 
-function getVerticalBlogPosts(isWidthUpSm, isWidthUpMd, blogPosts) {
+function getVerticalSoundListPosts(isWidthUpSm, isWidthUpMd, soundListPosts) {
   const gridRows = [[], [], []];
   let rows;
   let xs;
@@ -39,20 +40,25 @@ function getVerticalBlogPosts(isWidthUpSm, isWidthUpMd, blogPosts) {
     rows = 1;
     xs = 12;
   }
-  blogPosts.forEach((blogPost, index) => {
-    gridRows[index % rows].push(
-      <Grid key={blogPost.id} item xs={12}>
-        <Box mb={3}>
-          <BlogCard
-            src={blogPost.src}
-            title={blogPost.title}
-            snippet={blogPost.snippet}
-            date={blogPost.date}
-            url={blogPost.url}
-          />
-        </Box>
-      </Grid>
-    );
+  let index = 0;
+  soundListPosts.forEach((soundListPost) => {
+    if (soundListPost.soundVisible){
+      gridRows[index % rows].push(
+        <Grid key={soundListPost.soundId} item xs={12}>
+          <Box mb={3}>
+            <SoundListCard
+              title={soundListPost.soundName}
+              snippet={soundListPost.soundSnippet}
+              date={soundListPost.soundCreateAt}
+              url={soundListPost.url}
+              src={soundListPost.soundURL}
+              tagList={soundListPost.soundTagList}
+            />
+          </Box>
+        </Grid>
+      );
+      index++;
+    }
   });
   return gridRows.map((element, index) => (
     <Grid key={index} item xs={xs}>
@@ -61,15 +67,15 @@ function getVerticalBlogPosts(isWidthUpSm, isWidthUpMd, blogPosts) {
   ));
 }
 
-function Blog(props) {
-  const { classes, blogPosts, selectBlog, theme } = props;
+function SoundList(props) {
+  const { classes, soundListPosts, setSoundListPosts,  selectSoundList, theme } = props;
 
   const isWidthUpSm = useMediaQuery(theme.breakpoints.up("sm"));
   const isWidthUpMd = useMediaQuery(theme.breakpoints.up("md"));
 
   useEffect(() => {
-    selectBlog();
-  }, [selectBlog]);
+    selectSoundList();
+  }, [selectSoundList]);
 
   return (
     <Box
@@ -77,19 +83,24 @@ function Blog(props) {
       justifyContent="center"
       className={classNames(classes.wrapper, "lg-p-top")}
     >
+      <MySideBar
+        selectSoundList={selectSoundList}
+        soundListPosts={soundListPosts}
+        setSoundListPosts={setSoundListPosts}
+      />
       <div className={classes.blogContentWrapper}>
         <Grid container spacing={3}>
-          {getVerticalBlogPosts(isWidthUpSm, isWidthUpMd, blogPosts)}
+          {getVerticalSoundListPosts(isWidthUpSm, isWidthUpMd, soundListPosts)}
         </Grid>
       </div>
     </Box>
   );
 }
 
-Blog.propTypes = {
-  selectBlog: PropTypes.func.isRequired,
+SoundList.propTypes = {
+  selectSoundList: PropTypes.func.isRequired,
   classes: PropTypes.object.isRequired,
-  blogPosts: PropTypes.arrayOf(PropTypes.object),
+  soundListPosts: PropTypes.arrayOf(PropTypes.object),
 };
 
-export default withStyles(styles, { withTheme: true })(Blog);
+export default withStyles(styles, { withTheme: true })(SoundList);
