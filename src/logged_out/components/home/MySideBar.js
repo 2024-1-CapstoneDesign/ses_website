@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@mui/styles";
 import { Box, Typography, Chip } from "@mui/material";
-import Checkbox from "@mui/material/Checkbox";
 import ButtonBase from "@mui/material/ButtonBase";
+import MySidebarElement from "./MySidebarElement";
 
 function shadeColor(color, percent) {
 
@@ -93,14 +93,7 @@ const styles = (theme) => ({
 
 function MySideBar(props) {
   const { classes, soundListPosts, selectSoundList, setSoundListPosts } = props;
-  const [checked, setChecked] = useState([false, false, false, false, false]);
   const [selectedTags, setSelectedTags] = useState(new Set());
-
-  const handleChange = (index) => {
-    const newChecked = [...checked];
-    newChecked[index] = !newChecked[index];
-    setChecked(newChecked);
-  };
 
   const uniqueTagList = [
     ...new Set(
@@ -147,41 +140,29 @@ function MySideBar(props) {
     });
     setSoundListPosts(updatedSoundListPosts);
   };
+  const typeElementList = [
+    ".wav",
+    ".mp3",
+    ".mp4",
+    ".wma",
+    ".aac",
+  ]
+  const durationElementList = [
+    "0s ~ 10s",
+    "11s ~ 15s",
+    "16s ~ 20s",
+    "21s ~ 25s",
+    "up to 26s",
+  ]
 
-  return (
+  return ( //type, duration, filesize, sample rate, bit depth, channels
     <Box className={classes.sidebarContainer}>
-      <Box className={classes.sidebarBody}>
-        <Typography
-          variant="h6"
-          className={`font-semibold uppercase mt-4 mb-2 text-[#4829B2] text-gray-900 ${classes.fullWidth}`}
-        >
-          License
-        </Typography>
-        {[
-          "Approved for Free (544,282)",
-          "Creative Commons (321,890)",
-          "Attribution (222,392)",
-          "Attribution NonCommercial (74,513)",
-          "Sampling+ (11,475)",
-        ].map((label, index) => (
-          <Typography
-            key={index}
-            component="div"
-            className={`${classes.licenseLink} ${classes.fullWidth}`}
-            role="checkbox"
-            aria-checked={checked[index]}
-            onClick={() => handleChange(index)}
-          >
-            <Checkbox
-              checked={checked[index]}
-              onChange={() => handleChange(index)}
-            />
-            <Box component="span" display="block">
-              {label}
-            </Box>
-          </Typography>
-        ))}
-      </Box>
+      <MySidebarElement
+        elementName={"Type"}
+        elementList={typeElementList} />
+      <MySidebarElement
+        elementName={"Duration"}
+        elementList={durationElementList} />
       <Box className={classes.sidebarFooter}>
         <Typography
           variant="h6"
