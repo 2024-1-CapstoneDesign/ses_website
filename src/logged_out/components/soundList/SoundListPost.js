@@ -39,7 +39,6 @@ const styles = (theme) => ({
     marginBottom: "8px",
   },
   titleContainer:{
-    border: '1px red solid',
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between'
@@ -168,9 +167,9 @@ function SoundListPost(props) {
           </Grid>
           <Grid item md={3}>
             <Typography variant="h6" paragraph>
-              Other articles
+              Relative Sounds
             </Typography>
-            {sliceOtherArticles.map((blogPost) => (
+            {sliceOtherArticles.slice(0, 3).map((blogPost) => (
               <Box key={blogPost.soundId} mb={3}>
                 <SoundListCard
                   title={blogPost.soundName}
