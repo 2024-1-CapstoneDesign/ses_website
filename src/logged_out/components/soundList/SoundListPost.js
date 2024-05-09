@@ -2,10 +2,9 @@ import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
 import format from "date-fns/format";
-import {Grid, Typography, Card, Box, Chip, Button} from "@mui/material";
+import {Grid, Typography, Card, Box, Chip, Button, Divider, Stack, Paper} from "@mui/material";
 import withStyles from '@mui/styles/withStyles';
 import SoundListCard from "./SoundListCard";
-import ShareButton from "../../../shared/components/ShareButton";
 import smoothScrollTop from "../../../shared/functions/smoothScrollTop";
 import WaveSurferComponent from "../home/WaveSurferComponent";
 import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
@@ -48,6 +47,18 @@ const styles = (theme) => ({
     flexDirection: 'column',
     justifyContent: 'center',
   },
+  itemPaperContainer:{
+    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+    ...theme.typography.body2,
+    padding: theme.spacing(1),
+    textAlign: 'center',
+  },
+  textTitle:{
+    color: theme.palette.text.primary,
+  },
+  textDefault:{
+    color: theme.palette.text.secondary,
+  }
 });
 
 function SoundListPost(props) {
@@ -141,26 +152,25 @@ function SoundListPost(props) {
               </Box>
               <Box p={3}>
                 {content}
-                <Box pt={2}>
-                  <Grid spacing={1} container>
-                    {["Facebook", "Twitter", "Reddit", "Tumblr"].map(
-                      (type, index) => (
-                        <Grid item key={index}>
-                          <ShareButton
-                            type={type}
-                            title="React SaaS Template"
-                            description="I found an awesome template for an webapp using React!"
-                            disableElevation
-                            variant="contained"
-                            className="text-white"
-                            classes={{
-                              label: "text-white",
-                            }}
-                          />
-                        </Grid>
-                      )
-                    )}
-                  </Grid>
+                <Divider />
+                <Box pt={2} sx={{display:'flex', justifyContent: 'center'}}>
+                  <Stack
+                    direction={{ xs: 'column', sm: 'row' }}
+                    spacing={{ xs: 1, sm: 2, md: 4 }}
+                  >
+                    <Paper className={classes.itemPaperContainer}>
+                      <Stack>
+                        <Typography variant="h6" gutterBottom className={classes.textTitle}>
+                          Type
+                        </Typography>
+                        <Typography className={classes.textDefault}>
+                          Wave
+                        </Typography>
+                      </Stack>
+                    </Paper>
+                    <Paper className={classes.itemPaperContainer}>Item 1</Paper>
+                    <Paper className={classes.itemPaperContainer}>Item 1</Paper>
+                  </Stack>
                 </Box>
               </Box>
             </Card>
