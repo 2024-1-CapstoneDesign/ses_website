@@ -118,6 +118,7 @@ function MySideBar(props) {
     selectSoundList();
     setSelectedTags(new Set());
     resetVisibility();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectSoundList]);
 
   const handleChipClick = (tagName) => {
@@ -155,6 +156,31 @@ function MySideBar(props) {
     "up to 26s",
   ]
 
+  const fileSizeElementList = [
+    "0MB ~ 5MB",
+    "6MB ~ 10MB",
+    "11MB ~ 15MB",
+    "16MB ~ 20MB",
+    "21MB ~ 30MB",
+  ]
+
+  const sampleRateElementList = [
+    "0HZ ~ 100000HZ",
+    "100001HZ ~ 200000HZ",
+    "200001HZ ~ 300000HZ",
+    "300001HZ ~ 400000HZ",
+    "400001HZ ~ 500000HZ",
+  ]
+
+  const bitDepthElementList = [
+    "0bit ~ 5bit",
+    "6bit ~ 10bit",
+    "11bit ~ 15bit",
+    "21bit ~ 25it",
+    "26bit ~ 30bit",
+  ]
+
+
   return ( //type, duration, filesize, sample rate, bit depth, channels
     <Box className={classes.sidebarContainer}>
       <MySidebarElement
@@ -163,6 +189,15 @@ function MySideBar(props) {
       <MySidebarElement
         elementName={"Duration"}
         elementList={durationElementList} />
+      <MySidebarElement
+        elementName={"File Size"}
+        elementList={fileSizeElementList} />
+      <MySidebarElement
+        elementName={"Sample Rate"}
+        elementList={sampleRateElementList} />
+      <MySidebarElement
+        elementName={"Bit Depth"}
+        elementList={bitDepthElementList} />
       <Box className={classes.sidebarFooter}>
         <Typography
           variant="h6"
