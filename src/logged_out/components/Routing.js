@@ -20,6 +20,7 @@ function Routing(props) {
           key={post.soundName}
           src={post.soundURL}
           date={post.soundCreateAt}
+          tagList={post.soundTagList}
           content={post.soundContents}
           otherArticles={soundListPosts.filter(
             (soundListPost) => soundListPost.soundId !== post.soundId
