@@ -4,7 +4,7 @@ import Checkbox from "@mui/material/Checkbox";
 import React, {useState} from "react";
 import PropTypes from "prop-types";
 
-const styles = (theme) => ({
+const styles = () => ({
   sidebarBody: {
     padding: "16px",
     borderBottom: "1px solid rgba(0, 0, 0, 0.12)",
