@@ -2,12 +2,13 @@ import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
 import format from "date-fns/format";
-import {Grid, Typography, Card, Box, Chip} from "@mui/material";
+import {Grid, Typography, Card, Box, Chip, Button} from "@mui/material";
 import withStyles from '@mui/styles/withStyles';
 import SoundListCard from "./SoundListCard";
 import ShareButton from "../../../shared/components/ShareButton";
 import smoothScrollTop from "../../../shared/functions/smoothScrollTop";
 import WaveSurferComponent from "../home/WaveSurferComponent";
+import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 
 const styles = (theme) => ({
   blogContentWrapper: {
@@ -37,15 +38,48 @@ const styles = (theme) => ({
     marginRight: "8px",
     marginBottom: "8px",
   },
+  titleContainer:{
+    border: '1px red solid',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  titleButtonContainer:{
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+  },
 });
 
 function SoundListPost(props) {
-  const { classes, date, title, src, content, tagList, otherArticles } = props;
+  const { classes, date, title, src, content, tagList, fileExtension, otherArticles } = props;
 
   useEffect(() => {
-    document.title = `WaVer - ${title}`;
+    document.title = `AuLo - ${title}`;
     smoothScrollTop();
   }, [title]);
+
+  const handleDownload = () => {
+    fetch(src, { method: 'GET' })
+      .then(res => {
+        return res.blob();
+      })
+      .then(blob => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${title}.${fileExtension}`;
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(_ => {
+          window.URL.revokeObjectURL(url);
+        }, 60000);
+        a.remove();
+      })
+      .catch(err => {
+        console.error('err: ', err);
+      });
+  };
 
   const sliceOtherArticles = otherArticles.slice(0, 5) // up to 5 element
 
@@ -62,34 +96,48 @@ function SoundListPost(props) {
               <Box sx={{border: '2px solid black'}}>
                 <WaveSurferComponent audioURL={src}/>
               </Box>
-              <Box pt={3} pr={3} pl={3} pb={2}>
-                <Typography variant="h4">
-                  <b>{title}</b>
-                </Typography>
-                <Box sx={{display: 'flex'}}>
-                  <Typography variant="body1" color="textSecondary" sx={{padding: '0px 5px'}}>
-                    Downloads 133,333
+              <Box pt={3} pr={3} pl={3} pb={2} className={classes.titleContainer}>
+                <Box>
+                  <Typography variant="h4">
+                    <b>{title}</b>
                   </Typography>
-                  <Typography variant="body1">
-                    |
-                  </Typography>
-                  <Typography variant="body1" color="textSecondary" sx={{padding: '0px 5px'}}>
-                    {format(new Date(date * 1000), "PPP", {
-                      awareOfUnicodeTokens: true,
+                  <Box sx={{display: 'flex'}}>
+                    <Typography variant="body1" color="textSecondary" sx={{padding: '0px 5px'}}>
+                      Downloads 133,333
+                    </Typography>
+                    <Typography variant="body1">
+                      |
+                    </Typography>
+                    <Typography variant="body1" color="textSecondary" sx={{padding: '0px 5px'}}>
+                      {format(new Date(date * 1000), "PPP", {
+                        awareOfUnicodeTokens: true,
+                      })}
+                    </Typography>
+                  </Box>
+                  <Box sx={{margin: '5px 0'}}>
+                    {tagList && tagList.map(({tagId, tagName}) => {
+                      return (
+                        <Chip
+                          label={tagName}
+                          variant="outlined"
+                          size="small"
+                          className={classes.chip}
+                          key={tagId}
+                        />);
                     })}
-                  </Typography>
+                  </Box>
                 </Box>
-                <Box sx={{margin: '5px 0'}}>
-                  {tagList && tagList.map(({tagId, tagName}) => {
-                    return (
-                      <Chip
-                        label={tagName}
-                        variant="outlined"
-                        size="small"
-                        className={classes.chip}
-                        key={tagId}
-                      />);
-                  })}
+                <Box className={classes.titleButtonContainer}>
+                  <Button
+                    component="label"
+                    role={undefined}
+                    variant="contained"
+                    tabIndex={-1}
+                    startIcon={<CloudDownloadIcon />}
+                    onClick={handleDownload}
+                  >
+                    Download
+                  </Button>
                 </Box>
               </Box>
               <Box p={3}>
