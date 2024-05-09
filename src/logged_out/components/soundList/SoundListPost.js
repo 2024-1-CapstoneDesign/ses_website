@@ -2,11 +2,10 @@ import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
 import format from "date-fns/format";
-import { Grid, Typography, Card, Box } from "@mui/material";
+import {Grid, Typography, Card, Box, Chip} from "@mui/material";
 import withStyles from '@mui/styles/withStyles';
 import SoundListCard from "./SoundListCard";
 import ShareButton from "../../../shared/components/ShareButton";
-// import ZoomImage from "../../../shared/components/ZoomImage";
 import smoothScrollTop from "../../../shared/functions/smoothScrollTop";
 import WaveSurferComponent from "../home/WaveSurferComponent";
 
@@ -31,10 +30,17 @@ const styles = (theme) => ({
   card: {
     boxShadow: theme.shadows[4],
   },
+  chip: {
+    // backgroundColor: theme.palette.secondary.main,
+    // color: "white",
+    color: theme.palette.secondary.main,
+    marginRight: "8px",
+    marginBottom: "8px",
+  },
 });
 
 function SoundListPost(props) {
-  const { classes, date, title, src, content, otherArticles } = props;
+  const { classes, date, title, src, content, tagList, otherArticles } = props;
 
   useEffect(() => {
     document.title = `WaVer - ${title}`;
@@ -53,18 +59,39 @@ function SoundListPost(props) {
         <Grid container spacing={5}>
           <Grid item md={9}>
             <Card className={classes.card}>
+              <Box sx={{border: '2px solid black'}}>
+                <WaveSurferComponent audioURL={src}/>
+              </Box>
               <Box pt={3} pr={3} pl={3} pb={2}>
                 <Typography variant="h4">
                   <b>{title}</b>
                 </Typography>
-                <Typography variant="body1" color="textSecondary">
-                  {format(new Date(date * 1000), "PPP", {
-                    awareOfUnicodeTokens: true,
+                <Box sx={{display: 'flex'}}>
+                  <Typography variant="body1" color="textSecondary" sx={{padding: '0px 5px'}}>
+                    Downloads 133,333
+                  </Typography>
+                  <Typography variant="body1">
+                    |
+                  </Typography>
+                  <Typography variant="body1" color="textSecondary" sx={{padding: '0px 5px'}}>
+                    {format(new Date(date * 1000), "PPP", {
+                      awareOfUnicodeTokens: true,
+                    })}
+                  </Typography>
+                </Box>
+                <Box sx={{margin: '5px 0'}}>
+                  {tagList && tagList.map(({tagId, tagName}) => {
+                    return (
+                      <Chip
+                        label={tagName}
+                        variant="outlined"
+                        size="small"
+                        className={classes.chip}
+                        key={tagId}
+                      />);
                   })}
-                </Typography>
+                </Box>
               </Box>
-              {/*<ZoomImage className={classes.img} src={src} alt="" />*/}
-              <WaveSurferComponent audioURL={src}/>
               <Box p={3}>
                 {content}
                 <Box pt={2}>
