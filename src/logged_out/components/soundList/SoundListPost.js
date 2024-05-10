@@ -1,14 +1,15 @@
-import React, { useEffect } from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
 import format from "date-fns/format";
-import {Grid, Typography, Card, Box, Chip, Button, Divider, Stack} from "@mui/material";
+import {Box, Button, Card, Chip, Divider, Grid, Stack, Typography} from "@mui/material";
 import withStyles from '@mui/styles/withStyles';
 import SoundListCard from "./SoundListCard";
 import smoothScrollTop from "../../../shared/functions/smoothScrollTop";
 import WaveSurferComponent from "../home/WaveSurferComponent";
 import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 import SoundDetailPaper from "./SoundDetailPaper";
+import axios from "axios";
 
 const styles = (theme) => ({
   blogContentWrapper: {
@@ -63,12 +64,64 @@ const styles = (theme) => ({
 });
 
 function SoundListPost(props) {
-  const { classes, date, title, src, content, tagList, fileExtension, otherArticles } = props;
+  const { classes, date, title, src, content, tagList, fileExtension, id } = props;
+  const [relativeSoundEffects, setRelativeSoundEffects] = useState([])
 
   useEffect(() => {
     document.title = `AuLo - ${title}`;
     smoothScrollTop();
   }, [title]);
+
+  const fetchRelativeSoundList = useCallback(() => {
+    async function fetchData() {
+      const url = `https://soundeffect-search.p-e.kr/api/v1/soundeffect/${id}/relative`
+      try {
+        const axiosRes = await axios.get(url);
+        const resData = axiosRes.data; //fetchResult
+        if (resData.result === "SUCCESS"){
+          return resData.data.map((soundEffect) => {
+            return {
+              soundId: soundEffect.soundEffectId,
+              soundName: soundEffect.soundEffectName,
+              soundTagList: soundEffect.soundEffectTags,
+              soundURL: soundEffect.soundEffectTypes[0].url,
+              soundType: soundEffect.soundEffectTypes[0].soundEffectTypeName,
+              soundLength: soundEffect.soundEffectTypes[0].length,
+              soundDescription: soundEffect.description,
+              soundCreateBy: soundEffect.createBy,
+              // soundCreateAt: soundEffect.createAt,
+              soundSnippet: "this is sound",
+              soundCreateAt: 1576281600,
+            }
+          });
+        }
+        return {
+          errorMessage: "Server Error",
+        };
+      } catch (e){
+        console.error(e);
+        throw e;
+      }
+    }
+    fetchData().then(data => {
+      const soundListPosts = data.map((e) => {
+        let title = e.soundName;
+        title = title.toLowerCase();
+        /* Remove unwanted characters, only accept alphanumeric and space */
+        title = title.replace(/[^A-Za-z0-9 ]/g, "");
+        /* Replace multi spaces with a single space */
+        title = title.replace(/\s{2,}/g, " ");
+        /* Replace space with a '-' symbol */
+        title = title.replace(/\s/g, "-");
+        e.url = `/soundList/card/${title}`;
+        e.params = `?id=${e.soundId}`;
+        return e;
+      });
+      setRelativeSoundEffects(soundListPosts)
+    })
+  }, [id]);
+
+  useEffect(fetchRelativeSoundList, [fetchRelativeSoundList]);
 
   const handleDownload = () => {
     fetch(src, { method: 'GET' })
@@ -91,8 +144,6 @@ function SoundListPost(props) {
         console.error('err: ', err);
       });
   };
-
-  const sliceOtherArticles = otherArticles.slice(0, 5) // up to 5 element
 
   return (
     <Box
@@ -177,7 +228,7 @@ function SoundListPost(props) {
             <Typography variant="h6" paragraph>
               Relative Sounds
             </Typography>
-            {sliceOtherArticles.slice(0, 3).map((blogPost) => (
+            {relativeSoundEffects && relativeSoundEffects.map((blogPost) => (
               <Box key={blogPost.soundId} mb={3}>
                 <SoundListCard
                   title={blogPost.soundName}
