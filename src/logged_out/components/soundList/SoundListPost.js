@@ -2,12 +2,13 @@ import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
 import format from "date-fns/format";
-import {Grid, Typography, Card, Box, Chip, Button, Divider, Stack, Paper} from "@mui/material";
+import {Grid, Typography, Card, Box, Chip, Button, Divider, Stack} from "@mui/material";
 import withStyles from '@mui/styles/withStyles';
 import SoundListCard from "./SoundListCard";
 import smoothScrollTop from "../../../shared/functions/smoothScrollTop";
 import WaveSurferComponent from "../home/WaveSurferComponent";
 import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
+import SoundDetailPaper from "./SoundDetailPaper";
 
 const styles = (theme) => ({
   blogContentWrapper: {
@@ -58,7 +59,7 @@ const styles = (theme) => ({
   },
   textDefault:{
     color: theme.palette.text.secondary,
-  }
+  },
 });
 
 function SoundListPost(props) {
@@ -157,19 +158,16 @@ function SoundListPost(props) {
                   <Stack
                     direction={{ xs: 'column', sm: 'row' }}
                     spacing={{ xs: 1, sm: 2, md: 4 }}
+                    sx={{width: '100%', height: '100%'}}
+                    justifyContent="space-between"
+                    alignItems="center"
                   >
-                    <Paper className={classes.itemPaperContainer}>
-                      <Stack>
-                        <Typography variant="h6" gutterBottom className={classes.textTitle}>
-                          Type
-                        </Typography>
-                        <Typography className={classes.textDefault}>
-                          Wave
-                        </Typography>
-                      </Stack>
-                    </Paper>
-                    <Paper className={classes.itemPaperContainer}>Item 1</Paper>
-                    <Paper className={classes.itemPaperContainer}>Item 1</Paper>
+                    <SoundDetailPaper title="Type" value="wave" />
+                    <SoundDetailPaper title="Duration" value="00:30:00" />
+                    <SoundDetailPaper title="File Size" value="18.42MB" />
+                    <SoundDetailPaper title="Sample Rate" value="48000.00HZ" />
+                    <SoundDetailPaper title="Bit depth" value="24bit" />
+                    <SoundDetailPaper title="Channels" value="Stereo" />
                   </Stack>
                 </Box>
               </Box>
