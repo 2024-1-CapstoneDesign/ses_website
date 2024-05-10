@@ -147,6 +147,20 @@ function SoundListPost(props) {
       });
   };
 
+  // 시간을 hh:mm:ss 형식으로 변환하는 함수
+  const formatTime = (timeInSeconds) => {
+    const hours = Math.floor(timeInSeconds / 3600);
+    const minutes = Math.floor((timeInSeconds % 3600) / 60);
+    const seconds = Math.floor(timeInSeconds % 60);
+
+    // 시, 분, 초를 두 자리수로 표시하고 앞에 0을 붙임
+    const formattedHours = hours.toString().padStart(2, '0');
+    const formattedMinutes = minutes.toString().padStart(2, '0');
+    const formattedSeconds = seconds.toString().padStart(2, '0');
+
+    return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
+  };
+
   return (
     <Box
       className={classNames("lg-p-top", classes.wrapper)}
@@ -166,10 +180,10 @@ function SoundListPost(props) {
               </Box>
               <Box pt={1} pr={3} pl={3} className={classes.titleContainer}>
                 <Typography>
-                  {currentTime}
+                  {formatTime(currentTime)}
                 </Typography>
                 <Typography>
-                  {duration}
+                  {formatTime(duration)}
                 </Typography>
               </Box>
               <Box pt={3} pr={3} pl={3} pb={2} className={classes.titleContainer}>
