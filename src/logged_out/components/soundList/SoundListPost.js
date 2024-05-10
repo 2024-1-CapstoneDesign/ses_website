@@ -67,6 +67,7 @@ function SoundListPost(props) {
   const { classes, date, title, src, content, tagList, fileExtension, id } = props;
   const [relativeSoundEffects, setRelativeSoundEffects] = useState([])
   const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
 
   useEffect(() => {
     document.title = `AuLo - ${title}`;
@@ -156,15 +157,19 @@ function SoundListPost(props) {
         <Grid container spacing={5}>
           <Grid item md={9}>
             <Card className={classes.card}>
-              <Box pr={3} pl={3} sx={{border: '2px solid black'}}>
-                <WaveSurferComponent audioURL={src} setCurrentTime={setCurrentTime}/>
+              <Box sx={{border: '2px solid black'}}>
+                <WaveSurferComponent
+                  audioURL={src}
+                  setCurrentTime={setCurrentTime}
+                  setDuration={setDuration}
+                />
               </Box>
               <Box pt={1} pr={3} pl={3} className={classes.titleContainer}>
                 <Typography>
                   {currentTime}
                 </Typography>
                 <Typography>
-                  {currentTime}
+                  {duration}
                 </Typography>
               </Box>
               <Box pt={3} pr={3} pl={3} pb={2} className={classes.titleContainer}>
