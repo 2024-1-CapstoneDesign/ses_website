@@ -39,7 +39,7 @@ const styles = () => ({
 });
 
 const WaveSurferComponent = (props) => {
-  const {classes, audioURL} = props
+  const {classes, audioURL, setCurrentTime} = props
   const waveform = useRef(null);
   const wavesurfer = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -68,8 +68,14 @@ const WaveSurferComponent = (props) => {
         wavesurfer.current.pause();
         setIsPlaying(false);
       });
+
+      wavesurfer.current.on('audioprocess', () => {
+        if (setCurrentTime) {
+          setCurrentTime(wavesurfer.current.getCurrentTime());
+        }
+      });
     }
-  },[audioURL])
+  },[audioURL, setCurrentTime])
 
   const buttonClick = (event) => {
     event.preventDefault();
