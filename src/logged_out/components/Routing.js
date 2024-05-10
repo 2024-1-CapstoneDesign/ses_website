@@ -23,9 +23,7 @@ function Routing(props) {
           tagList={post.soundTagList}
           fileExtension={post.soundType}
           content={post.soundContents}
-          otherArticles={soundListPosts.filter(
-            (soundListPost) => soundListPost.soundId !== post.soundId
-          )}
+          id={post.soundId}
         />
       ))}
       <PropsRoute
