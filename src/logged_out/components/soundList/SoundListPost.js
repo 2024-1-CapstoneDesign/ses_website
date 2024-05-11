@@ -13,6 +13,7 @@ import axios from "axios";
 
 const styles = (theme) => ({
   blogContentWrapper: {
+    backgroundColor: theme.palette.background.default,
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
     [theme.breakpoints.up("sm")]: {
@@ -30,6 +31,7 @@ const styles = (theme) => ({
     height: "auto",
   },
   card: {
+    backgroundColor: theme.palette.background.default,
     boxShadow: theme.shadows[4],
   },
   chip: {

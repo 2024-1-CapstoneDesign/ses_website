@@ -56,7 +56,7 @@ function FeatureSection(props) {
   });
 
   return (
-    <div style={{ backgroundColor: "#FFFFFF" }}>
+    <div style={{ backgroundColor: theme.palette.background.default }}>
       <div className="container-fluid lg-p-top">
         <Typography variant="h3" align="center" className="lg-mg-bottom">
           SoundList
