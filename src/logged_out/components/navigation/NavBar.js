@@ -1,7 +1,7 @@
 import React, { memo } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import { AppBar, Toolbar, Typography, Button, Hidden, IconButton } from "@mui/material";
+import {AppBar, Toolbar, Typography, Button, Hidden, IconButton,  Stack} from "@mui/material";
 import withStyles from '@mui/styles/withStyles';
 import MenuIcon from "@mui/icons-material/Menu";
 import HomeIcon from "@mui/icons-material/Home";
@@ -20,12 +20,13 @@ const styles = theme => ({
     justifyContent: "space-between"
   },
   menuButtonText: {
+    fontFamily: "'Orbitron', cursive",
     fontSize: theme.typography.body1.fontSize,
-    fontWeight: theme.typography.h6.fontWeight
+    fontWeight: theme.typography.h6.fontWeight,
   },
   brandText: {
-    fontFamily: "'Baloo Bhaijaan', cursive",
-    fontWeight: 400
+    fontFamily: "'Orbitron', cursive",
+    fontWeight: 700
   },
   noDecoration: {
     textDecoration: "none !important"
@@ -53,22 +54,26 @@ function NavBar(props) {
     {
       link: "/",
       name: "Home",
-      icon: <HomeIcon className="text-white" />
+      icon: <HomeIcon className="text-white" />,
+      src: `${process.env.PUBLIC_URL}/images/logged_out/home.png`
     },
     {
       link: "/soundList",
       name: "soundList",
-      icon: <BookIcon className="text-white" />
+      icon: <BookIcon className="text-white" />,
+      src: `${process.env.PUBLIC_URL}/images/logged_out/soundlist.png`
     },
     {
       name: "Register",
       onClick: openRegisterDialog,
-      icon: <HowToRegIcon className="text-white" />
+      icon: <HowToRegIcon className="text-white" />,
+      src: `${process.env.PUBLIC_URL}/images/logged_out/register.png`
     },
     {
       name: "Login",
       onClick: openLoginDialog,
-      icon: <LockOpenIcon className="text-white" />
+      icon: <LockOpenIcon className="text-white" />,
+      src: `${process.env.PUBLIC_URL}/images/logged_out/door.png`
     }
   ];
   return (
@@ -77,7 +82,11 @@ function NavBar(props) {
         <Toolbar className={classes.toolbar}>
           {/* 2 * 2 pixel size*/}
           <div className={classes.logoWrapper}>
-            <img src={`${process.env.PUBLIC_URL}/images/logged_out/logo4.png`} alt="logo"/>
+            <img
+              src={`${process.env.PUBLIC_URL}/images/logged_out/radio.png`}
+              alt="logo"
+              style={{marginRight: "5px"}}
+            />
             <div>
               <Typography
                 variant="h4"
@@ -122,7 +131,14 @@ function NavBar(props) {
                         size="large"
                         classes={{ text: classes.menuButtonText }}
                       >
-                        {element.name}
+                        <Stack direction="column"
+                               justifyContent="center"
+                               alignItems="center"
+                               sx={{height: "100%"}}
+                        >
+                          <img src={element.src} alt="logo"/>
+                          {element.name}
+                        </Stack>
                       </Button>
                     </Link>
                   );
@@ -132,10 +148,17 @@ function NavBar(props) {
                     color="secondary"
                     size="large"
                     onClick={element.onClick}
-                    classes={{ text: classes.menuButtonText }}
+                    classes={{text: classes.menuButtonText}}
                     key={element.name}
                   >
-                    {element.name}
+                    <Stack direction="column"
+                            justifyContent="center"
+                            alignItems="center"
+                           sx={{height: "100%"}}
+                    >
+                      <img src={element.src} alt="logo"/>
+                      {element.name}
+                    </Stack>
                   </Button>
                 );
               })}
