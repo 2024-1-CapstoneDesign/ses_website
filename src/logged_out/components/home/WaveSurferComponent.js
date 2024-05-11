@@ -39,7 +39,7 @@ const styles = () => ({
 });
 
 const WaveSurferComponent = (props) => {
-  const {classes, audioURL} = props
+  const {classes, audioURL, setCurrentTime, setDuration} = props
   const waveform = useRef(null);
   const wavesurfer = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -61,6 +61,9 @@ const WaveSurferComponent = (props) => {
       wavesurfer.current.on('ready', () => {
         wavesurfer.current.setVolume(0.5);
         wavesurfer.current.pause();
+        if (setDuration){
+          setDuration(wavesurfer.current.getDuration());
+        }
       });
 
       wavesurfer.current.on("finish", () => {
@@ -68,8 +71,14 @@ const WaveSurferComponent = (props) => {
         wavesurfer.current.pause();
         setIsPlaying(false);
       });
+
+      wavesurfer.current.on('audioprocess', () => {
+        if (setCurrentTime) {
+          setCurrentTime(wavesurfer.current.getCurrentTime());
+        }
+      });
     }
-  },[audioURL])
+  },[audioURL, setCurrentTime, setDuration])
 
   const buttonClick = (event) => {
     event.preventDefault();

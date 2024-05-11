@@ -168,6 +168,7 @@ function Main(props) {
             soundName: soundEffect.soundEffectName,
             soundTagList: soundEffect.soundEffectTags,
             soundURL: soundEffect.soundEffectTypes[0].url,
+            soundType: soundEffect.soundEffectTypes[0].soundEffectTypeName,
             soundLength: soundEffect.soundEffectTypes[0].length,
             soundDescription: soundEffect.description,
             soundCreateBy: soundEffect.createBy,
