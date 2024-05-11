@@ -54,22 +54,26 @@ function NavBar(props) {
     {
       link: "/",
       name: "Home",
-      icon: <HomeIcon className="text-white" />
+      icon: <HomeIcon className="text-white" />,
+      src: `${process.env.PUBLIC_URL}/images/logged_out/home.png`
     },
     {
       link: "/soundList",
       name: "soundList",
-      icon: <BookIcon className="text-white" />
+      icon: <BookIcon className="text-white" />,
+      src: `${process.env.PUBLIC_URL}/images/logged_out/soundlist.png`
     },
     {
       name: "Register",
       onClick: openRegisterDialog,
-      icon: <HowToRegIcon className="text-white" />
+      icon: <HowToRegIcon className="text-white" />,
+      src: `${process.env.PUBLIC_URL}/images/logged_out/register.png`
     },
     {
       name: "Login",
       onClick: openLoginDialog,
-      icon: <LockOpenIcon className="text-white" />
+      icon: <LockOpenIcon className="text-white" />,
+      src: `${process.env.PUBLIC_URL}/images/logged_out/door.png`
     }
   ];
   return (
