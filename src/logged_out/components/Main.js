@@ -100,7 +100,7 @@ const content = (
 
 const styles = (theme) => ({
   wrapper: {
-    backgroundColor: theme.palette.common.white,
+    backgroundColor: theme.palette.background.default,
     overflowX: "hidden",
   },
 });
