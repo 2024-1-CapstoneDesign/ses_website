@@ -1,7 +1,7 @@
 import React, { memo } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import {AppBar, Toolbar, Typography, Button, Hidden, IconButton, Box, Stack} from "@mui/material";
+import {AppBar, Toolbar, Typography, Button, Hidden, IconButton,  Stack} from "@mui/material";
 import withStyles from '@mui/styles/withStyles';
 import MenuIcon from "@mui/icons-material/Menu";
 import HomeIcon from "@mui/icons-material/Home";
