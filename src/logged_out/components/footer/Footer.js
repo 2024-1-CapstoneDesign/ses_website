@@ -71,6 +71,9 @@ const styles = (theme) => ({
   whiteBg: {
     backgroundColor: theme.palette.common.white,
   },
+  newBG:{
+    backgroundColor: theme.palette.background.default
+  }
 });
 
 const infos = [
@@ -158,7 +161,7 @@ function Footer(props) {
   return (
     <footer className="lg-p-top">
       <WaveBorder
-        upperColor="#FFFFFF"
+        upperColor={theme.palette.background.default}
         lowerColor={theme.palette.common.darkBlack}
         animationNegativeDelay={4}
       />
@@ -173,7 +176,7 @@ function Footer(props) {
                     multiline
                     placeholder="Get in touch with us"
                     InputProps={{
-                      className: classes.whiteBg,
+                      className: classes.newBG,
                       "aria-label": "Get in Touch",
                     }}
                     rows={4}
