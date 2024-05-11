@@ -1,7 +1,7 @@
 import React, { memo } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import { AppBar, Toolbar, Typography, Button, Hidden, IconButton } from "@mui/material";
+import {AppBar, Toolbar, Typography, Button, Hidden, IconButton, Box, Stack} from "@mui/material";
 import withStyles from '@mui/styles/withStyles';
 import MenuIcon from "@mui/icons-material/Menu";
 import HomeIcon from "@mui/icons-material/Home";
@@ -22,7 +22,7 @@ const styles = theme => ({
   menuButtonText: {
     fontFamily: "'Orbitron', cursive",
     fontSize: theme.typography.body1.fontSize,
-    fontWeight: theme.typography.h6.fontWeight
+    fontWeight: theme.typography.h6.fontWeight,
   },
   brandText: {
     fontFamily: "'Orbitron', cursive",
@@ -123,7 +123,14 @@ function NavBar(props) {
                         size="large"
                         classes={{ text: classes.menuButtonText }}
                       >
-                        {element.name}
+                        <Stack direction="column"
+                               justifyContent="center"
+                               alignItems="center"
+                               sx={{height: "100%"}}
+                        >
+                          <img src={`${process.env.PUBLIC_URL}/images/logged_out/home.png`} alt="logo"/>
+                          {element.name}
+                        </Stack>
                       </Button>
                     </Link>
                   );
@@ -133,10 +140,17 @@ function NavBar(props) {
                     color="secondary"
                     size="large"
                     onClick={element.onClick}
-                    classes={{ text: classes.menuButtonText }}
+                    classes={{text: classes.menuButtonText}}
                     key={element.name}
                   >
-                    {element.name}
+                    <Stack direction="column"
+                            justifyContent="center"
+                            alignItems="center"
+                           sx={{height: "100%"}}
+                    >
+                      <img src={`${process.env.PUBLIC_URL}/images/logged_out/home.png`} alt="logo"/>
+                      {element.name}
+                    </Stack>
                   </Button>
                 );
               })}
