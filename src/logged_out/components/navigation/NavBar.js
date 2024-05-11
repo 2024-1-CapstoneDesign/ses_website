@@ -132,7 +132,7 @@ function NavBar(props) {
                                alignItems="center"
                                sx={{height: "100%"}}
                         >
-                          <img src={`${process.env.PUBLIC_URL}/images/logged_out/home.png`} alt="logo"/>
+                          <img src={element.src} alt="logo"/>
                           {element.name}
                         </Stack>
                       </Button>
@@ -152,7 +152,7 @@ function NavBar(props) {
                             alignItems="center"
                            sx={{height: "100%"}}
                     >
-                      <img src={`${process.env.PUBLIC_URL}/images/logged_out/home.png`} alt="logo"/>
+                      <img src={element.src} alt="logo"/>
                       {element.name}
                     </Stack>
                   </Button>
