@@ -28,6 +28,7 @@ const styles = (theme) => ({
     },
   },
   card: {
+    backgroundColor: theme.palette.background.default,
     boxShadow: theme.shadows[4],
     marginLeft: theme.spacing(2),
     marginRight: theme.spacing(2),
