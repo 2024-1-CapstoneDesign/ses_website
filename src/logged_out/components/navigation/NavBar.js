@@ -20,6 +20,7 @@ const styles = theme => ({
     justifyContent: "space-between"
   },
   menuButtonText: {
+    fontFamily: "'Orbitron', cursive",
     fontSize: theme.typography.body1.fontSize,
     fontWeight: theme.typography.h6.fontWeight
   },
