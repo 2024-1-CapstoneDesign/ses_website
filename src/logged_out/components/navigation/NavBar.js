@@ -82,7 +82,11 @@ function NavBar(props) {
         <Toolbar className={classes.toolbar}>
           {/* 2 * 2 pixel size*/}
           <div className={classes.logoWrapper}>
-            <img src={`${process.env.PUBLIC_URL}/images/logged_out/logo4.png`} alt="logo"/>
+            <img
+              src={`${process.env.PUBLIC_URL}/images/logged_out/radio.png`}
+              alt="logo"
+              style={{marginRight: "5px"}}
+            />
             <div>
               <Typography
                 variant="h4"
