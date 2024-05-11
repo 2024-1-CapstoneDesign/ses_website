@@ -24,8 +24,8 @@ const styles = theme => ({
     fontWeight: theme.typography.h6.fontWeight
   },
   brandText: {
-    fontFamily: "'Baloo Bhaijaan', cursive",
-    fontWeight: 400
+    fontFamily: "'Orbitron', cursive",
+    fontWeight: 700
   },
   noDecoration: {
     textDecoration: "none !important"
