@@ -35,7 +35,7 @@ const styles = (theme) => ({
     width: "30%",
     display: "flex",
     flexDirection: "column",
-    backgroundColor: "white",
+    backgroundColor: theme.palette.background.default,
     color: "text.primary",
     borderRight: "1px solid rgba(0, 0, 0, 0.12)",
   },
