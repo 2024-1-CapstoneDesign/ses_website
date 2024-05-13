@@ -157,7 +157,8 @@ function Main(props) {
   }, [setDialogOpen]);
 
   const fetchSoundList = async () => {
-    const url = "https://soundeffect-search.p-e.kr/api/v1/soundeffect"
+    const url = "https://soundeffect-search.p-e.kr/api/v1/soundeffect?page=0&size=5"
+    // const url = "https://soundeffect-search.p-e.kr/api/v1/soundeffect"
     try {
       const axiosRes = await axios.get(url);
       const resData = axiosRes.data; //fetchResult
@@ -176,7 +177,8 @@ function Main(props) {
             soundSnippet: "this is sound",
             soundCreateAt: 1576281600,
             soundContents: content,
-            soundVisible: true
+            soundVisible: true,
+            pageCnt: resData.data.totalPages
           }
         });
       }
