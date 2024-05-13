@@ -98,13 +98,15 @@ function SoundList(props) {
         <Grid container spacing={3}>
           {getVerticalSoundListPosts(isWidthUpSm, isWidthUpMd, soundListPosts)}
         </Grid>
-        {totalPages &&
-          <Pagination
-            count={totalPages}
-            color="primary"
-            onChange={handleChange}
-          />
-        }
+        <Box sx={{display: 'flex', justifyContent: 'center'}} mt={3}>
+          {totalPages &&
+            <Pagination
+              count={totalPages}
+              color="primary"
+              onChange={handleChange}
+            />
+          }
+        </Box>
       </div>
     </Box>
   );
