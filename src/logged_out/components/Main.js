@@ -162,7 +162,7 @@ function Main(props) {
       const axiosRes = await axios.get(url);
       const resData = axiosRes.data; //fetchResult
       if (resData.result === "SUCCESS"){
-        return resData.data.map((soundEffect) => {
+        return resData.data.soundEffectDtos.map((soundEffect) => {
           return {
             soundId: soundEffect.soundEffectId,
             soundName: soundEffect.soundEffectName,
