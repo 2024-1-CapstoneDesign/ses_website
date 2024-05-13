@@ -112,6 +112,7 @@ function Main(props) {
   const [soundListPosts, setSoundListPosts] = useState([]);
   const [dialogOpen, setDialogOpen] = useState(null);
   const [isCookieRulesDialogOpen, setIsCookieRulesDialogOpen] = useState(false);
+  const [page, setPage] = useState(0);
 
   const selectHome = useCallback(() => {
     smoothScrollTop();
@@ -157,7 +158,7 @@ function Main(props) {
   }, [setDialogOpen]);
 
   const fetchSoundList = async () => {
-    const url = "https://soundeffect-search.p-e.kr/api/v1/soundeffect?page=0&size=5"
+    const url = `https://soundeffect-search.p-e.kr/api/v1/soundeffect?page=${page}&size=5`
     // const url = "https://soundeffect-search.p-e.kr/api/v1/soundeffect"
     try {
       const axiosRes = await axios.get(url);
@@ -207,7 +208,8 @@ function Main(props) {
       return soundListPost;
     });
     setSoundListPosts(soundListPosts);
-  }, [setSoundListPosts]);
+    selectSoundList()
+  }, [setSoundListPosts, page]);
 
   const handleCookieRulesDialogOpen = useCallback(() => {
     setIsCookieRulesDialogOpen(true);
@@ -252,6 +254,7 @@ function Main(props) {
         selectHome={selectHome}
         selectSoundList={selectSoundList}
         setSoundListPosts={setSoundListPosts}
+        setPage={setPage}
       />
       <Footer />
     </div>
