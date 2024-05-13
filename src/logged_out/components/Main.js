@@ -15,6 +15,8 @@ import {Typography} from "@mui/material";
 
 AOS.init({ once: true });
 
+const PAGESIZE = 10;
+
 const content = (
   <Fragment>
     <Typography variant="h6" paragraph>
@@ -158,7 +160,7 @@ function Main(props) {
   }, [setDialogOpen]);
 
   const fetchSoundList = async () => {
-    const url = `https://soundeffect-search.p-e.kr/api/v1/soundeffect?page=${page}&size=5`
+    const url = `https://soundeffect-search.p-e.kr/api/v1/soundeffect?page=${page}&size=${PAGESIZE}`
     // const url = "https://soundeffect-search.p-e.kr/api/v1/soundeffect"
     try {
       const axiosRes = await axios.get(url);
