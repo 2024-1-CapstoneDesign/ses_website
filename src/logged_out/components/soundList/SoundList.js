@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
+import React, {useEffect} from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
-import { Grid, Box } from "@mui/material";
+import {Grid, Box, Pagination} from "@mui/material";
 import withStyles from "@mui/styles/withStyles";
 import SoundListCard from "./SoundListCard";
 import useMediaQuery from "@mui/material/useMediaQuery";
@@ -68,14 +68,19 @@ function getVerticalSoundListPosts(isWidthUpSm, isWidthUpMd, soundListPosts) {
 }
 
 function SoundList(props) {
-  const { classes, soundListPosts, setSoundListPosts,  selectSoundList, theme } = props;
+  const { classes, soundListPosts, setSoundListPosts,  selectSoundList, setPage, theme } = props;
+  const handleChange = (event, value) => {
+    setPage(value - 1);
+  };
 
   const isWidthUpSm = useMediaQuery(theme.breakpoints.up("sm"));
   const isWidthUpMd = useMediaQuery(theme.breakpoints.up("md"));
 
+  const totalPages = soundListPosts[0]?.pageCnt
+
   useEffect(() => {
     selectSoundList();
-  }, [selectSoundList]);
+  }, [selectSoundList, totalPages]);
 
   return (
     <Box
@@ -92,6 +97,15 @@ function SoundList(props) {
         <Grid container spacing={3}>
           {getVerticalSoundListPosts(isWidthUpSm, isWidthUpMd, soundListPosts)}
         </Grid>
+        <Box sx={{display: 'flex', justifyContent: 'center'}} mt={3}>
+          {totalPages &&
+            <Pagination
+              count={totalPages}
+              color="primary"
+              onChange={handleChange}
+            />
+          }
+        </Box>
       </div>
     </Box>
   );

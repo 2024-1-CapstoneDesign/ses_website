@@ -18,7 +18,7 @@ const fetchSoundList = async () => {
     const axiosRes = await axios.get(url);
     const resData = axiosRes.data; //fetchResult
     if (resData.result === "SUCCESS"){
-      const resSoundList = resData.data.map(({soundEffectId, soundEffectName, soundEffectTags, soundEffectTypes}, idx) => {
+      const resSoundList = resData.data.soundEffectDtos.map(({soundEffectId, soundEffectName, soundEffectTags, soundEffectTypes}, idx) => {
         return {
           soundId: soundEffectId,
           soundName: soundEffectName,

@@ -8,7 +8,7 @@ import SoundListPost from "./soundList/SoundListPost";
 import useLocationBlocker from "../../shared/functions/useLocationBlocker";
 
 function Routing(props) {
-  const { soundListPosts, setSoundListPosts, selectSoundList, selectHome } = props;
+  const { soundListPosts, setSoundListPosts, selectSoundList, selectHome, setPage } = props;
   useLocationBlocker();
   return (
     <Switch>
@@ -33,6 +33,7 @@ function Routing(props) {
         selectSoundList={selectSoundList}
         soundListPosts={soundListPosts}
         setSoundListPosts={setSoundListPosts}
+        setPage={setPage}
       />
       <PropsRoute path="/" component={Home} selectHome={selectHome} />
     </Switch>

@@ -15,6 +15,8 @@ import {Typography} from "@mui/material";
 
 AOS.init({ once: true });
 
+const PAGESIZE = 10;
+
 const content = (
   <Fragment>
     <Typography variant="h6" paragraph>
@@ -112,6 +114,7 @@ function Main(props) {
   const [soundListPosts, setSoundListPosts] = useState([]);
   const [dialogOpen, setDialogOpen] = useState(null);
   const [isCookieRulesDialogOpen, setIsCookieRulesDialogOpen] = useState(false);
+  const [page, setPage] = useState(0);
 
   const selectHome = useCallback(() => {
     smoothScrollTop();
@@ -157,12 +160,13 @@ function Main(props) {
   }, [setDialogOpen]);
 
   const fetchSoundList = async () => {
-    const url = "https://soundeffect-search.p-e.kr/api/v1/soundeffect"
+    const url = `https://soundeffect-search.p-e.kr/api/v1/soundeffect?page=${page}&size=${PAGESIZE}`
+    // const url = "https://soundeffect-search.p-e.kr/api/v1/soundeffect"
     try {
       const axiosRes = await axios.get(url);
       const resData = axiosRes.data; //fetchResult
       if (resData.result === "SUCCESS"){
-        return resData.data.map((soundEffect) => {
+        return resData.data.soundEffectDtos.map((soundEffect) => {
           return {
             soundId: soundEffect.soundEffectId,
             soundName: soundEffect.soundEffectName,
@@ -176,7 +180,8 @@ function Main(props) {
             soundSnippet: "this is sound",
             soundCreateAt: 1576281600,
             soundContents: content,
-            soundVisible: true
+            soundVisible: true,
+            pageCnt: resData.data.totalPages
           }
         });
       }
@@ -205,7 +210,9 @@ function Main(props) {
       return soundListPost;
     });
     setSoundListPosts(soundListPosts);
-  }, [setSoundListPosts]);
+    selectSoundList()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [setSoundListPosts, page]);
 
   const handleCookieRulesDialogOpen = useCallback(() => {
     setIsCookieRulesDialogOpen(true);
@@ -250,6 +257,7 @@ function Main(props) {
         selectHome={selectHome}
         selectSoundList={selectSoundList}
         setSoundListPosts={setSoundListPosts}
+        setPage={setPage}
       />
       <Footer />
     </div>
