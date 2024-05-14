@@ -26,7 +26,8 @@ const styles = theme => ({
   },
   brandText: {
     fontFamily: "'Orbitron', cursive",
-    fontWeight: 700
+    fontWeight: 700,
+    color: '#3e3e3e'
   },
   noDecoration: {
     textDecoration: "none !important"
