@@ -60,7 +60,8 @@ const styles = (theme) => ({
   },
   wrapper: {
     position: "relative",
-    backgroundColor: theme.palette.secondary.main,
+    // backgroundColor: theme.palette.secondary.main,
+    backgroundColor: "#d9d9d9",
     paddingBottom: theme.spacing(2),
   },
   image: {
@@ -165,7 +166,8 @@ function HeadSection(props) {
         </div>
       </div>
       <WaveBorder
-        upperColor={theme.palette.secondary.main}
+        // upperColor={theme.palette.secondary.main}
+        upperColor={"#d9d9d9"}
         lowerColor="#FFFFFF"
         className={classes.waveBorder}
         animationNegativeDelay={2}

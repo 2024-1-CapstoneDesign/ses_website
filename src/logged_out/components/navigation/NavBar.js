@@ -26,7 +26,8 @@ const styles = theme => ({
   },
   brandText: {
     fontFamily: "'Orbitron', cursive",
-    fontWeight: 700
+    fontWeight: 700,
+    color: '#3e3e3e'
   },
   noDecoration: {
     textDecoration: "none !important"
@@ -55,25 +56,29 @@ function NavBar(props) {
       link: "/",
       name: "Home",
       icon: <HomeIcon className="text-white" />,
-      src: `${process.env.PUBLIC_URL}/images/logged_out/home.png`
+      src: `${process.env.PUBLIC_URL}/images/logged_out/home.png`,
+      color: "#c65d4a"
     },
     {
       link: "/soundList",
       name: "soundList",
       icon: <BookIcon className="text-white" />,
-      src: `${process.env.PUBLIC_URL}/images/logged_out/soundlist.png`
+      src: `${process.env.PUBLIC_URL}/images/logged_out/soundlist.png`,
+      color: "#949494"
     },
     {
       name: "Register",
       onClick: openRegisterDialog,
       icon: <HowToRegIcon className="text-white" />,
-      src: `${process.env.PUBLIC_URL}/images/logged_out/register.png`
+      src: `${process.env.PUBLIC_URL}/images/logged_out/register.png`,
+      color: "#949494"
     },
     {
       name: "Login",
       onClick: openLoginDialog,
       icon: <LockOpenIcon className="text-white" />,
-      src: `${process.env.PUBLIC_URL}/images/logged_out/door.png`
+      src: `${process.env.PUBLIC_URL}/images/logged_out/door.png`,
+      color: "#949494"
     }
   ];
   return (
@@ -127,6 +132,7 @@ function NavBar(props) {
                       onClick={handleMobileDrawerClose}
                     >
                       <Button
+                        sx={{color: element.color}}
                         color="secondary"
                         size="large"
                         classes={{ text: classes.menuButtonText }}
@@ -145,6 +151,7 @@ function NavBar(props) {
                 }
                 return (
                   <Button
+                    sx={{color: element.color}}
                     color="secondary"
                     size="large"
                     onClick={element.onClick}
