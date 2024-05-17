@@ -14,8 +14,8 @@ const styles = (theme) => ({
     borderRadius: theme.shape.borderRadius,
     boxShadow: theme.shadows[4],
     backgroundColor: theme.palette.background.default,
-    width: '50vh',
-    height: '70vh',
+    width: '60vh',
+    height: '75vh',
     overflow: 'auto',
     display: 'flex',
     justifyContent: 'space-evenly',
@@ -28,7 +28,8 @@ const styles = (theme) => ({
     justifyContent: 'space-evenly',
     alignItems: 'center',
     width: '100%',
-    height: '20%',
+    height: '40%',
+    border: "1px green solid"
   },
   modalTopTextContainer: {
     display: 'flex',
@@ -43,8 +44,9 @@ const styles = (theme) => ({
     flexDirection: 'column',
     justifyContent: 'space-between',
     alignItems: 'center',
-    height: '20%',
+    height: '40%',
     width: '100%',
+    border: "1px red solid"
   },
   modalMiddleTextContainer: {
     display: 'flex',
@@ -53,6 +55,7 @@ const styles = (theme) => ({
     width: '100%',
     height: '20%',
     padding: theme.spacing(3),
+    border: "1px blue solid"
   },
   modalBottomContainer: {
     display: 'flex',
@@ -75,6 +78,24 @@ const styles = (theme) => ({
     left: 0,
     whiteSpace: 'nowrap',
     width: 1,
+  },
+  roundedTextField: {
+    '& .MuiOutlinedInput-root': {
+      borderRadius: '20px', // 둥근 모서리 반지름 설정
+      '& fieldset': {
+        borderColor: '#d9d9d9', // 기본 테두리 색상
+      },
+      '&:hover fieldset': {
+        borderColor: '#a6a6a6', // 호버 시 테두리 색상
+      },
+      '&.Mui-focused fieldset': {
+        borderColor: '#c65d4a', // 포커스 시 테두리 색상
+      },
+    },
+    '& .MuiInputBase-input': {
+      height: '20px', // 입력 요소의 높이 조정
+    },
+    width: "90%"
   },
 });
 
@@ -137,18 +158,25 @@ const InputModal = (props) => {
               <CloseIcon/>
             </IconButton>
           </Box>
-          <TextField label="youtube URL" type="search" className={classes.wideTextFieldStyle}
+          <TextField label="www.example.com" type="search" className={classes.roundedTextField}
                      value={youtubeURL} onChange={handleURLChange}/>
         </Box>
         <Box className={classes.modalMiddleContainer}>
           <Box className={classes.modalMiddleTextContainer}>
             <Typography variant="h6" component="h2">
-              Youtube Start to end
+              From
             </Typography>
           </Box>
           <Box>
             <TextField label="start time" type="search"
                        value={youtubeStart} onChange={handleStartChange}/>
+          </Box>
+          <Box className={classes.modalMiddleTextContainer}>
+            <Typography variant="h6" component="h2">
+              To
+            </Typography>
+          </Box>
+          <Box>
             <TextField label="end time" type="search"
                        value={youtubeEnd} onChange={handleEndChange}/>
           </Box>
