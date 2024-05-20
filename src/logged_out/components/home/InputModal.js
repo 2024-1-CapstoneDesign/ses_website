@@ -18,7 +18,7 @@ const styles = (theme) => ({
     height: '75vh',
     overflow: 'auto',
     display: 'flex',
-    justifyContent: 'space-evenly',
+    justifyContent: 'space-between',
     alignItems: 'center',
     flexDirection: 'column'
   },
@@ -28,7 +28,7 @@ const styles = (theme) => ({
     justifyContent: 'space-evenly',
     alignItems: 'center',
     width: '100%',
-    height: '40%',
+    height: '30%',
     border: "1px green solid"
   },
   modalTopTextContainer: {
@@ -46,7 +46,7 @@ const styles = (theme) => ({
     alignItems: 'center',
     height: '40%',
     width: '100%',
-    border: "1px red solid"
+    border: "1px red solid",
   },
   modalMiddleTextContainer: {
     display: 'flex',
@@ -63,7 +63,8 @@ const styles = (theme) => ({
     justifyContent: 'space-between',
     alignItems: 'center',
     width: '100%',
-    height: '20%',
+    height: '30%',
+    border: "1px green solid",
   },
   wideTextFieldStyle: {
     width: '90%',
@@ -95,12 +96,12 @@ const styles = (theme) => ({
     '& .MuiInputBase-input': {
       height: '20px', // 입력 요소의 높이 조정
     },
-    width: "90%"
+    width: "90%",
   },
 });
 
 const InputModal = (props) => {
-  const {classes, modalOpen, setModalOpen} = props;
+  const {classes, modalOpen, setModalOpen, theme} = props;
   const [youtubeURL, setYoutubeURL] = useState('');
   const [youtubeStart, setYoutubeStart] = useState('');
   const [youtubeEnd, setYoutubeEnd] = useState('');
@@ -158,8 +159,14 @@ const InputModal = (props) => {
               <CloseIcon/>
             </IconButton>
           </Box>
-          <TextField label="www.example.com" type="search" className={classes.roundedTextField}
-                     value={youtubeURL} onChange={handleURLChange}/>
+          <TextField
+            label="www.example.com"
+            type="search"
+            className={classes.roundedTextField}
+            value={youtubeURL}
+            onChange={handleURLChange}
+            sx={{marginTop: theme.spacing(-3)}}
+          />
         </Box>
         <Box className={classes.modalMiddleContainer}>
           <Box className={classes.modalMiddleTextContainer}>
@@ -195,7 +202,7 @@ const InputModal = (props) => {
             {selectedFile ? 'file Selected' : 'Upload file'}
             <Input className={classes.visuallyHiddenInputStyle} type="file" onChange={handleFileChange}/>
           </Button>
-          <Button type="submit" fullWidth variant="contained" sx={{top: '50%'}}>
+          <Button type="submit" fullWidth variant="contained">
             Submit
           </Button>
         </Box>
