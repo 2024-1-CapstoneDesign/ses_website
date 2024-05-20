@@ -165,10 +165,13 @@ const InputModal = (props) => {
       >
         <Box className={classes.modalTopContainer}>
           <Box className={classes.modalTopTextContainer}>
-            <Typography variant="h6" component="h2">
-              Youtube Full URL
-            </Typography>
-            <IconButton onClick={handleModalClose} sx={{bottom: '2rem'}}>
+            <Box sx={{display: "flex", flexDirection: "row", alignItems: "center"}} ml={-1}>
+              <img src={`${process.env.PUBLIC_URL}/images/logged_out/youtube.png`} alt={"youtube logo"}/>
+              <Typography variant="h6" component="h2">
+                Youtube Full URL
+              </Typography>
+            </Box>
+            <IconButton onClick={handleModalClose} sx={{bottom: '1rem'}}>
               <CloseIcon/>
             </IconButton>
           </Box>
@@ -193,7 +196,7 @@ const InputModal = (props) => {
               labelId={"from-minute-"}
               value={minuteFrom}
               setValue={setMinuteFrom}
-              text={"minute"}
+              text={"minutes"}
               inputLabel={"min"}
             />
             <MyTimePicker
@@ -201,7 +204,7 @@ const InputModal = (props) => {
               labelId={"from-second"}
               value={secondFrom}
               setValue={setSecondFrom}
-              text={"second"}
+              text={"seconds"}
               inputLabel={"sec"}
             />
           </Box>
@@ -216,7 +219,7 @@ const InputModal = (props) => {
               labelId={"to-minute"}
               value={minuteTo}
               setValue={setMinuteTo}
-              text={"minute"}
+              text={"minutes"}
               inputLabel={"min"}
             />
             <MyTimePicker
@@ -224,7 +227,7 @@ const InputModal = (props) => {
               labelId={"to-second"}
               value={secondTo}
               setValue={setSecondTo}
-              text={"second"}
+              text={"seconds"}
               inputLabel={"sec"}
             />
           </Box>

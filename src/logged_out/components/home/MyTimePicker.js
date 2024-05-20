@@ -41,7 +41,7 @@ function MyTimePicker(props){
         </Select>
       </FormControl>
       <Box className={classes.textContainer}>
-        <Typography variant="h6">{text}</Typography>
+        <Typography variant="h7">{text}</Typography>
       </Box>
     </Stack>
   );
