@@ -1,4 +1,15 @@
-import {Box, Button, IconButton, Input, Modal, TextField, Typography} from "@mui/material";
+import {
+  Box,
+  Button, Divider,
+  FormControl,
+  IconButton,
+  Input,
+  InputLabel, MenuItem,
+  Modal,
+  Select, Stack,
+  TextField,
+  Typography
+} from "@mui/material";
 import React, {useState} from "react";
 import withStyles from "@mui/styles/withStyles";
 import axios from "axios";
@@ -29,7 +40,6 @@ const styles = (theme) => ({
     alignItems: 'center',
     width: '100%',
     height: '30%',
-    border: "1px green solid"
   },
   modalTopTextContainer: {
     display: 'flex',
@@ -46,7 +56,6 @@ const styles = (theme) => ({
     alignItems: 'center',
     height: '40%',
     width: '100%',
-    border: "1px red solid",
   },
   modalMiddleTextContainer: {
     display: 'flex',
@@ -54,8 +63,13 @@ const styles = (theme) => ({
     textAlign: 'left',
     width: '100%',
     height: '20%',
-    padding: theme.spacing(3),
-    border: "1px blue solid"
+    paddingLeft: theme.spacing(3),
+  },
+  modalMiddleInputContainer: {
+    width: "100%",
+    display: "flex",
+    flexDirection: "row",
+    paddingLeft: theme.spacing(3),
   },
   modalBottomContainer: {
     display: 'flex',
@@ -64,7 +78,6 @@ const styles = (theme) => ({
     alignItems: 'center',
     width: '100%',
     height: '30%',
-    border: "1px green solid",
   },
   wideTextFieldStyle: {
     width: '90%',
@@ -103,20 +116,19 @@ const styles = (theme) => ({
 const InputModal = (props) => {
   const {classes, modalOpen, setModalOpen, theme} = props;
   const [youtubeURL, setYoutubeURL] = useState('');
-  const [youtubeStart, setYoutubeStart] = useState('');
-  const [youtubeEnd, setYoutubeEnd] = useState('');
+  const [minuteFrom, setMinuteFrom] = useState('');
+  const [secondFrom, setSecondFrom] = useState('');
+  const [minuteTo, setMinuteTo] = useState('');
+  const [secondTo, setSecondTo] = useState('');
   const [selectedFile, setSelectedFile] = useState(null);
 
   const handleModalClose = () => {
     setModalOpen(false);
     setYoutubeURL('');
-    setYoutubeStart('');
-    setYoutubeEnd('');
+    setMinuteFrom('');
     setSelectedFile(null);
   }
   const handleURLChange = (e) => setYoutubeURL(e.target.value);
-  const handleStartChange = (e) => setYoutubeStart(e.target.value);
-  const handleEndChange = (e) => setYoutubeEnd(e.target.value);
   const handleFileChange = (e) => setSelectedFile(e.target.files[0]);
   const handleSubmit = async (e)=> {
     e.preventDefault();
@@ -124,7 +136,7 @@ const InputModal = (props) => {
       title: youtubeURL
     };
     const regex = /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/;
-    if (regex.test(youtubeStart) && regex.test(youtubeEnd)) {
+    if (regex.test(minuteFrom) && regex.test(secondFrom)) {
       const res = await axios.post('https://dummyjson.com/products/add', body,{
         headers: {
           'Content-Type': 'application/json'
@@ -135,6 +147,12 @@ const InputModal = (props) => {
       alert("start and end need to HH:MM:SS format")
     }
   };
+  const [age, setAge] = useState('');
+
+  const handleChange = (event) => {
+    setAge(event.target.value);
+  };
+
 
 
   return (
@@ -174,37 +192,138 @@ const InputModal = (props) => {
               From
             </Typography>
           </Box>
-          <Box>
-            <TextField label="start time" type="search"
-                       value={youtubeStart} onChange={handleStartChange}/>
+          <Box className={classes.modalMiddleInputContainer}>
+            <Stack
+              direction="row"
+              spacing={0}
+              mr={1}
+            >
+              <FormControl sx={{ m: 1, minWidth: 75 }} size="small">
+                <InputLabel id="from-minute-label">Age</InputLabel>
+                <Select
+                  labelId="from-minute-label"
+                  id="from-minute"
+                  value={age}
+                  label="Age"
+                  onChange={handleChange}
+                >
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
+                  {[...Array(60).keys()].map(i => (
+                    <MenuItem value={i + 1}>{i + 1}</MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+              <Box sx={{display: 'flex', alignItems: 'center'}}>
+                <Typography variant="h6">minutes</Typography>
+              </Box>
+            </Stack>
+            <Stack
+              direction="row"
+              spacing={0}
+            >
+              <FormControl sx={{ m: 1, minWidth: 75 }} size="small">
+                <InputLabel id="demo-select-small-label">Age</InputLabel>
+                <Select
+                  labelId="demo-select-small-label"
+                  id="demo-select-small"
+                  value={age}
+                  label="Age"
+                  onChange={handleChange}
+                >
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
+                  {[...Array(60).keys()].map(i => (
+                    <MenuItem value={i + 1}>{i + 1}</MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+              <Box sx={{display: 'flex', alignItems: 'center'}}>
+                <Typography variant="h6">seconds</Typography>
+              </Box>
+            </Stack>
           </Box>
           <Box className={classes.modalMiddleTextContainer}>
             <Typography variant="h6" component="h2">
               To
             </Typography>
           </Box>
-          <Box>
-            <TextField label="end time" type="search"
-                       value={youtubeEnd} onChange={handleEndChange}/>
+          <Box className={classes.modalMiddleInputContainer}>
+            <Stack
+              direction="row"
+              spacing={0}
+              mr={1}
+            >
+              <FormControl sx={{ m: 1, minWidth: 75 }} size="small">
+                <InputLabel id="demo-select-small-label">Age</InputLabel>
+                <Select
+                  labelId="demo-select-small-label"
+                  id="demo-select-small"
+                  value={age}
+                  label="Age"
+                  onChange={handleChange}
+                >
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
+                  {[...Array(60).keys()].map(i => (
+                    <MenuItem value={i + 1}>{i + 1}</MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+              <Box sx={{display: 'flex', alignItems: 'center'}}>
+                <Typography variant="h6">minutes</Typography>
+              </Box>
+            </Stack>
+            <Stack
+              direction="row"
+              spacing={0}
+            >
+              <FormControl sx={{ m: 1, minWidth: 75 }} size="small">
+                <InputLabel id="demo-select-small-label">Age</InputLabel>
+                <Select
+                  labelId="demo-select-small-label"
+                  id="demo-select-small"
+                  value={age}
+                  label="Age"
+                  onChange={handleChange}
+                >
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
+                  {[...Array(60).keys()].map(i => (
+                    <MenuItem value={i + 1}>{i + 1}</MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+              <Box sx={{display: 'flex', alignItems: 'center'}}>
+                <Typography variant="h6">seconds</Typography>
+              </Box>
+            </Stack>
           </Box>
+          <Box sx={{width: "100%", height: "20%"}}/>
+          <Divider sx={{width: "90%"}} />
         </Box>
         <Box className={classes.modalBottomContainer}>
-          <Typography variant="h6" component="h2">
-            OR
-          </Typography>
-          <Button
-            component="label"
-            role={undefined}
-            variant="contained"
-            tabIndex={-1}
-            startIcon={<CloudUploadIcon />}
-          >
-            {selectedFile ? 'file Selected' : 'Upload file'}
-            <Input className={classes.visuallyHiddenInputStyle} type="file" onChange={handleFileChange}/>
-          </Button>
-          <Button type="submit" fullWidth variant="contained">
-            Submit
-          </Button>
+          <Box sx={{height: "85%", display: "flex", alignItems: "center"}}>
+            <Button
+              component="label"
+              role={undefined}
+              variant="contained"
+              tabIndex={-1}
+              startIcon={<CloudUploadIcon />}
+            >
+              {selectedFile ? 'file Selected' : 'Upload file'}
+              <Input className={classes.visuallyHiddenInputStyle} type="file" onChange={handleFileChange}/>
+            </Button>
+          </Box>
+          <Box sx={{height: "20%", width: "100%"}}>
+            <Button type="submit" fullWidth variant="contained">
+              Submit
+            </Button>
+          </Box>
         </Box>
       </Box>
     </Modal>
