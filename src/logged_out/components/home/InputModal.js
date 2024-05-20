@@ -235,7 +235,7 @@ const InputModal = (props) => {
           <Divider sx={{width: "90%"}} />
         </Box>
         <Box className={classes.modalBottomContainer}>
-          <Box sx={{height: "80%", display: "flex", alignItems: "center"}}>
+          <Box sx={{height: "85%", display: "flex", alignItems: "center"}}>
             <Button
               component="label"
               role={undefined}
@@ -247,7 +247,7 @@ const InputModal = (props) => {
               <Input className={classes.visuallyHiddenInputStyle} type="file" onChange={handleFileChange}/>
             </Button>
           </Box>
-          <Box sx={{height: "20%", width: "100%"}}>
+          <Box sx={{height: "15%", width: "100%"}}>
             <Button type="submit" fullWidth variant="contained">
               Submit
             </Button>
