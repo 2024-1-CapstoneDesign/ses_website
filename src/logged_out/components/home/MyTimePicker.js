@@ -2,7 +2,7 @@ import withStyles from "@mui/styles/withStyles";
 import {Box, FormControl, InputLabel, MenuItem, Select, Stack, Typography} from "@mui/material";
 import React from "react";
 
-const styles = (theme) => ({
+const styles = () => ({
   textContainer: {
     display: 'flex',
     alignItems: 'center',

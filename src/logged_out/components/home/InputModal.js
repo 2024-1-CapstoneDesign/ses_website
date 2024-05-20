@@ -1,12 +1,9 @@
 import {
   Box,
   Button, Divider,
-  FormControl,
   IconButton,
   Input,
-  InputLabel, MenuItem,
   Modal,
-  Select, Stack,
   TextField,
   Typography
 } from "@mui/material";
@@ -15,6 +12,7 @@ import withStyles from "@mui/styles/withStyles";
 import axios from "axios";
 import CloseIcon from "@mui/icons-material/Close";
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import MyTimePicker from "./MyTimePicker";
 
 const styles = (theme) => ({
   modalStyle: {
@@ -27,7 +25,7 @@ const styles = (theme) => ({
     backgroundColor: theme.palette.background.default,
     width: '60vh',
     height: '75vh',
-    overflow: 'auto',
+    // overflow: 'auto',
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -126,10 +124,14 @@ const InputModal = (props) => {
     setModalOpen(false);
     setYoutubeURL('');
     setMinuteFrom('');
+    setSecondFrom('');
+    setMinuteTo('');
+    setSecondTo('');
     setSelectedFile(null);
   }
   const handleURLChange = (e) => setYoutubeURL(e.target.value);
   const handleFileChange = (e) => setSelectedFile(e.target.files[0]);
+
   const handleSubmit = async (e)=> {
     e.preventDefault();
     const body = {
@@ -147,13 +149,6 @@ const InputModal = (props) => {
       alert("start and end need to HH:MM:SS format")
     }
   };
-  const [age, setAge] = useState('');
-
-  const handleChange = (event) => {
-    setAge(event.target.value);
-  };
-
-
 
   return (
     <Modal
@@ -193,57 +188,22 @@ const InputModal = (props) => {
             </Typography>
           </Box>
           <Box className={classes.modalMiddleInputContainer}>
-            <Stack
-              direction="row"
-              spacing={0}
-              mr={1}
-            >
-              <FormControl sx={{ m: 1, minWidth: 75 }} size="small">
-                <InputLabel id="from-minute-label">Age</InputLabel>
-                <Select
-                  labelId="from-minute-label"
-                  id="from-minute"
-                  value={age}
-                  label="Age"
-                  onChange={handleChange}
-                >
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  {[...Array(60).keys()].map(i => (
-                    <MenuItem value={i + 1}>{i + 1}</MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-              <Box sx={{display: 'flex', alignItems: 'center'}}>
-                <Typography variant="h6">minutes</Typography>
-              </Box>
-            </Stack>
-            <Stack
-              direction="row"
-              spacing={0}
-            >
-              <FormControl sx={{ m: 1, minWidth: 75 }} size="small">
-                <InputLabel id="demo-select-small-label">Age</InputLabel>
-                <Select
-                  labelId="demo-select-small-label"
-                  id="demo-select-small"
-                  value={age}
-                  label="Age"
-                  onChange={handleChange}
-                >
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  {[...Array(60).keys()].map(i => (
-                    <MenuItem value={i + 1}>{i + 1}</MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-              <Box sx={{display: 'flex', alignItems: 'center'}}>
-                <Typography variant="h6">seconds</Typography>
-              </Box>
-            </Stack>
+            <MyTimePicker
+              inputLabelId={"from-minute-label"}
+              labelId={"from-minute-"}
+              value={minuteFrom}
+              setValue={setMinuteFrom}
+              text={"minute"}
+              inputLabel={"min"}
+            />
+            <MyTimePicker
+              inputLabelId={"from-second-label"}
+              labelId={"from-second"}
+              value={secondFrom}
+              setValue={setSecondFrom}
+              text={"second"}
+              inputLabel={"sec"}
+            />
           </Box>
           <Box className={classes.modalMiddleTextContainer}>
             <Typography variant="h6" component="h2">
@@ -251,63 +211,28 @@ const InputModal = (props) => {
             </Typography>
           </Box>
           <Box className={classes.modalMiddleInputContainer}>
-            <Stack
-              direction="row"
-              spacing={0}
-              mr={1}
-            >
-              <FormControl sx={{ m: 1, minWidth: 75 }} size="small">
-                <InputLabel id="demo-select-small-label">Age</InputLabel>
-                <Select
-                  labelId="demo-select-small-label"
-                  id="demo-select-small"
-                  value={age}
-                  label="Age"
-                  onChange={handleChange}
-                >
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  {[...Array(60).keys()].map(i => (
-                    <MenuItem value={i + 1}>{i + 1}</MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-              <Box sx={{display: 'flex', alignItems: 'center'}}>
-                <Typography variant="h6">minutes</Typography>
-              </Box>
-            </Stack>
-            <Stack
-              direction="row"
-              spacing={0}
-            >
-              <FormControl sx={{ m: 1, minWidth: 75 }} size="small">
-                <InputLabel id="demo-select-small-label">Age</InputLabel>
-                <Select
-                  labelId="demo-select-small-label"
-                  id="demo-select-small"
-                  value={age}
-                  label="Age"
-                  onChange={handleChange}
-                >
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  {[...Array(60).keys()].map(i => (
-                    <MenuItem value={i + 1}>{i + 1}</MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-              <Box sx={{display: 'flex', alignItems: 'center'}}>
-                <Typography variant="h6">seconds</Typography>
-              </Box>
-            </Stack>
+            <MyTimePicker
+              inputLabelId={"to-minute-label"}
+              labelId={"to-minute"}
+              value={minuteTo}
+              setValue={setMinuteTo}
+              text={"minute"}
+              inputLabel={"min"}
+            />
+            <MyTimePicker
+              inputLabelId={"to-second-label"}
+              labelId={"to-second"}
+              value={secondTo}
+              setValue={setSecondTo}
+              text={"second"}
+              inputLabel={"sec"}
+            />
           </Box>
           <Box sx={{width: "100%", height: "20%"}}/>
           <Divider sx={{width: "90%"}} />
         </Box>
         <Box className={classes.modalBottomContainer}>
-          <Box sx={{height: "85%", display: "flex", alignItems: "center"}}>
+          <Box sx={{height: "80%", display: "flex", alignItems: "center"}}>
             <Button
               component="label"
               role={undefined}
