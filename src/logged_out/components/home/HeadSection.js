@@ -122,8 +122,11 @@ function HeadSection(props) {
                       height="100%"
                     >
                       <Box mb={4}>
-                        <Typography variant={isWidthUpLg ? "h3" : "h4"}>
-                          You can find all the sound effects you want.
+                        <Typography
+                          variant={isWidthUpLg ? "h3" : "h4"}
+                          sx={{fontFamily: "'Orbitron', cursive"}}
+                        >
+                          Are you ready for a revolution in finding sound effects?
                         </Typography>
                       </Box>
                       <div>
@@ -132,8 +135,25 @@ function HeadSection(props) {
                             variant={isWidthUpLg ? "h6" : "body1"}
                             color="textSecondary"
                           >
-                            Lorem ipsum dolor sit amet, consetetur sadipscing
-                            elitr, sed diam nonumy eirmod tempor invidunt
+                            you can find all the sound effects you want.
+                          </Typography>
+                          <Typography
+                            variant={isWidthUpLg ? "h6" : "body1"}
+                            color="textSecondary"
+                          >
+                            Just put in Youtube url and section.
+                          </Typography>
+                          <Typography
+                            variant={isWidthUpLg ? "h6" : "body1"}
+                            color="textSecondary"
+                          >
+                            That’s how to search for sound effects.
+                          </Typography>
+                          <Typography
+                            variant={isWidthUpLg ? "h6" : "body1"}
+                            color="textSecondary"
+                          >
+                            Let’s experience the full sound effects of Aulo!
                           </Typography>
                         </Box>
                         <Button
