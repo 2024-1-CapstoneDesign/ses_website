@@ -12,6 +12,7 @@ import Routing from "./Routing";
 import smoothScrollTop from "../../shared/functions/smoothScrollTop";
 import axios from "axios";
 import {Typography} from "@mui/material";
+import formatDateTime from "./home/formatDateTime";
 
 AOS.init({ once: true });
 
@@ -176,9 +177,8 @@ function Main(props) {
             soundLength: soundEffect.soundEffectTypes[0].length,
             soundDescription: soundEffect.description,
             soundCreateBy: soundEffect.createBy,
-            // soundCreateAt: soundEffect.createAt,
+            soundCreateAt: formatDateTime(soundEffect.createdAt),
             soundSnippet: soundEffect.summary,
-            soundCreateAt: 1576281600,
             soundContents: content,
             soundVisible: true,
             pageCnt: resData.data.totalPages
