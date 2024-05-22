@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import format from "date-fns/format";
 import classNames from "classnames";
 import {Typography, Card, Box, Chip} from "@mui/material";
 import withStyles from '@mui/styles/withStyles';

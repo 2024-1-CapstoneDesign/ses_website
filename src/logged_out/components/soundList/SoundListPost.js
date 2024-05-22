@@ -1,7 +1,6 @@
 import React, {useCallback, useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
-import format from "date-fns/format";
 import {Box, Button, Card, Chip, Divider, Grid, Stack, Typography} from "@mui/material";
 import withStyles from '@mui/styles/withStyles';
 import SoundListCard from "./SoundListCard";
@@ -10,6 +9,7 @@ import WaveSurferComponent from "../home/WaveSurferComponent";
 import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 import SoundDetailPaper from "./SoundDetailPaper";
 import axios from "axios";
+import formatDateTime from "../home/formatDateTime";
 
 const styles = (theme) => ({
   blogContentWrapper: {
@@ -93,9 +93,8 @@ function SoundListPost(props) {
               soundLength: soundEffect.soundEffectTypes[0].length,
               soundDescription: soundEffect.description,
               soundCreateBy: soundEffect.createBy,
-              // soundCreateAt: soundEffect.createAt,
-              soundSnippet: "this is sound",
-              soundCreateAt: 1576281600,
+              soundCreateAt: formatDateTime(soundEffect.createdAt),
+              soundSnippet: soundEffect.summary,
             }
           });
         }
@@ -201,9 +200,7 @@ function SoundListPost(props) {
                       |
                     </Typography>
                     <Typography variant="body1" color="textSecondary" sx={{padding: '0px 5px'}}>
-                      {format(new Date(date * 1000), "PPP", {
-                        awareOfUnicodeTokens: true,
-                      })}
+                      {date}
                     </Typography>
                   </Box>
                   <Box sx={{margin: '5px 0'}}>
@@ -262,7 +259,7 @@ function SoundListPost(props) {
               <Box key={blogPost.soundId} mb={3}>
                 <SoundListCard
                   title={blogPost.soundName}
-                  snippet={blogPost.soundSnippet}
+                  snippet={blogPost.summary}
                   date={blogPost.soundCreateAt}
                   src={blogPost.soundURL}
                   url={`${blogPost.url}${blogPost.params}`}
