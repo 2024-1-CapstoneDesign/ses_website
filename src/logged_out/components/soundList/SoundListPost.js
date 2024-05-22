@@ -66,7 +66,8 @@ const styles = (theme) => ({
 });
 
 function SoundListPost(props) {
-  const { classes, date, title, src, content, tagList, fileExtension, id } = props;
+  const { classes, date, title, src, content, tagList,
+      type, length, sampleRate, bitDepth, channels, fileSize, id } = props;
   const [relativeSoundEffects, setRelativeSoundEffects] = useState([])
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -135,7 +136,7 @@ function SoundListPost(props) {
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = `${title}.${fileExtension}`;
+        a.download = `${title}.${type}`;
         document.body.appendChild(a);
         a.click();
         setTimeout(_ => {
@@ -242,12 +243,12 @@ function SoundListPost(props) {
                     justifyContent="space-between"
                     alignItems="center"
                   >
-                    <SoundDetailPaper title="Type" value="wave" />
-                    <SoundDetailPaper title="Duration" value="00:30:00" />
-                    <SoundDetailPaper title="File Size" value="18.42MB" />
-                    <SoundDetailPaper title="Sample Rate" value="48000.00HZ" />
-                    <SoundDetailPaper title="Bit depth" value="24bit" />
-                    <SoundDetailPaper title="Channels" value="Stereo" />
+                    <SoundDetailPaper title="Type" value={type} />
+                    <SoundDetailPaper title="Duration" value={length + "s"} />
+                    <SoundDetailPaper title="File Size" value={fileSize + "MB"} />
+                    <SoundDetailPaper title="Sample Rate" value={sampleRate + "HZ"} />
+                    <SoundDetailPaper title="Bit depth" value={bitDepth + "bit"} />
+                    <SoundDetailPaper title="Channels" value={channels} />
                   </Stack>
                 </Box>
               </Box>
