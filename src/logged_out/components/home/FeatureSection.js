@@ -58,8 +58,11 @@ function FeatureSection(props) {
   return (
     <div style={{ backgroundColor: theme.palette.background.default }}>
       <div className="container-fluid lg-p-top">
-        <Typography variant="h3" align="center" className="lg-mg-bottom">
-          SoundList
+        <Typography
+          variant="h3" align="center" className="lg-mg-bottom"
+          sx={{fontFamily: "'Orbitron', cursive", fontWeight: 'bold'}}
+        >
+          Today's SoundEffect
         </Typography>
         {isLoading && <strong>Loading....</strong>}
         {isError && <strong>{response?.errorMessage}</strong>}
