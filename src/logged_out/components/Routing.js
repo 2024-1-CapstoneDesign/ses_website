@@ -21,8 +21,13 @@ function Routing(props) {
           src={post.soundURL}
           date={post.soundCreateAt}
           tagList={post.soundTagList}
-          fileExtension={post.soundType}
-          content={post.soundContents}
+          type={post.soundType}
+          length={post.soundLength}
+          sampleRate={post.soundSampleRate}
+          bitDepth={post.soundBitDepth}
+          channels={post.soundChannels}
+          fileSize={post.soundFileSize}
+          content={post.soundDescription}
           id={post.soundId}
         />
       ))}

@@ -1,7 +1,6 @@
 import React, {useCallback, useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
-import format from "date-fns/format";
 import {Box, Button, Card, Chip, Divider, Grid, Stack, Typography} from "@mui/material";
 import withStyles from '@mui/styles/withStyles';
 import SoundListCard from "./SoundListCard";
@@ -10,6 +9,7 @@ import WaveSurferComponent from "../home/WaveSurferComponent";
 import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 import SoundDetailPaper from "./SoundDetailPaper";
 import axios from "axios";
+import formatDateTime from "../home/formatDateTime";
 
 const styles = (theme) => ({
   blogContentWrapper: {
@@ -66,7 +66,8 @@ const styles = (theme) => ({
 });
 
 function SoundListPost(props) {
-  const { classes, date, title, src, content, tagList, fileExtension, id } = props;
+  const { classes, date, title, src, content, tagList,
+      type, length, sampleRate, bitDepth, channels, fileSize, id } = props;
   const [relativeSoundEffects, setRelativeSoundEffects] = useState([])
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -93,9 +94,8 @@ function SoundListPost(props) {
               soundLength: soundEffect.soundEffectTypes[0].length,
               soundDescription: soundEffect.description,
               soundCreateBy: soundEffect.createBy,
-              // soundCreateAt: soundEffect.createAt,
-              soundSnippet: "this is sound",
-              soundCreateAt: 1576281600,
+              soundCreateAt: formatDateTime(soundEffect.createdAt),
+              soundSnippet: soundEffect.summary,
             }
           });
         }
@@ -136,7 +136,7 @@ function SoundListPost(props) {
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = `${title}.${fileExtension}`;
+        a.download = `${title}.${type}`;
         document.body.appendChild(a);
         a.click();
         setTimeout(_ => {
@@ -201,9 +201,7 @@ function SoundListPost(props) {
                       |
                     </Typography>
                     <Typography variant="body1" color="textSecondary" sx={{padding: '0px 5px'}}>
-                      {format(new Date(date * 1000), "PPP", {
-                        awareOfUnicodeTokens: true,
-                      })}
+                      {date}
                     </Typography>
                   </Box>
                   <Box sx={{margin: '5px 0'}}>
@@ -233,7 +231,9 @@ function SoundListPost(props) {
                 </Box>
               </Box>
               <Box p={3}>
-                {content}
+                <Typography paragraph>
+                  {content}
+                </Typography>
                 <Divider />
                 <Box pt={2} sx={{display:'flex', justifyContent: 'center'}}>
                   <Stack
@@ -243,12 +243,12 @@ function SoundListPost(props) {
                     justifyContent="space-between"
                     alignItems="center"
                   >
-                    <SoundDetailPaper title="Type" value="wave" />
-                    <SoundDetailPaper title="Duration" value="00:30:00" />
-                    <SoundDetailPaper title="File Size" value="18.42MB" />
-                    <SoundDetailPaper title="Sample Rate" value="48000.00HZ" />
-                    <SoundDetailPaper title="Bit depth" value="24bit" />
-                    <SoundDetailPaper title="Channels" value="Stereo" />
+                    <SoundDetailPaper title="Type" value={type} />
+                    <SoundDetailPaper title="Duration" value={length + "s"} />
+                    <SoundDetailPaper title="File Size" value={fileSize + "MB"} />
+                    <SoundDetailPaper title="Sample Rate" value={sampleRate + "HZ"} />
+                    <SoundDetailPaper title="Bit depth" value={bitDepth + "bit"} />
+                    <SoundDetailPaper title="Channels" value={channels} />
                   </Stack>
                 </Box>
               </Box>
@@ -262,7 +262,7 @@ function SoundListPost(props) {
               <Box key={blogPost.soundId} mb={3}>
                 <SoundListCard
                   title={blogPost.soundName}
-                  snippet={blogPost.soundSnippet}
+                  snippet={blogPost.summary}
                   date={blogPost.soundCreateAt}
                   src={blogPost.soundURL}
                   url={`${blogPost.url}${blogPost.params}`}
