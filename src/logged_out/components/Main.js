@@ -177,7 +177,7 @@ function Main(props) {
             soundDescription: soundEffect.description,
             soundCreateBy: soundEffect.createBy,
             // soundCreateAt: soundEffect.createAt,
-            soundSnippet: "this is sound",
+            soundSnippet: soundEffect.summary,
             soundCreateAt: 1576281600,
             soundContents: content,
             soundVisible: true,
