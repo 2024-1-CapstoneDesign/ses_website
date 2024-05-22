@@ -114,6 +114,20 @@ function HeadSection(props) {
             >
               <div className={classNames(classes.containerFix, "container")}>
                 <Box justifyContent="space-between" className="row">
+                  <Box mb={4}>
+                    <Typography
+                      variant={isWidthUpLg ? "h3" : "h4"}
+                      sx={{fontFamily: "'Orbitron', cursive", fontWeight: "bold"}}
+                    >
+                      Are you ready for a revolution
+                    </Typography>
+                    <Typography
+                      variant={isWidthUpLg ? "h3" : "h4"}
+                      sx={{fontFamily: "'Orbitron', cursive", fontWeight: "bold"}}
+                    >
+                      in finding sound effects?
+                    </Typography>
+                  </Box>
                   <Grid item xs={12} md={5}>
                     <Box
                       display="flex"
@@ -121,14 +135,6 @@ function HeadSection(props) {
                       justifyContent="space-between"
                       height="100%"
                     >
-                      <Box mb={4}>
-                        <Typography
-                          variant={isWidthUpLg ? "h3" : "h4"}
-                          sx={{fontFamily: "'Orbitron', cursive", fontWeight: "bold"}}
-                        >
-                          Are you ready for a revolution in finding sound effects?
-                        </Typography>
-                      </Box>
                       <div>
                         <Box mb={2}>
                           <Typography
