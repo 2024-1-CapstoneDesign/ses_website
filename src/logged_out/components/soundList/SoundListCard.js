@@ -68,6 +68,7 @@ const styles = (theme) => ({
 
 function SoundListCard(props) {
   const { classes, url, src, date, title, snippet, tagList } = props;
+
   return (
     <Card className={classes.card}>
       <div className={classes.gradientContainer}>
@@ -102,9 +103,7 @@ function SoundListCard(props) {
             </Link>
           </Typography>
           <Typography variant="body2" color="textSecondary">
-            {format(new Date(date * 1000), "PPP", {
-              awareOfUnicodeTokens: true,
-            })}
+            {date}
           </Typography>
         </Box>
       </Link>
