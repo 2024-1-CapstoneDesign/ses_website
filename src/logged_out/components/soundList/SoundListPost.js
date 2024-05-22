@@ -230,7 +230,9 @@ function SoundListPost(props) {
                 </Box>
               </Box>
               <Box p={3}>
-                {content}
+                <Typography paragraph>
+                  {content}
+                </Typography>
                 <Divider />
                 <Box pt={2} sx={{display:'flex', justifyContent: 'center'}}>
                   <Stack
