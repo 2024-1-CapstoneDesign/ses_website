@@ -22,7 +22,7 @@ function Routing(props) {
           date={post.soundCreateAt}
           tagList={post.soundTagList}
           fileExtension={post.soundType}
-          content={post.soundContents}
+          content={post.soundDescription}
           id={post.soundId}
         />
       ))}
