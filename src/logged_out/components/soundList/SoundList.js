@@ -68,7 +68,7 @@ function getVerticalSoundListPosts(isWidthUpSm, isWidthUpMd, soundListPosts) {
 }
 
 function SoundList(props) {
-  const { classes, soundListPosts, setSoundListPosts,  selectSoundList, setPage, theme } = props;
+  const { classes, soundListPosts, setSoundListPosts,  selectSoundList, setPage, theme, page } = props;
   const handleChange = (event, value) => {
     setPage(value - 1);
   };
@@ -103,6 +103,9 @@ function SoundList(props) {
               count={totalPages}
               color="primary"
               onChange={handleChange}
+              page={page + 1}
+              siblingCount={5}
+              boundaryCount={3}
             />
           }
         </Box>
