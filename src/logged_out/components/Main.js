@@ -1,4 +1,4 @@
-import React, {memo, useState, useEffect, useCallback, Fragment} from "react";
+import React, {memo, useState, useEffect, useCallback } from "react";
 import PropTypes from "prop-types";
 import AOS from "aos/dist/aos";
 import withStyles from '@mui/styles/withStyles';
@@ -11,7 +11,6 @@ import DialogSelector from "./register_login/DialogSelector";
 import Routing from "./Routing";
 import smoothScrollTop from "../../shared/functions/smoothScrollTop";
 import axios from "axios";
-import {Typography} from "@mui/material";
 import formatDateTime from "./home/formatDateTime";
 
 AOS.init({ once: true });
