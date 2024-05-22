@@ -258,6 +258,7 @@ function Main(props) {
         selectSoundList={selectSoundList}
         setSoundListPosts={setSoundListPosts}
         setPage={setPage}
+        page={page}
       />
       <Footer />
     </div>
