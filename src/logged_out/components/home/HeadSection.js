@@ -114,7 +114,7 @@ function HeadSection(props) {
             >
               <div className={classNames(classes.containerFix, "container")}>
                 <Box justifyContent="space-between" className="row">
-                  <Box mb={4}>
+                  <Box mb={4} sx={{width: "100%"}}>
                     <Typography
                       variant={isWidthUpLg ? "h3" : "h4"}
                       sx={{fontFamily: "'Orbitron', cursive", fontWeight: "bold"}}
