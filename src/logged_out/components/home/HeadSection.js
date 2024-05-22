@@ -114,6 +114,20 @@ function HeadSection(props) {
             >
               <div className={classNames(classes.containerFix, "container")}>
                 <Box justifyContent="space-between" className="row">
+                  <Box mb={4} sx={{width: "100%"}}>
+                    <Typography
+                      variant={isWidthUpLg ? "h3" : "h4"}
+                      sx={{fontFamily: "'Orbitron', cursive", fontWeight: "bold"}}
+                    >
+                      Are you ready for a revolution
+                    </Typography>
+                    <Typography
+                      variant={isWidthUpLg ? "h3" : "h4"}
+                      sx={{fontFamily: "'Orbitron', cursive", fontWeight: "bold"}}
+                    >
+                      in finding sound effects?
+                    </Typography>
+                  </Box>
                   <Grid item xs={12} md={5}>
                     <Box
                       display="flex"
@@ -121,31 +135,47 @@ function HeadSection(props) {
                       justifyContent="space-between"
                       height="100%"
                     >
-                      <Box mb={4}>
-                        <Typography variant={isWidthUpLg ? "h3" : "h4"}>
-                          You can find all the sound effects you want.
-                        </Typography>
-                      </Box>
-                      <div>
-                        <Box mb={2}>
+                        <Box mb={2} sx={{flexGrow: 1, display: "flex", flexDirection: "column", justifyContent: "center"}}>
                           <Typography
                             variant={isWidthUpLg ? "h6" : "body1"}
                             color="textSecondary"
                           >
-                            Lorem ipsum dolor sit amet, consetetur sadipscing
-                            elitr, sed diam nonumy eirmod tempor invidunt
+                            you can find all the sound effects you want.
+                          </Typography>
+                          <Typography
+                            variant={isWidthUpLg ? "h6" : "body1"}
+                            color="textSecondary"
+                          >
+                            Just put in Youtube url and section.
+                          </Typography>
+                          <Typography
+                            variant={isWidthUpLg ? "h6" : "body1"}
+                            color="textSecondary"
+                          >
+                            That’s how to search for sound effects.
+                          </Typography>
+                          <Typography
+                            variant={isWidthUpLg ? "h6" : "body1"}
+                            color="textSecondary"
+                          >
+                            Let’s experience the full sound effects of Aulo!
                           </Typography>
                         </Box>
+                      <div>
                         <Button
                           variant="contained"
-                          color="secondary"
+                          color="primary"
                           fullWidth
                           className={classes.extraLargeButton}
                           classes={{ label: classes.extraLargeButtonLabel }}
                           onClick={handleModalOpen}
-                          // href="https://github.com/dunky11/react-saas-template"
                         >
-                          Start Searching Side Effect sound
+                          <Typography
+                            variant={isWidthUpLg ? "h4" : "h5"}
+                            sx={{fontFamily: "'Orbitron', cursive", fontWeight: "bold"}}
+                          >
+                            let's Search!
+                          </Typography>
                         </Button>
                       </div>
                     </Box>
