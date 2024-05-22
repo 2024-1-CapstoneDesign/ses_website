@@ -135,8 +135,7 @@ function HeadSection(props) {
                       justifyContent="space-between"
                       height="100%"
                     >
-                      <div>
-                        <Box mb={2}>
+                        <Box mb={2} sx={{flexGrow: 1, display: "flex", flexDirection: "column", justifyContent: "center"}}>
                           <Typography
                             variant={isWidthUpLg ? "h6" : "body1"}
                             color="textSecondary"
@@ -162,6 +161,7 @@ function HeadSection(props) {
                             Let’s experience the full sound effects of Aulo!
                           </Typography>
                         </Box>
+                      <div>
                         <Button
                           variant="contained"
                           color="primary"
