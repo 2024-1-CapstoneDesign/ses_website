@@ -124,7 +124,7 @@ function HeadSection(props) {
                       <Box mb={4}>
                         <Typography
                           variant={isWidthUpLg ? "h3" : "h4"}
-                          sx={{fontFamily: "'Orbitron', cursive"}}
+                          sx={{fontFamily: "'Orbitron', cursive", fontWeight: "bold"}}
                         >
                           Are you ready for a revolution in finding sound effects?
                         </Typography>
@@ -163,9 +163,13 @@ function HeadSection(props) {
                           className={classes.extraLargeButton}
                           classes={{ label: classes.extraLargeButtonLabel }}
                           onClick={handleModalOpen}
-                          // href="https://github.com/dunky11/react-saas-template"
                         >
-                          Start Searching Side Effect sound
+                          <Typography
+                            variant={isWidthUpLg ? "h4" : "h5"}
+                            sx={{fontFamily: "'Orbitron', cursive", fontWeight: "bold"}}
+                          >
+                            let's Search!
+                          </Typography>
                         </Button>
                       </div>
                     </Box>
