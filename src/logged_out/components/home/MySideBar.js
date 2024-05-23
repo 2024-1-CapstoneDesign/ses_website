@@ -104,6 +104,24 @@ function MySideBar(props) {
     ),
   ];
 
+  const uniqueTypeList = [
+    ...new Set(
+      soundListPosts
+        .map(({ soundType }) => soundType)
+    ),
+  ];
+
+  const typeListChange = (selectedList, element) => {
+    return [...selectedList].some(select => select === element);
+  }
+
+  const uniqueLengthList = [
+    ...new Set(
+      soundListPosts
+        .map(({ soundLength }) => soundLength)
+    ),
+  ];
+
   const resetVisibility = () => {
     const updatedSoundListPosts = soundListPosts.map(sound => {
       return {
@@ -141,13 +159,6 @@ function MySideBar(props) {
     });
     setSoundListPosts(updatedSoundListPosts);
   };
-  const typeElementList = [
-    ".wav",
-    ".mp3",
-    ".mp4",
-    ".wma",
-    ".aac",
-  ]
   const durationElementList = [
     "0s ~ 10s",
     "11s ~ 15s",
@@ -185,19 +196,44 @@ function MySideBar(props) {
     <Box className={classes.sidebarContainer}>
       <MySidebarElement
         elementName={"Type"}
-        elementList={typeElementList} />
+        elementList={uniqueTypeList}
+        soundListPosts={soundListPosts}
+        setSoundListPosts={setSoundListPosts}
+        selectSoundList={selectSoundList}
+        changeCallback={typeListChange}
+      />
       <MySidebarElement
         elementName={"Duration"}
-        elementList={durationElementList} />
+        elementList={durationElementList}
+        soundListPosts={soundListPosts}
+        setSoundListPosts={setSoundListPosts}
+        selectSoundList={selectSoundList}
+        changeCallback={typeListChange}
+      />
       <MySidebarElement
         elementName={"File Size"}
-        elementList={fileSizeElementList} />
+        elementList={fileSizeElementList}
+        soundListPosts={soundListPosts}
+        setSoundListPosts={setSoundListPosts}
+        selectSoundList={selectSoundList}
+        changeCallback={typeListChange}
+      />
       <MySidebarElement
         elementName={"Sample Rate"}
-        elementList={sampleRateElementList} />
+        elementList={sampleRateElementList}
+        soundListPosts={soundListPosts}
+        setSoundListPosts={setSoundListPosts}
+        selectSoundList={selectSoundList}
+        changeCallback={typeListChange}
+      />
       <MySidebarElement
         elementName={"Bit Depth"}
-        elementList={bitDepthElementList} />
+        elementList={bitDepthElementList}
+        soundListPosts={soundListPosts}
+        setSoundListPosts={setSoundListPosts}
+        selectSoundList={selectSoundList}
+        changeCallback={typeListChange}
+      />
       <Box className={classes.sidebarFooter}>
         <Typography
           variant="h6"
