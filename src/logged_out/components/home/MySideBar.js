@@ -104,28 +104,34 @@ function MySideBar(props) {
     ),
   ];
 
-  const uniqueTypeList = [
-    ...new Set(
-      soundListPosts
-        .map(({ soundType }) => soundType)
-    ),
-  ];
-
   const typeListChange = (label, element) => {
     return label === element.soundType;
   }
 
   const lengthChange = (label, element) => {
-      const tmp = element.soundLength;
-      if (label.charAt(0) === '0' && tmp >= 0 && tmp < 11)
+      const length = element.soundLength;
+      if (label.charAt(0) === '0' && length >= 0 && length <= 11)
           return true;
-      if (label.charAt(0) === '1' && label.charAt(1) === '1' && tmp >= 11 && tmp < 16)
+      if (label.charAt(0) === '1' && label.charAt(1) === '1' && length >= 11 && length < 16)
         return true;
-      if (label.charAt(0) === '1' && label.charAt(1) === '6' && tmp >= 16 && tmp < 21)
+      if (label.charAt(0) === '1' && label.charAt(1) === '6' && length >= 16 && length < 21)
         return true;
-      if (label.charAt(0) === '2' && label.charAt(1) === '1' && tmp >= 21 && tmp < 26)
+      if (label.charAt(0) === '2' && label.charAt(1) === '1' && length >= 21 && length < 26)
         return true;
-      return label.charAt(0) === 'u' && tmp >= 26;
+      return label.charAt(0) === 'u' && length >= 26;
+  }
+
+  const fileSizeChange = (label, element) => {
+    const size = element.soundFileSize;
+    if (label.charAt(0) === '0' && size >= 0 && size < 1)
+      return true;
+    if (label.charAt(0) === '1' && size >= 1 && size < 2)
+      return true;
+    if (label.charAt(0) === '2' && size >= 2 && size < 3)
+      return true;
+    if (label.charAt(0) === '3' && size >= 3 && size < 4)
+      return true;
+    return label.charAt(0) === 'u' && size >= 4;
   }
 
   const resetVisibility = () => {
@@ -170,15 +176,15 @@ function MySideBar(props) {
     "11s ~ 15s",
     "16s ~ 20s",
     "21s ~ 25s",
-    "up to 26s",
+    "upper to 25s",
   ]
 
   const fileSizeElementList = [
-    "0MB ~ 5MB",
-    "6MB ~ 10MB",
-    "11MB ~ 15MB",
-    "16MB ~ 20MB",
-    "21MB ~ 30MB",
+    "0MB ~ 1MB",
+    "1MB ~ 2MB",
+    "2MB ~ 3MB",
+    "3MB ~ 4MB",
+    "upper to 4MB",
   ]
 
   const sampleRateElementList = [
@@ -202,7 +208,12 @@ function MySideBar(props) {
     <Box className={classes.sidebarContainer}>
       <MySidebarElement
         elementName={"Type"}
-        elementList={uniqueTypeList}
+        elementList={[
+          ...new Set(
+            soundListPosts
+              .map(({ soundType }) => soundType)
+          ),
+        ]}
         soundListPosts={soundListPosts}
         setSoundListPosts={setSoundListPosts}
         selectSoundList={selectSoundList}
@@ -222,7 +233,7 @@ function MySideBar(props) {
         soundListPosts={soundListPosts}
         setSoundListPosts={setSoundListPosts}
         selectSoundList={selectSoundList}
-        changeCallback={typeListChange}
+        changeCallback={fileSizeChange}
       />
       <MySidebarElement
         elementName={"Sample Rate"}
