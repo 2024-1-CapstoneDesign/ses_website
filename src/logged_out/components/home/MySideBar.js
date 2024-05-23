@@ -134,6 +134,19 @@ function MySideBar(props) {
     return label.charAt(0) === 'u' && size >= 4;
   }
 
+  const sampleRateChange = (label, element) => {
+    const rate = element.soundSampleRate;
+    if (label.charAt(0) === '0' && rate >= 0 && rate < 40000)
+      return true;
+    if (label.charAt(0) === '4' && label.charAt(1) === '0' && rate >= 40001 && rate < 42000)
+      return true;
+    if (label.charAt(0) === '4' && label.charAt(1) === '2' && rate >= 42001 && rate < 44000)
+      return true;
+    if (label.charAt(0) === '4' && label.charAt(1) === '4' && rate >= 44001 && rate < 46000)
+      return true;
+    return label.charAt(0) === 'u' && rate >= 46000;
+  }
+
   const resetVisibility = () => {
     const updatedSoundListPosts = soundListPosts.map(sound => {
       return {
@@ -188,11 +201,11 @@ function MySideBar(props) {
   ]
 
   const sampleRateElementList = [
-    "0HZ ~ 100000HZ",
-    "100001HZ ~ 200000HZ",
-    "200001HZ ~ 300000HZ",
-    "300001HZ ~ 400000HZ",
-    "400001HZ ~ 500000HZ",
+    "0HZ ~ 40000HZ",
+    "40001HZ ~ 42000HZ",
+    "42001HZ ~ 44000HZ",
+    "44001HZ ~ 46000HZ",
+    "upper to 460000HZ"
   ]
 
   const bitDepthElementList = [
@@ -241,7 +254,7 @@ function MySideBar(props) {
         soundListPosts={soundListPosts}
         setSoundListPosts={setSoundListPosts}
         selectSoundList={selectSoundList}
-        changeCallback={typeListChange}
+        changeCallback={sampleRateChange}
       />
       <MySidebarElement
         elementName={"Bit Depth"}
