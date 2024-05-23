@@ -111,16 +111,22 @@ function MySideBar(props) {
     ),
   ];
 
-  const typeListChange = (selectedList, element) => {
-    return [...selectedList].some(select => select === element);
+  const typeListChange = (label, element) => {
+    return label === element.soundType;
   }
 
-  const uniqueLengthList = [
-    ...new Set(
-      soundListPosts
-        .map(({ soundLength }) => soundLength)
-    ),
-  ];
+  const lengthChange = (label, element) => {
+      const tmp = element.soundLength;
+      if (label.charAt(0) === '0' && tmp >= 0 && tmp < 11)
+          return true;
+      if (label.charAt(0) === '1' && label.charAt(1) === '1' && tmp >= 11 && tmp < 16)
+        return true;
+      if (label.charAt(0) === '1' && label.charAt(1) === '6' && tmp >= 16 && tmp < 21)
+        return true;
+      if (label.charAt(0) === '2' && label.charAt(1) === '1' && tmp >= 21 && tmp < 26)
+        return true;
+      return label.charAt(0) === 'u' && tmp >= 26;
+  }
 
   const resetVisibility = () => {
     const updatedSoundListPosts = soundListPosts.map(sound => {
@@ -208,7 +214,7 @@ function MySideBar(props) {
         soundListPosts={soundListPosts}
         setSoundListPosts={setSoundListPosts}
         selectSoundList={selectSoundList}
-        changeCallback={typeListChange}
+        changeCallback={lengthChange}
       />
       <MySidebarElement
         elementName={"File Size"}
