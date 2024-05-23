@@ -114,7 +114,7 @@ SoundListCard.propTypes = {
   classes: PropTypes.object.isRequired,
   url: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  date: PropTypes.number.isRequired,
+  date: PropTypes.string.isRequired,
   snippet: PropTypes.string.isRequired,
   src: PropTypes.string,
 };
