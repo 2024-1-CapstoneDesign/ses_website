@@ -147,6 +147,23 @@ function MySideBar(props) {
     return label.charAt(0) === 'u' && rate >= 46000;
   }
 
+  const bitDepthChange = (label, element) => {
+    const bit = element.soundBitDepth;
+    if (label.charAt(0) === '0' && bit >= 0 && bit < 5)
+      return true;
+    if (label.charAt(0) === '6' && bit >= 6 && bit < 11)
+      return true;
+    if (label.charAt(0) === '1' && label.charAt(1) === '1' && bit >= 11 && bit < 16)
+      return true;
+    if (label.charAt(0) === '1' && label.charAt(1) === '6' && bit >= 16 && bit < 21)
+      return true;
+    return label.charAt(0) === 'u' && bit >= 21;
+  }
+
+  const channelsChange = (label, element) => {
+    return label === element.soundChannels;
+  }
+
   const resetVisibility = () => {
     const updatedSoundListPosts = soundListPosts.map(sound => {
       return {
@@ -212,8 +229,8 @@ function MySideBar(props) {
     "0bit ~ 5bit",
     "6bit ~ 10bit",
     "11bit ~ 15bit",
-    "21bit ~ 25it",
-    "26bit ~ 30bit",
+    "16bit ~ 20bit",
+    "upper to 21bit",
   ]
 
 
@@ -262,7 +279,20 @@ function MySideBar(props) {
         soundListPosts={soundListPosts}
         setSoundListPosts={setSoundListPosts}
         selectSoundList={selectSoundList}
-        changeCallback={typeListChange}
+        changeCallback={bitDepthChange}
+      />
+      <MySidebarElement
+        elementName={"Channels"}
+        elementList={[
+          ...new Set(
+            soundListPosts
+              .map(({ soundChannels }) => soundChannels)
+          ),
+        ]}
+        soundListPosts={soundListPosts}
+        setSoundListPosts={setSoundListPosts}
+        selectSoundList={selectSoundList}
+        changeCallback={channelsChange}
       />
       <Box className={classes.sidebarFooter}>
         <Typography
