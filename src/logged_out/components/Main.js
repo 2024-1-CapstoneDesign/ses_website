@@ -32,6 +32,7 @@ function Main(props) {
   const [dialogOpen, setDialogOpen] = useState(null);
   const [isCookieRulesDialogOpen, setIsCookieRulesDialogOpen] = useState(false);
   const [page, setPage] = useState(0);
+  const [filterList, setFilterList] = useState(new Set());
 
   const selectHome = useCallback(() => {
     smoothScrollTop();
@@ -76,9 +77,20 @@ function Main(props) {
     setDialogOpen("changePassword");
   }, [setDialogOpen]);
 
+  const getURLQueryString = (filterList) => {
+    const resObj = {
+      fromLen: "",
+      toLen: "",
+      sampleRate: "",
+      bitDepth: "",
+      channels: "",
+    };
+    return resObj;
+  }
+
   const fetchSoundList = async () => {
-    const url = `https://soundeffect-search.p-e.kr/api/v1/soundeffect?page=${page}&size=${PAGESIZE}`
-    // const url = "https://soundeffect-search.p-e.kr/api/v1/soundeffect"
+    const {fromLen, toLen, sampleRate, bitDepth, channels} = getURLQueryString(filterList);
+    const url = `https://soundeffect-search.p-e.kr/api/v1/soundeffect?fromLength=${fromLen}&toLength=${toLen}&sampleRate=${sampleRate}&bitDepth=${bitDepth}&channels=${channels}&page=${page}&size=${PAGESIZE}`
     try {
       const axiosRes = await axios.get(url);
       const resData = axiosRes.data; //fetchResult
