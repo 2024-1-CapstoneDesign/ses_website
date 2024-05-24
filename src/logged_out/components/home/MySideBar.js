@@ -201,37 +201,100 @@ function MySideBar(props) {
       };
     });
     setSoundListPosts(updatedSoundListPosts);
+
+    const newIsSelected = new Array(isSelected.length).fill(false);
+    setIsSelected(newIsSelected);
   };
   const durationElementList = [
-    "0s ~ 10s",
-    "11s ~ 15s",
-    "16s ~ 20s",
-    "21s ~ 25s",
-    "upper to 25s",
+    {
+      value: [0, 10],
+      label: "0s ~ 10s"
+    },
+    {
+      value: [11, 15],
+      label: "11s ~ 15s"
+    },
+    {
+      value: [16, 20],
+      label: "16s ~ 20s"
+    },
+    {
+      value: [21, 25],
+      label: "21s ~ 25s"
+    },
+    {
+      value: [26, 100],
+      label: "upper to 25s"
+    },
   ]
 
   const fileSizeElementList = [
-    "0MB ~ 1MB",
-    "1MB ~ 2MB",
-    "2MB ~ 3MB",
-    "3MB ~ 4MB",
-    "upper to 4MB",
+    {
+      value: [0, 1],
+      label: "0MB ~ 1MB",
+    },
+    {
+      value: [1, 2],
+      label: "1MB ~ 2MB",
+    },
+    {
+      value: [2, 3],
+      label: "2MB ~ 3MB",
+    },
+    {
+      value: [3, 4],
+      label: "3MB ~ 4MB",
+    },
+    {
+      value: [4, 100],
+      label: "upper to 4MB",
+    },
   ]
 
   const sampleRateElementList = [
-    "0HZ ~ 40000HZ",
-    "40001HZ ~ 42000HZ",
-    "42001HZ ~ 44000HZ",
-    "44001HZ ~ 46000HZ",
-    "upper to 460000HZ"
+    {
+      value: [0, 40000],
+      label: "0HZ ~ 40000HZ",
+    },
+    {
+      value: [40001, 42000],
+      label: "40001HZ ~ 42000HZ",
+    },
+    {
+      value: [42001, 44000],
+      label: "42001HZ ~ 44000HZ",
+    },
+    {
+      value: [44001, 46000],
+      label: "44001HZ ~ 46000HZ",
+    },
+    {
+      value: [46001, 1000000],
+      label: "upper to 460000HZ",
+    },
   ]
 
   const bitDepthElementList = [
-    "0bit ~ 5bit",
-    "6bit ~ 10bit",
-    "11bit ~ 15bit",
-    "16bit ~ 20bit",
-    "upper to 21bit",
+    {
+      value: [0, 5],
+      label: "0bit ~ 5bit",
+    },
+    {
+      value: [6, 10],
+      label: "6bit ~ 10bit",
+    },
+    {
+      value: [11, 15],
+      label: "11bit ~ 15bit",
+    },
+    {
+      value: [16, 20],
+      label: "16bit ~ 20bit",
+    },
+    {
+      value: [21, 1000000],
+      label: "upper to 21bit",
+    },
   ]
 
 
@@ -244,8 +307,13 @@ function MySideBar(props) {
           ...new Set(
             soundListPosts
               .map(({ soundType }) => soundType)
-          ),
-        ]}
+          )].map((element) => {
+            return {
+              value: [element],
+              label: element
+            }
+        })
+        }
         soundListPosts={soundListPosts}
         setSoundListPosts={setSoundListPosts}
         selectSoundList={selectSoundList}
@@ -305,8 +373,13 @@ function MySideBar(props) {
           ...new Set(
             soundListPosts
               .map(({ soundChannels }) => soundChannels)
-          ),
-        ]}
+          )].map((element) => {
+          return {
+            value: [element],
+            label: element
+          }
+        })
+        }
         soundListPosts={soundListPosts}
         setSoundListPosts={setSoundListPosts}
         selectSoundList={selectSoundList}

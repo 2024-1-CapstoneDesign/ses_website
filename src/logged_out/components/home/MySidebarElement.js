@@ -67,7 +67,7 @@ function MySidebarElement(props) {
       >
         {elementName}
       </Typography>
-      {elementList.map((label, index) => (
+      {elementList.map(({value, label}, index) => (
         <Typography
           key={index}
           component="div"
