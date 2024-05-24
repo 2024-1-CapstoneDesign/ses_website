@@ -35,6 +35,14 @@ function MySidebarElement(props) {
     newChecked[index] = !checked[index];
     setChecked(newChecked);
 
+    const newFilterList = new Set(filterList);
+    if (newChecked[index]) {
+      newFilterList.add(elementList[index]);
+    } else {
+      newFilterList.delete(elementList[index]);
+    }
+    setFilterList(newFilterList);
+
     const updatedSoundListPosts = soundListPosts.map((sound) => {
       return {
         ...sound,
