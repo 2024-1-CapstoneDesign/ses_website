@@ -226,7 +226,12 @@ function MySideBar(props) {
       value: [26, 100],
       label: "upper to 25s"
     },
-  ]
+  ].map(element => {
+    return {
+      ...element,
+      id: 1,
+    }
+  });
 
   const fileSizeElementList = [
     {
@@ -249,7 +254,12 @@ function MySideBar(props) {
       value: [4, 100],
       label: "upper to 4MB",
     },
-  ]
+  ].map(element => {
+    return {
+      ...element,
+      id: 2,
+    }
+  });
 
   const sampleRateElementList = [
     {
@@ -272,7 +282,12 @@ function MySideBar(props) {
       value: [46001, 1000000],
       label: "upper to 460000HZ",
     },
-  ]
+  ].map(element => {
+    return {
+      ...element,
+      id: 3,
+    }
+  });
 
   const bitDepthElementList = [
     {
@@ -295,7 +310,12 @@ function MySideBar(props) {
       value: [21, 1000000],
       label: "upper to 21bit",
     },
-  ]
+  ].map(element => {
+    return {
+      ...element,
+      id: 4,
+    }
+  });
 
 
   return ( //type, duration, filesize, sample rate, bit depth, channels
@@ -310,7 +330,8 @@ function MySideBar(props) {
           )].map((element) => {
             return {
               value: [element],
-              label: element
+              label: element,
+              id: 0,
             }
         })
         }
@@ -318,7 +339,6 @@ function MySideBar(props) {
         setSoundListPosts={setSoundListPosts}
         selectSoundList={selectSoundList}
         changeCallback={typeListChange}
-        id={"0"}
       />
       {/*id = 1*/}
       <MySidebarElement
@@ -328,7 +348,6 @@ function MySideBar(props) {
         setSoundListPosts={setSoundListPosts}
         selectSoundList={selectSoundList}
         changeCallback={lengthChange}
-        id={"1"}
       />
       <MySidebarElement
         elementName={"File Size"}
@@ -337,7 +356,6 @@ function MySideBar(props) {
         setSoundListPosts={setSoundListPosts}
         selectSoundList={selectSoundList}
         changeCallback={fileSizeChange}
-        id={"2"}
       />
       <MySidebarElement
         elementName={"Sample Rate"}
@@ -346,7 +364,6 @@ function MySideBar(props) {
         setSoundListPosts={setSoundListPosts}
         selectSoundList={selectSoundList}
         changeCallback={sampleRateChange}
-        id={"3"}
       />
       <MySidebarElement
         elementName={"Bit Depth"}
@@ -355,7 +372,6 @@ function MySideBar(props) {
         setSoundListPosts={setSoundListPosts}
         selectSoundList={selectSoundList}
         changeCallback={bitDepthChange}
-        id={"4"}
       />
       <MySidebarElement
         elementName={"Channels"}
@@ -366,7 +382,8 @@ function MySideBar(props) {
           )].map((element) => {
           return {
             value: [element],
-            label: element
+            label: element,
+            id: 5,
           }
         })
         }
@@ -376,7 +393,6 @@ function MySideBar(props) {
         changeCallback={channelsChange}
         isSelected={isSelected}
         setIsSelected={setIsSelected}
-        id={"5"}
       />
       <Box className={classes.sidebarFooter}>
         <Typography
