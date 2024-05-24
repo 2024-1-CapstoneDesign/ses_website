@@ -78,6 +78,7 @@ function Main(props) {
   }, [setDialogOpen]);
 
   const getURLQueryString = (filterList) => {
+    console.dir(filterList);
     const resObj = {
       fromLen: "",
       toLen: "",
@@ -143,7 +144,7 @@ function Main(props) {
     setSoundListPosts(soundListPosts);
     selectSoundList()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [setSoundListPosts, page]);
+  }, [setSoundListPosts, page, filterList]);
 
   const handleCookieRulesDialogOpen = useCallback(() => {
     setIsCookieRulesDialogOpen(true);
