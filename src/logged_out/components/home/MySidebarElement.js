@@ -27,13 +27,10 @@ const styles = () => ({
 
 function MySidebarElement(props) {
   const {classes, elementName, elementList,
-    soundListPosts, setSoundListPosts, selectSoundList, changeCallback,
-    isSelected, setIsSelected, id} = props;
+    soundListPosts, setSoundListPosts, selectSoundList, changeCallback, id} = props;
   const [checked, setChecked] = useState([false, false, false, false, false]);
 
   const handleChange = (index, label) => {
-    setIsSelected(id);
-
     const newChecked = new Array(checked.length).fill(false);
     newChecked[index] = !checked[index];
     setChecked(newChecked);
@@ -51,13 +48,6 @@ function MySidebarElement(props) {
     selectSoundList();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectSoundList]);
-
-  useEffect(() => {
-    if (isSelected !== id) {
-      setChecked(new Array(checked.length).fill(false));
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isSelected]);
 
   return (
     <Box className={classes.sidebarBody}>

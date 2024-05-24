@@ -318,8 +318,6 @@ function MySideBar(props) {
         setSoundListPosts={setSoundListPosts}
         selectSoundList={selectSoundList}
         changeCallback={typeListChange}
-        isSelected={isSelected}
-        setIsSelected={setIsSelected}
         id={"0"}
       />
       {/*id = 1*/}
@@ -330,8 +328,6 @@ function MySideBar(props) {
         setSoundListPosts={setSoundListPosts}
         selectSoundList={selectSoundList}
         changeCallback={lengthChange}
-        isSelected={isSelected}
-        setIsSelected={setIsSelected}
         id={"1"}
       />
       <MySidebarElement
@@ -341,8 +337,6 @@ function MySideBar(props) {
         setSoundListPosts={setSoundListPosts}
         selectSoundList={selectSoundList}
         changeCallback={fileSizeChange}
-        isSelected={isSelected}
-        setIsSelected={setIsSelected}
         id={"2"}
       />
       <MySidebarElement
@@ -352,8 +346,6 @@ function MySideBar(props) {
         setSoundListPosts={setSoundListPosts}
         selectSoundList={selectSoundList}
         changeCallback={sampleRateChange}
-        isSelected={isSelected}
-        setIsSelected={setIsSelected}
         id={"3"}
       />
       <MySidebarElement
@@ -363,8 +355,6 @@ function MySideBar(props) {
         setSoundListPosts={setSoundListPosts}
         selectSoundList={selectSoundList}
         changeCallback={bitDepthChange}
-        isSelected={isSelected}
-        setIsSelected={setIsSelected}
         id={"4"}
       />
       <MySidebarElement
