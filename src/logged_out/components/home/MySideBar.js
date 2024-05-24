@@ -94,6 +94,7 @@ const styles = (theme) => ({
 function MySideBar(props) {
   const { classes, soundListPosts, selectSoundList, setSoundListPosts } = props;
   const [selectedTags, setSelectedTags] = useState(new Set());
+  const [isSelected, setIsSelected] = useState(null);
 
   const uniqueTagList = [
     ...new Set(
@@ -236,6 +237,7 @@ function MySideBar(props) {
 
   return ( //type, duration, filesize, sample rate, bit depth, channels
     <Box className={classes.sidebarContainer}>
+      {/*id = 0*/}
       <MySidebarElement
         elementName={"Type"}
         elementList={[
@@ -248,7 +250,11 @@ function MySideBar(props) {
         setSoundListPosts={setSoundListPosts}
         selectSoundList={selectSoundList}
         changeCallback={typeListChange}
+        isSelected={isSelected}
+        setIsSelected={setIsSelected}
+        id={"0"}
       />
+      {/*id = 1*/}
       <MySidebarElement
         elementName={"Duration"}
         elementList={durationElementList}
@@ -256,6 +262,9 @@ function MySideBar(props) {
         setSoundListPosts={setSoundListPosts}
         selectSoundList={selectSoundList}
         changeCallback={lengthChange}
+        isSelected={isSelected}
+        setIsSelected={setIsSelected}
+        id={"1"}
       />
       <MySidebarElement
         elementName={"File Size"}
@@ -264,6 +273,9 @@ function MySideBar(props) {
         setSoundListPosts={setSoundListPosts}
         selectSoundList={selectSoundList}
         changeCallback={fileSizeChange}
+        isSelected={isSelected}
+        setIsSelected={setIsSelected}
+        id={"2"}
       />
       <MySidebarElement
         elementName={"Sample Rate"}
@@ -272,6 +284,9 @@ function MySideBar(props) {
         setSoundListPosts={setSoundListPosts}
         selectSoundList={selectSoundList}
         changeCallback={sampleRateChange}
+        isSelected={isSelected}
+        setIsSelected={setIsSelected}
+        id={"3"}
       />
       <MySidebarElement
         elementName={"Bit Depth"}
@@ -280,6 +295,9 @@ function MySideBar(props) {
         setSoundListPosts={setSoundListPosts}
         selectSoundList={selectSoundList}
         changeCallback={bitDepthChange}
+        isSelected={isSelected}
+        setIsSelected={setIsSelected}
+        id={"4"}
       />
       <MySidebarElement
         elementName={"Channels"}
@@ -293,6 +311,9 @@ function MySideBar(props) {
         setSoundListPosts={setSoundListPosts}
         selectSoundList={selectSoundList}
         changeCallback={channelsChange}
+        isSelected={isSelected}
+        setIsSelected={setIsSelected}
+        id={"5"}
       />
       <Box className={classes.sidebarFooter}>
         <Typography
