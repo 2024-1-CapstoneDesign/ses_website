@@ -27,7 +27,7 @@ const styles = () => ({
 
 function MySidebarElement(props) {
   const {classes, elementName, elementList,
-    soundListPosts, setSoundListPosts, selectSoundList, changeCallback, id} = props;
+    soundListPosts, setSoundListPosts, selectSoundList, changeCallback} = props;
   const [checked, setChecked] = useState([false, false, false, false, false]);
 
   const handleChange = (index, label) => {
