@@ -92,7 +92,7 @@ const styles = (theme) => ({
 });
 
 function MySideBar(props) {
-  const { classes, soundListPosts, selectSoundList, setSoundListPosts } = props;
+  const { classes, soundListPosts, selectSoundList, setSoundListPosts, filterList, setFilterList } = props;
   const [selectedTags, setSelectedTags] = useState(new Set());
   const [isSelected, setIsSelected] = useState(null);
 
@@ -339,6 +339,8 @@ function MySideBar(props) {
         setSoundListPosts={setSoundListPosts}
         selectSoundList={selectSoundList}
         changeCallback={typeListChange}
+        filterList={filterList}
+        setFilterList={setFilterList}
       />
       {/*id = 1*/}
       <MySidebarElement
@@ -348,6 +350,8 @@ function MySideBar(props) {
         setSoundListPosts={setSoundListPosts}
         selectSoundList={selectSoundList}
         changeCallback={lengthChange}
+        filterList={filterList}
+        setFilterList={setFilterList}
       />
       <MySidebarElement
         elementName={"File Size"}
@@ -356,6 +360,8 @@ function MySideBar(props) {
         setSoundListPosts={setSoundListPosts}
         selectSoundList={selectSoundList}
         changeCallback={fileSizeChange}
+        filterList={filterList}
+        setFilterList={setFilterList}
       />
       <MySidebarElement
         elementName={"Sample Rate"}
@@ -364,6 +370,8 @@ function MySideBar(props) {
         setSoundListPosts={setSoundListPosts}
         selectSoundList={selectSoundList}
         changeCallback={sampleRateChange}
+        filterList={filterList}
+        setFilterList={setFilterList}
       />
       <MySidebarElement
         elementName={"Bit Depth"}
@@ -372,6 +380,8 @@ function MySideBar(props) {
         setSoundListPosts={setSoundListPosts}
         selectSoundList={selectSoundList}
         changeCallback={bitDepthChange}
+        filterList={filterList}
+        setFilterList={setFilterList}
       />
       <MySidebarElement
         elementName={"Channels"}
@@ -393,6 +403,8 @@ function MySideBar(props) {
         changeCallback={channelsChange}
         isSelected={isSelected}
         setIsSelected={setIsSelected}
+        filterList={filterList}
+        setFilterList={setFilterList}
       />
       <Box className={classes.sidebarFooter}>
         <Typography

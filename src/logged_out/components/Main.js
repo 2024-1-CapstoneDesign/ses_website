@@ -190,6 +190,8 @@ function Main(props) {
         setSoundListPosts={setSoundListPosts}
         setPage={setPage}
         page={page}
+        filterList={filterList}
+        setFilterList={setFilterList}
       />
       <Footer />
     </div>
