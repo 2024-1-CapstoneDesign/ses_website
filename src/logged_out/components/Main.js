@@ -81,7 +81,6 @@ function Main(props) {
   }, [setDialogOpen]);
 
   const getURLQueryString = (filterList) => {
-    console.dir(filterList);
     const resObj = {
       type:"",
       fromLen: "",
@@ -145,7 +144,6 @@ function Main(props) {
     } else {
       url = `https://soundeffect-search.p-e.kr/api/v1/soundeffect?type=${type}&fromLength=${fromLen}&toLength=${toLen}&fromFileSize=${fromFileSize}&toFileSize=${toFileSize}&sampleRate=${sampleRate}&bitDepth=${bitDepth}&channels=${channels}&page=${page}&size=${PAGESIZE}`
     }
-    console.log(url);
     try {
       const axiosRes = await axios.get(url);
       const resData = axiosRes.data; //fetchResult
