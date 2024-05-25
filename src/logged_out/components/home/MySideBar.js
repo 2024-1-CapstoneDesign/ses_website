@@ -92,7 +92,7 @@ const styles = (theme) => ({
 });
 
 function MySideBar(props) {
-  const { classes, soundListPosts, selectSoundList, setSoundListPosts, filterList, setFilterList } = props;
+  const { classes, soundListPosts, selectSoundList, setSoundListPosts, filterList, setFilterList, setPage } = props;
   const [selectedTags, setSelectedTags] = useState(new Set());
   const [isSelected, setIsSelected] = useState(null);
 
@@ -104,66 +104,6 @@ function MySideBar(props) {
         .map((tag) => tag.tagName)
     ),
   ];
-
-  const typeListChange = (label, element) => {
-    return label === element.soundType;
-  }
-
-  const lengthChange = (label, element) => {
-      const length = element.soundLength;
-      if (label.charAt(0) === '0' && length >= 0 && length <= 11)
-          return true;
-      if (label.charAt(0) === '1' && label.charAt(1) === '1' && length >= 11 && length < 16)
-        return true;
-      if (label.charAt(0) === '1' && label.charAt(1) === '6' && length >= 16 && length < 21)
-        return true;
-      if (label.charAt(0) === '2' && label.charAt(1) === '1' && length >= 21 && length < 26)
-        return true;
-      return label.charAt(0) === 'u' && length >= 26;
-  }
-
-  const fileSizeChange = (label, element) => {
-    const size = element.soundFileSize;
-    if (label.charAt(0) === '0' && size >= 0 && size < 1)
-      return true;
-    if (label.charAt(0) === '1' && size >= 1 && size < 2)
-      return true;
-    if (label.charAt(0) === '2' && size >= 2 && size < 3)
-      return true;
-    if (label.charAt(0) === '3' && size >= 3 && size < 4)
-      return true;
-    return label.charAt(0) === 'u' && size >= 4;
-  }
-
-  const sampleRateChange = (label, element) => {
-    const rate = element.soundSampleRate;
-    if (label.charAt(0) === '0' && rate >= 0 && rate < 40000)
-      return true;
-    if (label.charAt(0) === '4' && label.charAt(1) === '0' && rate >= 40001 && rate < 42000)
-      return true;
-    if (label.charAt(0) === '4' && label.charAt(1) === '2' && rate >= 42001 && rate < 44000)
-      return true;
-    if (label.charAt(0) === '4' && label.charAt(1) === '4' && rate >= 44001 && rate < 46000)
-      return true;
-    return label.charAt(0) === 'u' && rate >= 46000;
-  }
-
-  const bitDepthChange = (label, element) => {
-    const bit = element.soundBitDepth;
-    if (label.charAt(0) === '0' && bit >= 0 && bit < 5)
-      return true;
-    if (label.charAt(0) === '6' && bit >= 6 && bit < 11)
-      return true;
-    if (label.charAt(0) === '1' && label.charAt(1) === '1' && bit >= 11 && bit < 16)
-      return true;
-    if (label.charAt(0) === '1' && label.charAt(1) === '6' && bit >= 16 && bit < 21)
-      return true;
-    return label.charAt(0) === 'u' && bit >= 21;
-  }
-
-  const channelsChange = (label, element) => {
-    return label === element.soundChannels;
-  }
 
   const resetVisibility = () => {
     const updatedSoundListPosts = soundListPosts.map(sound => {
@@ -205,6 +145,34 @@ function MySideBar(props) {
     const newIsSelected = new Array(isSelected.length).fill(false);
     setIsSelected(newIsSelected);
   };
+  const typeElementList = [
+    {
+      value: ["wav"],
+      label: "wav"
+    },
+    {
+      value: ["mp3"],
+      label: "mp3"
+    },
+    {
+      value: ["aiff"],
+      label: "aiff"
+    },
+    {
+      value: ["flac"],
+      label: "flac"
+    },
+    {
+      value: ["m4a"],
+      label: "m4a"
+    },
+  ].map(element => {
+    return {
+      ...element,
+      id: 0,
+    }
+  });
+
   const durationElementList = [
     {
       value: [0, 10],
@@ -263,24 +231,24 @@ function MySideBar(props) {
 
   const sampleRateElementList = [
     {
-      value: [0, 40000],
-      label: "0HZ ~ 40000HZ",
+      value: [22050],
+      label: "22050HZ",
     },
     {
-      value: [40001, 42000],
-      label: "40001HZ ~ 42000HZ",
+      value: [44100],
+      label: "44100HZ",
     },
     {
-      value: [42001, 44000],
-      label: "42001HZ ~ 44000HZ",
+      value: [48000],
+      label: "48000HZ",
     },
     {
-      value: [44001, 46000],
-      label: "44001HZ ~ 46000HZ",
+      value: [96000],
+      label: "96000HZ",
     },
     {
-      value: [46001, 1000000],
-      label: "upper to 460000HZ",
+      value: [192000],
+      label: "192000HZ",
     },
   ].map(element => {
     return {
@@ -291,24 +259,20 @@ function MySideBar(props) {
 
   const bitDepthElementList = [
     {
-      value: [0, 5],
-      label: "0bit ~ 5bit",
+      value: [8],
+      label: "8bit",
     },
     {
-      value: [6, 10],
-      label: "6bit ~ 10bit",
+      value: [16],
+      label: "16bit",
     },
     {
-      value: [11, 15],
-      label: "11bit ~ 15bit",
+      value: [24],
+      label: "24bit",
     },
     {
-      value: [16, 20],
-      label: "16bit ~ 20bit",
-    },
-    {
-      value: [21, 1000000],
-      label: "upper to 21bit",
+      value: [32],
+      label: "32bit",
     },
   ].map(element => {
     return {
@@ -317,94 +281,70 @@ function MySideBar(props) {
     }
   });
 
+  const ChannelElementList = [
+    {
+      value: ["Stereo"],
+      label: "Stereo",
+    },
+  ].map(element => {
+    return {
+      ...element,
+      id: 5,
+    }
+  });
+
 
   return ( //type, duration, filesize, sample rate, bit depth, channels
     <Box className={classes.sidebarContainer}>
-      {/*id = 0*/}
       <MySidebarElement
         elementName={"Type"}
-        elementList={[
-          ...new Set(
-            soundListPosts
-              .map(({ soundType }) => soundType)
-          )].map((element) => {
-            return {
-              value: [element],
-              label: element,
-              id: 0,
-            }
-        })
-        }
-        soundListPosts={soundListPosts}
-        setSoundListPosts={setSoundListPosts}
+        elementList={typeElementList}
         selectSoundList={selectSoundList}
-        changeCallback={typeListChange}
         filterList={filterList}
         setFilterList={setFilterList}
+        setPage={setPage}
       />
-      {/*id = 1*/}
       <MySidebarElement
         elementName={"Duration"}
         elementList={durationElementList}
-        soundListPosts={soundListPosts}
-        setSoundListPosts={setSoundListPosts}
         selectSoundList={selectSoundList}
-        changeCallback={lengthChange}
         filterList={filterList}
         setFilterList={setFilterList}
+        setPage={setPage}
       />
       <MySidebarElement
         elementName={"File Size"}
         elementList={fileSizeElementList}
-        soundListPosts={soundListPosts}
-        setSoundListPosts={setSoundListPosts}
         selectSoundList={selectSoundList}
-        changeCallback={fileSizeChange}
         filterList={filterList}
         setFilterList={setFilterList}
+        setPage={setPage}
       />
       <MySidebarElement
         elementName={"Sample Rate"}
         elementList={sampleRateElementList}
-        soundListPosts={soundListPosts}
-        setSoundListPosts={setSoundListPosts}
         selectSoundList={selectSoundList}
-        changeCallback={sampleRateChange}
         filterList={filterList}
         setFilterList={setFilterList}
+        setPage={setPage}
       />
       <MySidebarElement
         elementName={"Bit Depth"}
         elementList={bitDepthElementList}
-        soundListPosts={soundListPosts}
-        setSoundListPosts={setSoundListPosts}
         selectSoundList={selectSoundList}
-        changeCallback={bitDepthChange}
         filterList={filterList}
         setFilterList={setFilterList}
+        setPage={setPage}
       />
       <MySidebarElement
         elementName={"Channels"}
-        elementList={[
-          ...new Set(
-            soundListPosts
-              .map(({ soundChannels }) => soundChannels)
-          )].map((element) => {
-          return {
-            value: [element],
-            label: element,
-            id: 5,
-          }
-        })
-        }
-        soundListPosts={soundListPosts}
-        setSoundListPosts={setSoundListPosts}
+        elementList={ChannelElementList}
         selectSoundList={selectSoundList}
-        changeCallback={channelsChange}
         isSelected={isSelected}
         setIsSelected={setIsSelected}
         filterList={filterList}
         setFilterList={setFilterList}
+        setPage={setPage}
       />
       <Box className={classes.sidebarFooter}>
         <Typography

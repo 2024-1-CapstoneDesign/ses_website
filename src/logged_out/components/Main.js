@@ -86,12 +86,38 @@ function Main(props) {
       bitDepth: "",
       channels: "",
     };
+    filterList.forEach((filter, index) => {
+      switch (index){
+        case 1:
+          if (filter !== 0){
+            resObj.fromLen = filter.value[0];
+            resObj.toLen = filter.value[1];
+          }
+          break;
+        case 2:
+          if (filter !== 0){
+            resObj.sampleRate = filter.value[0];
+          }
+          break;
+        case 3:
+          if (filter !== 0){
+            resObj.bitDepth = filter.value[0];
+          }
+          break;
+        case 4:
+          if (filter !== 0){
+            resObj.channels = filter.value[0];
+          }
+          break;
+      }
+    });
     return resObj;
   }
 
   const fetchSoundList = async () => {
     const {fromLen, toLen, sampleRate, bitDepth, channels} = getURLQueryString(filterList);
     const url = `https://soundeffect-search.p-e.kr/api/v1/soundeffect?fromLength=${fromLen}&toLength=${toLen}&sampleRate=${sampleRate}&bitDepth=${bitDepth}&channels=${channels}&page=${page}&size=${PAGESIZE}`
+    console.log(url);
     try {
       const axiosRes = await axios.get(url);
       const resData = axiosRes.data; //fetchResult

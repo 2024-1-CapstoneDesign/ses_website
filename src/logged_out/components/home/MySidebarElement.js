@@ -27,10 +27,10 @@ const styles = () => ({
 
 function MySidebarElement(props) {
   const {classes, elementName, elementList,
-    soundListPosts, setSoundListPosts, selectSoundList, changeCallback, filterList, setFilterList} = props;
+    selectSoundList, filterList, setFilterList, setPage} = props;
   const [checked, setChecked] = useState([false, false, false, false, false]);
 
-  const handleChange = (index, label) => {
+  const handleChange = (index) => {
     const newChecked = new Array(checked.length).fill(false);
     newChecked[index] = !checked[index];
     setChecked(newChecked);
@@ -44,14 +44,7 @@ function MySidebarElement(props) {
       newFilterList[id] = 0;
     }
     setFilterList(newFilterList);
-
-    const updatedSoundListPosts = soundListPosts.map((sound) => {
-      return {
-        ...sound,
-        soundVisible: [...newChecked].every(element => !element) ? true : newChecked[index] && changeCallback(label, sound)
-      };
-    });
-    setSoundListPosts(updatedSoundListPosts);
+    setPage(0);
   };
 
   useEffect(() => {
