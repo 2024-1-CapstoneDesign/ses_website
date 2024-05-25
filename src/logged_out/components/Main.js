@@ -12,6 +12,7 @@ import Routing from "./Routing";
 import smoothScrollTop from "../../shared/functions/smoothScrollTop";
 import axios from "axios";
 import formatDateTime from "./home/formatDateTime";
+import {useHistory, useLocation} from "react-router-dom";
 
 AOS.init({ once: true });
 
@@ -26,6 +27,8 @@ const styles = (theme) => ({
 
 function Main(props) {
   const { classes } = props;
+  const location = useLocation(); // Get the current location
+  const history = useHistory(); // Get the history object
   const [selectedTab, setSelectedTab] = useState(null);
   const [isMobileDrawerOpen, setIsMobileDrawerOpen] = useState(false);
   const [soundListPosts, setSoundListPosts] = useState([]);
@@ -206,6 +209,18 @@ function Main(props) {
   }, [setIsCookieRulesDialogOpen]);
 
   useEffect(fetchSoundListPosts, [fetchSoundListPosts]);
+
+  useEffect(() => {
+    if (location.pathname === "/soundList") {
+      const urlParams = new URLSearchParams(location.search);
+      if (!urlParams.has('reload')) {
+        urlParams.set('reload', '1');
+        history.replace({ search: urlParams.toString() });
+        setPage(0);
+        setFilterList([0, 0, 0, 0, 0, 0, []]);
+      }
+    }
+  }, [location, history]);
 
   return (
     <div className={classes.wrapper}>
