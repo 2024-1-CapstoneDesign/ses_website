@@ -95,6 +95,7 @@ function SoundList(props) {
         setSoundListPosts={setSoundListPosts}
         filterList={filterList}
         setFilterList={setFilterList}
+        setPage={setPage}
       />
       <div className={classes.blogContentWrapper}>
         <Grid container spacing={3}>
