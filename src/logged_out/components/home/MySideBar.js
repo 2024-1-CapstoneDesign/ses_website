@@ -92,16 +92,15 @@ const styles = (theme) => ({
 });
 
 function MySideBar(props) {
-  const { classes, soundListPosts, selectSoundList, setSoundListPosts } = props;
+  const { classes, soundListPosts, selectSoundList, setSoundListPosts, filterList, setFilterList, setPage } = props;
   const [selectedTags, setSelectedTags] = useState(new Set());
 
   const uniqueTagList = [
-    ...new Set(
+    ...new Map(
       soundListPosts
-        .map(({ soundTagList }) => ({ ...soundTagList }))
-        .flatMap((obj) => Object.values(obj))
-        .map((tag) => tag.tagName)
-    ),
+        .flatMap(({ soundTagList }) => Object.values(soundTagList))
+        .map(tag => [tag.tagId, tag])
+    ).values()
   ];
 
   const resetVisibility = () => {
@@ -121,83 +120,220 @@ function MySideBar(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectSoundList]);
 
-  const handleChipClick = (tagName) => {
+  const handleChipClick = ({tagName, tagId}) => {
+    const newFilterList = [...filterList];
+    const newSelectedTagIds = new Set(filterList[6]);
     const newSelectedTags = new Set(selectedTags);
     if (selectedTags.has(tagName)) {
       newSelectedTags.delete(tagName);
+      newSelectedTagIds.delete(tagId);
     } else {
       newSelectedTags.add(tagName);
+      newSelectedTagIds.add(tagId);
     }
     setSelectedTags(newSelectedTags);
-    const updatedSoundListPosts = soundListPosts.map(sound => {
-      let isTagSelected = sound.soundTagList.some((element) => newSelectedTags.has(element.tagName))
-      if (newSelectedTags.size === 0){ // 만약 모든 tag가 비어있다면 다시 전체 soundCard가 보이게 만들기
-        isTagSelected = true
-      }
-      return {
-        ...sound,
-        soundVisible: isTagSelected
-      };
-    });
-    setSoundListPosts(updatedSoundListPosts);
+    newFilterList[6] = [...newSelectedTagIds];
+    setFilterList(newFilterList);
   };
   const typeElementList = [
-    ".wav",
-    ".mp3",
-    ".mp4",
-    ".wma",
-    ".aac",
-  ]
+    {
+      value: ["wav"],
+      label: "wav"
+    },
+    {
+      value: ["mp3"],
+      label: "mp3"
+    },
+    {
+      value: ["aiff"],
+      label: "aiff"
+    },
+    {
+      value: ["flac"],
+      label: "flac"
+    },
+    {
+      value: ["m4a"],
+      label: "m4a"
+    },
+  ].map(element => {
+    return {
+      ...element,
+      id: 0,
+    }
+  });
+
   const durationElementList = [
-    "0s ~ 10s",
-    "11s ~ 15s",
-    "16s ~ 20s",
-    "21s ~ 25s",
-    "up to 26s",
-  ]
+    {
+      value: [0, 10],
+      label: "0s ~ 10s"
+    },
+    {
+      value: [11, 15],
+      label: "11s ~ 15s"
+    },
+    {
+      value: [16, 20],
+      label: "16s ~ 20s"
+    },
+    {
+      value: [21, 25],
+      label: "21s ~ 25s"
+    },
+    {
+      value: [26, 100],
+      label: "upper to 25s"
+    },
+  ].map(element => {
+    return {
+      ...element,
+      id: 1,
+    }
+  });
 
   const fileSizeElementList = [
-    "0MB ~ 5MB",
-    "6MB ~ 10MB",
-    "11MB ~ 15MB",
-    "16MB ~ 20MB",
-    "21MB ~ 30MB",
-  ]
+    {
+      value: [0, 1],
+      label: "0MB ~ 1MB",
+    },
+    {
+      value: [1, 2],
+      label: "1MB ~ 2MB",
+    },
+    {
+      value: [2, 3],
+      label: "2MB ~ 3MB",
+    },
+    {
+      value: [3, 4],
+      label: "3MB ~ 4MB",
+    },
+    {
+      value: [4, 100],
+      label: "upper to 4MB",
+    },
+  ].map(element => {
+    return {
+      ...element,
+      id: 2,
+    }
+  });
 
   const sampleRateElementList = [
-    "0HZ ~ 100000HZ",
-    "100001HZ ~ 200000HZ",
-    "200001HZ ~ 300000HZ",
-    "300001HZ ~ 400000HZ",
-    "400001HZ ~ 500000HZ",
-  ]
+    {
+      value: [22050],
+      label: "22050HZ",
+    },
+    {
+      value: [44100],
+      label: "44100HZ",
+    },
+    {
+      value: [48000],
+      label: "48000HZ",
+    },
+    {
+      value: [96000],
+      label: "96000HZ",
+    },
+    {
+      value: [192000],
+      label: "192000HZ",
+    },
+  ].map(element => {
+    return {
+      ...element,
+      id: 3,
+    }
+  });
 
   const bitDepthElementList = [
-    "0bit ~ 5bit",
-    "6bit ~ 10bit",
-    "11bit ~ 15bit",
-    "21bit ~ 25it",
-    "26bit ~ 30bit",
-  ]
+    {
+      value: [8],
+      label: "8bit",
+    },
+    {
+      value: [16],
+      label: "16bit",
+    },
+    {
+      value: [24],
+      label: "24bit",
+    },
+    {
+      value: [32],
+      label: "32bit",
+    },
+  ].map(element => {
+    return {
+      ...element,
+      id: 4,
+    }
+  });
+
+  const ChannelElementList = [
+    {
+      value: ["Stereo"],
+      label: "Stereo",
+    },
+  ].map(element => {
+    return {
+      ...element,
+      id: 5,
+    }
+  });
 
 
   return ( //type, duration, filesize, sample rate, bit depth, channels
     <Box className={classes.sidebarContainer}>
       <MySidebarElement
         elementName={"Type"}
-        elementList={typeElementList} />
+        elementList={typeElementList}
+        selectSoundList={selectSoundList}
+        filterList={filterList}
+        setFilterList={setFilterList}
+        setPage={setPage}
+      />
       <MySidebarElement
         elementName={"Duration"}
-        elementList={durationElementList} />
+        elementList={durationElementList}
+        selectSoundList={selectSoundList}
+        filterList={filterList}
+        setFilterList={setFilterList}
+        setPage={setPage}
+      />
       <MySidebarElement
         elementName={"File Size"}
-        elementList={fileSizeElementList} />
+        elementList={fileSizeElementList}
+        selectSoundList={selectSoundList}
+        filterList={filterList}
+        setFilterList={setFilterList}
+        setPage={setPage}
+      />
       <MySidebarElement
         elementName={"Sample Rate"}
-        elementList={sampleRateElementList} />
+        elementList={sampleRateElementList}
+        selectSoundList={selectSoundList}
+        filterList={filterList}
+        setFilterList={setFilterList}
+        setPage={setPage}
+      />
       <MySidebarElement
         elementName={"Bit Depth"}
-        elementList={bitDepthElementList} />
+        elementList={bitDepthElementList}
+        selectSoundList={selectSoundList}
+        filterList={filterList}
+        setFilterList={setFilterList}
+        setPage={setPage}
+      />
+      <MySidebarElement
+        elementName={"Channels"}
+        elementList={ChannelElementList}
+        selectSoundList={selectSoundList}
+        filterList={filterList}
+        setFilterList={setFilterList}
+        setPage={setPage}
+      />
       <Box className={classes.sidebarFooter}>
         <Typography
           variant="h6"
@@ -206,14 +342,14 @@ function MySideBar(props) {
           Tags
         </Typography>
         <div style={{ display: "flex", flexWrap: "wrap" }}>
-          {uniqueTagList.map((tagName, index) => (
+          {uniqueTagList.map((tagElement, index) => (
             <div key={index} className={classes.chipWrapper}>
-              <ButtonBase onClick={() => handleChipClick(tagName)}>
+              <ButtonBase onClick={() => handleChipClick(tagElement)}>
                 <Chip
-                  label={tagName}
+                  label={tagElement.tagName}
                   size="small"
                   className={
-                    selectedTags.has(tagName)
+                    selectedTags.has(tagElement.tagName)
                       ? classes.chipSelected
                       : classes.chip
                   }

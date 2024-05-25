@@ -1,7 +1,7 @@
 import {withStyles} from "@mui/styles";
 import {Box, Typography} from "@mui/material";
 import Checkbox from "@mui/material/Checkbox";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 
 const styles = () => ({
@@ -26,14 +26,31 @@ const styles = () => ({
 });
 
 function MySidebarElement(props) {
-  const {classes, elementName, elementList} = props;
+  const {classes, elementName, elementList,
+    selectSoundList, filterList, setFilterList, setPage} = props;
   const [checked, setChecked] = useState([false, false, false, false, false]);
 
   const handleChange = (index) => {
-    const newChecked = [...checked];
-    newChecked[index] = !newChecked[index];
+    const newChecked = new Array(checked.length).fill(false);
+    newChecked[index] = !checked[index];
     setChecked(newChecked);
+
+    const newFilterList = [...filterList];
+    if (newChecked[index]) {
+      const id = elementList[index].id;
+      newFilterList[id] = elementList[index];
+    } else {
+      const id = elementList[index].id;
+      newFilterList[id] = 0;
+    }
+    setFilterList(newFilterList);
+    setPage(0);
   };
+
+  useEffect(() => {
+    selectSoundList();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectSoundList]);
 
   return (
     <Box className={classes.sidebarBody}>
@@ -43,18 +60,18 @@ function MySidebarElement(props) {
       >
         {elementName}
       </Typography>
-      {elementList.map((label, index) => (
+      {elementList.map(({value, label}, index) => (
         <Typography
           key={index}
           component="div"
           className={`${classes.licenseLink} ${classes.fullWidth}`}
           role="checkbox"
           aria-checked={checked[index]}
-          onClick={() => handleChange(index)}
+          onClick={() => handleChange(index, label)}
         >
           <Checkbox
             checked={checked[index]}
-            onChange={() => handleChange(index)}
+            onChange={() => handleChange(index, label)}
           />
           <Box component="span" display="block">
             {label}

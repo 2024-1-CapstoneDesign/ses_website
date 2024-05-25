@@ -12,6 +12,7 @@ import Routing from "./Routing";
 import smoothScrollTop from "../../shared/functions/smoothScrollTop";
 import axios from "axios";
 import formatDateTime from "./home/formatDateTime";
+import {useHistory, useLocation} from "react-router-dom";
 
 AOS.init({ once: true });
 
@@ -26,12 +27,15 @@ const styles = (theme) => ({
 
 function Main(props) {
   const { classes } = props;
+  const location = useLocation(); // Get the current location
+  const history = useHistory(); // Get the history object
   const [selectedTab, setSelectedTab] = useState(null);
   const [isMobileDrawerOpen, setIsMobileDrawerOpen] = useState(false);
   const [soundListPosts, setSoundListPosts] = useState([]);
   const [dialogOpen, setDialogOpen] = useState(null);
   const [isCookieRulesDialogOpen, setIsCookieRulesDialogOpen] = useState(false);
   const [page, setPage] = useState(0);
+  const [filterList, setFilterList] = useState([0, 0, 0, 0, 0, 0, []]);
 
   const selectHome = useCallback(() => {
     smoothScrollTop();
@@ -76,9 +80,70 @@ function Main(props) {
     setDialogOpen("changePassword");
   }, [setDialogOpen]);
 
+  const getURLQueryString = (filterList) => {
+    const resObj = {
+      type:"",
+      fromLen: "",
+      toLen: "",
+      fromFileSize: "",
+      toFileSize: "",
+      sampleRate: "",
+      bitDepth: "",
+      channels: "",
+    };
+    filterList.forEach((filter, index) => {
+      switch (index){
+        case 0:
+          if (filter !== 0){
+            resObj.type = filter.value[0];
+          }
+          break;
+        case 1:
+          if (filter !== 0){
+            resObj.fromLen = filter.value[0];
+            resObj.toLen = filter.value[1];
+          }
+          break;
+        case 2:
+          if (filter !== 0){
+            resObj.fromFileSize = filter.value[0];
+            resObj.toFileSize = filter.value[1];
+          }
+          break;
+        case 3:
+          if (filter !== 0){
+            resObj.sampleRate = filter.value[0];
+          }
+          break;
+        case 4:
+          if (filter !== 0){
+            resObj.bitDepth = filter.value[0];
+          }
+          break;
+        case 5:
+          if (filter !== 0){
+            resObj.channels = filter.value[0];
+          }
+          break;
+        case 6:
+          if (filter !== []){
+            resObj.soundEffectTagId = filter.join();
+          }
+          break;
+      }
+    });
+    return resObj;
+  }
+
   const fetchSoundList = async () => {
-    const url = `https://soundeffect-search.p-e.kr/api/v1/soundeffect?page=${page}&size=${PAGESIZE}`
-    // const url = "https://soundeffect-search.p-e.kr/api/v1/soundeffect"
+    const {type, fromLen, toLen, fromFileSize, toFileSize,
+      sampleRate, bitDepth, channels, soundEffectTagId} = getURLQueryString(filterList);
+    let url;
+    if (soundEffectTagId){
+      url = `https://soundeffect-search.p-e.kr/api/v1/soundeffect?type=${type}&fromLength=${fromLen}&toLength=${toLen}&fromFileSize=${fromFileSize}&toFileSize=${toFileSize}&sampleRate=${sampleRate}&bitDepth=${bitDepth}&channels=${channels}&soundEffectTagId=${soundEffectTagId}&page=${page}&size=${PAGESIZE}`
+    } else {
+      url = `https://soundeffect-search.p-e.kr/api/v1/soundeffect?type=${type}&fromLength=${fromLen}&toLength=${toLen}&fromFileSize=${fromFileSize}&toFileSize=${toFileSize}&sampleRate=${sampleRate}&bitDepth=${bitDepth}&channels=${channels}&page=${page}&size=${PAGESIZE}`
+    }
     try {
       const axiosRes = await axios.get(url);
       const resData = axiosRes.data; //fetchResult
@@ -131,7 +196,7 @@ function Main(props) {
     setSoundListPosts(soundListPosts);
     selectSoundList()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [setSoundListPosts, page]);
+  }, [setSoundListPosts, page, filterList]);
 
   const handleCookieRulesDialogOpen = useCallback(() => {
     setIsCookieRulesDialogOpen(true);
@@ -142,6 +207,18 @@ function Main(props) {
   }, [setIsCookieRulesDialogOpen]);
 
   useEffect(fetchSoundListPosts, [fetchSoundListPosts]);
+
+  useEffect(() => {
+    if (location.pathname === "/soundList") {
+      const urlParams = new URLSearchParams(location.search);
+      if (!urlParams.has('reload')) {
+        urlParams.set('reload', '1');
+        history.replace({ search: urlParams.toString() });
+        setPage(0);
+        setFilterList([0, 0, 0, 0, 0, 0, []]);
+      }
+    }
+  }, [location, history]);
 
   return (
     <div className={classes.wrapper}>
@@ -178,6 +255,8 @@ function Main(props) {
         setSoundListPosts={setSoundListPosts}
         setPage={setPage}
         page={page}
+        filterList={filterList}
+        setFilterList={setFilterList}
       />
       <Footer />
     </div>

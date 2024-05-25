@@ -68,7 +68,8 @@ function getVerticalSoundListPosts(isWidthUpSm, isWidthUpMd, soundListPosts) {
 }
 
 function SoundList(props) {
-  const { classes, soundListPosts, setSoundListPosts,  selectSoundList, setPage, theme, page } = props;
+  const { classes, soundListPosts, setSoundListPosts,
+      selectSoundList, setPage, theme, page, filterList, setFilterList } = props;
   const handleChange = (event, value) => {
     setPage(value - 1);
   };
@@ -92,6 +93,9 @@ function SoundList(props) {
         selectSoundList={selectSoundList}
         soundListPosts={soundListPosts}
         setSoundListPosts={setSoundListPosts}
+        filterList={filterList}
+        setFilterList={setFilterList}
+        setPage={setPage}
       />
       <div className={classes.blogContentWrapper}>
         <Grid container spacing={3}>
