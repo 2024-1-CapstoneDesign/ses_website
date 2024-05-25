@@ -32,7 +32,7 @@ function Main(props) {
   const [dialogOpen, setDialogOpen] = useState(null);
   const [isCookieRulesDialogOpen, setIsCookieRulesDialogOpen] = useState(false);
   const [page, setPage] = useState(0);
-  const [filterList, setFilterList] = useState(new Set());
+  const [filterList, setFilterList] = useState([0, 0, 0, 0, 0, 0]);
 
   const selectHome = useCallback(() => {
     smoothScrollTop();

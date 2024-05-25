@@ -35,11 +35,13 @@ function MySidebarElement(props) {
     newChecked[index] = !checked[index];
     setChecked(newChecked);
 
-    const newFilterList = new Set(filterList);
+    const newFilterList = [...filterList];
     if (newChecked[index]) {
-      newFilterList.add(elementList[index]);
+      const id = elementList[index].id;
+      newFilterList[id] = elementList[index];
     } else {
-      newFilterList.delete(elementList[index]);
+      const id = elementList[index].id;
+      newFilterList[id] = 0;
     }
     setFilterList(newFilterList);
 
