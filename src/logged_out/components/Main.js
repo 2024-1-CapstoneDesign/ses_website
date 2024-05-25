@@ -32,7 +32,7 @@ function Main(props) {
   const [dialogOpen, setDialogOpen] = useState(null);
   const [isCookieRulesDialogOpen, setIsCookieRulesDialogOpen] = useState(false);
   const [page, setPage] = useState(0);
-  const [filterList, setFilterList] = useState([0, 0, 0, 0, 0, 0]);
+  const [filterList, setFilterList] = useState([0, 0, 0, 0, 0, 0, []]);
 
   const selectHome = useCallback(() => {
     smoothScrollTop();
@@ -94,19 +94,24 @@ function Main(props) {
             resObj.toLen = filter.value[1];
           }
           break;
-        case 2:
+        case 3:
           if (filter !== 0){
             resObj.sampleRate = filter.value[0];
           }
           break;
-        case 3:
+        case 4:
           if (filter !== 0){
             resObj.bitDepth = filter.value[0];
           }
           break;
-        case 4:
+        case 5:
           if (filter !== 0){
             resObj.channels = filter.value[0];
+          }
+          break;
+        case 6:
+          if (filter !== []){
+            resObj.soundEffectTagId = filter.join();
           }
           break;
       }
@@ -115,8 +120,13 @@ function Main(props) {
   }
 
   const fetchSoundList = async () => {
-    const {fromLen, toLen, sampleRate, bitDepth, channels} = getURLQueryString(filterList);
-    const url = `https://soundeffect-search.p-e.kr/api/v1/soundeffect?fromLength=${fromLen}&toLength=${toLen}&sampleRate=${sampleRate}&bitDepth=${bitDepth}&channels=${channels}&page=${page}&size=${PAGESIZE}`
+    const {fromLen, toLen, sampleRate, bitDepth, channels, soundEffectTagId} = getURLQueryString(filterList);
+    let url;
+    if (soundEffectTagId){
+      url = `https://soundeffect-search.p-e.kr/api/v1/soundeffect?fromLength=${fromLen}&toLength=${toLen}&sampleRate=${sampleRate}&bitDepth=${bitDepth}&channels=${channels}&soundEffectTagId=${soundEffectTagId}&page=${page}&size=${PAGESIZE}`
+    } else {
+      url = `https://soundeffect-search.p-e.kr/api/v1/soundeffect?fromLength=${fromLen}&toLength=${toLen}&sampleRate=${sampleRate}&bitDepth=${bitDepth}&channels=${channels}&page=${page}&size=${PAGESIZE}`
+    }
     console.log(url);
     try {
       const axiosRes = await axios.get(url);

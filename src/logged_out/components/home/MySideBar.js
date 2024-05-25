@@ -94,15 +94,13 @@ const styles = (theme) => ({
 function MySideBar(props) {
   const { classes, soundListPosts, selectSoundList, setSoundListPosts, filterList, setFilterList, setPage } = props;
   const [selectedTags, setSelectedTags] = useState(new Set());
-  const [isSelected, setIsSelected] = useState(null);
 
   const uniqueTagList = [
-    ...new Set(
+    ...new Map(
       soundListPosts
-        .map(({ soundTagList }) => ({ ...soundTagList }))
-        .flatMap((obj) => Object.values(obj))
-        .map((tag) => tag.tagName)
-    ),
+        .flatMap(({ soundTagList }) => Object.values(soundTagList))
+        .map(tag => [tag.tagId, tag])
+    ).values()
   ];
 
   const resetVisibility = () => {
@@ -122,28 +120,20 @@ function MySideBar(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectSoundList]);
 
-  const handleChipClick = (tagName) => {
+  const handleChipClick = ({tagName, tagId}) => {
+    const newFilterList = [...filterList];
+    const newSelectedTagIds = new Set(filterList[6]);
     const newSelectedTags = new Set(selectedTags);
     if (selectedTags.has(tagName)) {
       newSelectedTags.delete(tagName);
+      newSelectedTagIds.delete(tagId);
     } else {
       newSelectedTags.add(tagName);
+      newSelectedTagIds.add(tagId);
     }
     setSelectedTags(newSelectedTags);
-    const updatedSoundListPosts = soundListPosts.map(sound => {
-      let isTagSelected = sound.soundTagList.some((element) => newSelectedTags.has(element.tagName))
-      if (newSelectedTags.size === 0){ // 만약 모든 tag가 비어있다면 다시 전체 soundCard가 보이게 만들기
-        isTagSelected = true
-      }
-      return {
-        ...sound,
-        soundVisible: isTagSelected
-      };
-    });
-    setSoundListPosts(updatedSoundListPosts);
-
-    const newIsSelected = new Array(isSelected.length).fill(false);
-    setIsSelected(newIsSelected);
+    newFilterList[6] = [...newSelectedTagIds];
+    setFilterList(newFilterList);
   };
   const typeElementList = [
     {
@@ -340,8 +330,6 @@ function MySideBar(props) {
         elementName={"Channels"}
         elementList={ChannelElementList}
         selectSoundList={selectSoundList}
-        isSelected={isSelected}
-        setIsSelected={setIsSelected}
         filterList={filterList}
         setFilterList={setFilterList}
         setPage={setPage}
@@ -354,14 +342,14 @@ function MySideBar(props) {
           Tags
         </Typography>
         <div style={{ display: "flex", flexWrap: "wrap" }}>
-          {uniqueTagList.map((tagName, index) => (
+          {uniqueTagList.map((tagElement, index) => (
             <div key={index} className={classes.chipWrapper}>
-              <ButtonBase onClick={() => handleChipClick(tagName)}>
+              <ButtonBase onClick={() => handleChipClick(tagElement)}>
                 <Chip
-                  label={tagName}
+                  label={tagElement.tagName}
                   size="small"
                   className={
-                    selectedTags.has(tagName)
+                    selectedTags.has(tagElement.tagName)
                       ? classes.chipSelected
                       : classes.chip
                   }
