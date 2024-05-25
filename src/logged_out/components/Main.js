@@ -80,18 +80,32 @@ function Main(props) {
   const getURLQueryString = (filterList) => {
     console.dir(filterList);
     const resObj = {
+      type:"",
       fromLen: "",
       toLen: "",
+      fromFileSize: "",
+      toFileSize: "",
       sampleRate: "",
       bitDepth: "",
       channels: "",
     };
     filterList.forEach((filter, index) => {
       switch (index){
+        case 0:
+          if (filter !== 0){
+            resObj.type = filter.value[0];
+          }
+          break;
         case 1:
           if (filter !== 0){
             resObj.fromLen = filter.value[0];
             resObj.toLen = filter.value[1];
+          }
+          break;
+        case 2:
+          if (filter !== 0){
+            resObj.fromFileSize = filter.value[0];
+            resObj.toFileSize = filter.value[1];
           }
           break;
         case 3:
@@ -120,12 +134,13 @@ function Main(props) {
   }
 
   const fetchSoundList = async () => {
-    const {fromLen, toLen, sampleRate, bitDepth, channels, soundEffectTagId} = getURLQueryString(filterList);
+    const {type, fromLen, toLen, fromFileSize, toFileSize,
+      sampleRate, bitDepth, channels, soundEffectTagId} = getURLQueryString(filterList);
     let url;
     if (soundEffectTagId){
-      url = `https://soundeffect-search.p-e.kr/api/v1/soundeffect?fromLength=${fromLen}&toLength=${toLen}&sampleRate=${sampleRate}&bitDepth=${bitDepth}&channels=${channels}&soundEffectTagId=${soundEffectTagId}&page=${page}&size=${PAGESIZE}`
+      url = `https://soundeffect-search.p-e.kr/api/v1/soundeffect?type=${type}&fromLength=${fromLen}&toLength=${toLen}&fromFileSize=${fromFileSize}&toFileSize=${toFileSize}&sampleRate=${sampleRate}&bitDepth=${bitDepth}&channels=${channels}&soundEffectTagId=${soundEffectTagId}&page=${page}&size=${PAGESIZE}`
     } else {
-      url = `https://soundeffect-search.p-e.kr/api/v1/soundeffect?fromLength=${fromLen}&toLength=${toLen}&sampleRate=${sampleRate}&bitDepth=${bitDepth}&channels=${channels}&page=${page}&size=${PAGESIZE}`
+      url = `https://soundeffect-search.p-e.kr/api/v1/soundeffect?type=${type}&fromLength=${fromLen}&toLength=${toLen}&fromFileSize=${fromFileSize}&toFileSize=${toFileSize}&sampleRate=${sampleRate}&bitDepth=${bitDepth}&channels=${channels}&page=${page}&size=${PAGESIZE}`
     }
     console.log(url);
     try {
