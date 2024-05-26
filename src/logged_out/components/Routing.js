@@ -44,7 +44,14 @@ function Routing(props) {
         filterList={filterList}
         setFilterList={setFilterList}
       />
-      <PropsRoute path="/profile" component={Profile} selectProfile={selectProfile} />
+      {
+        JSON.parse(localStorage.getItem("userinfo")) &&
+          <PropsRoute
+            path="/profile"
+            component={Profile}
+            selectProfile={selectProfile}
+          />
+      }
       <PropsRoute path="/" component={Home} selectHome={selectHome} />
     </Switch>
   );

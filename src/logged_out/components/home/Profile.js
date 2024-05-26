@@ -32,10 +32,11 @@ const styles = (theme) => ({
 
 function Profile(props) {
   const { classes, selectProfile} = props;
+  const userObj = JSON.parse(localStorage.getItem("userinfo"));
+  console.dir(userObj);
 
   useEffect(() => {
     selectProfile();
-    console.dir("!!!");
   }, [selectProfile]);
 
   return (
@@ -46,15 +47,15 @@ function Profile(props) {
             <Avatar
               alt="User Avatar"
               className={classes.avatar}
-              src="/placeholder.svg"
+              src={userObj.picture}
             />
           </Grid>
           <Grid item>
             <Typography variant="h4" gutterBottom>
-              John Doe
+              {userObj.name}
             </Typography>
             <Typography variant="body1" color="textSecondary">
-              john.doe@gmail.com
+              {userObj.email}
             </Typography>
           </Grid>
         </Grid>
