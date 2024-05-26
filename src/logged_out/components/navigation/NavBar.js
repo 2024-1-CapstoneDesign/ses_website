@@ -84,7 +84,7 @@ function NavBar(props) {
       link: "/profile",
       name: "profile",
       icon: <BookIcon className="text-white" />,
-      src: `${process.env.PUBLIC_URL}/images/logged_out/soundlist.png`,
+      src: `${process.env.PUBLIC_URL}/images/logged_out/profile.png`,
       color: "#949494"
     },
   ];
