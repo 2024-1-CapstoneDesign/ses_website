@@ -5,6 +5,7 @@ import TermsOfServiceDialog from "./TermsOfServiceDialog";
 import LoginDialog from "./LoginDialog";
 import ChangePasswordDialog from "./ChangePasswordDialog";
 import ModalBackdrop from "../../../shared/components/ModalBackdrop";
+import MyLoginDialog from "./MyLoginDialog";
 
 function DialogSelector(props) {
   const {
@@ -39,7 +40,7 @@ function DialogSelector(props) {
         return <TermsOfServiceDialog onClose={openRegisterDialog} />;
       case "login":
         return (
-          <LoginDialog
+          <MyLoginDialog
             onClose={_onClose}
             status={loginStatus}
             setStatus={setLoginStatus}
