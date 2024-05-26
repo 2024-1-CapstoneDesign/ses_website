@@ -16,7 +16,9 @@ const GoogleLoginButton = (props) => {
             console.log(err);
             setGoogleRes(null);
           }}
-          width={"300px"}
+          size={"large"}
+          shape={"pill"}
+          witdh={"300px"}
         />
       </GoogleOAuthProvider>
     </>
