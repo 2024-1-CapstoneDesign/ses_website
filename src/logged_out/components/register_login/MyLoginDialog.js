@@ -1,14 +1,13 @@
-import React, { useState, useCallback, useRef, Fragment } from "react";
+import React, { useState, useCallback, Fragment } from "react";
 import PropTypes from "prop-types";
-import classNames from "classnames";
 import { withRouter } from "react-router-dom";
-import { TextField, Button, Checkbox, Typography, FormControlLabel } from "@mui/material";
+import { Button,  Typography } from "@mui/material";
 import withStyles from '@mui/styles/withStyles';
 import FormDialog from "../../../shared/components/FormDialog";
-import HighlightedInformation from "../../../shared/components/HighlightedInformation";
 import ButtonCircularProgress from "../../../shared/components/ButtonCircularProgress";
-import VisibilityPasswordTextField from "../../../shared/components/VisibilityPasswordTextField";
-import GoogleLoginButton from "./GoogleLoginButton";
+import {GoogleOAuthProvider, useGoogleLogin} from "@react-oauth/google";
+import axios from "axios";
+import Cookies from "js-cookie";
 
 const styles = (theme) => ({
   forgotPassword: {
@@ -31,34 +30,61 @@ const styles = (theme) => ({
   },
 });
 
-function LoginDialog(props) {
-  const {
-    setStatus,
-    history,
-    classes,
-    onClose,
-    openChangePasswordDialog,
-    status,
-  } = props;
-  const [isLoading, setIsLoading] = useState(false);
-  const [googleRes, setGoogleRes] = useState(null);
-
-  const login = useCallback(() => {
-    setIsLoading(true);
-    setStatus(null);
-    console.dir(googleRes)
-    if (googleRes === null) {
+const GoogleLoginButton = (props) => {
+  const {history, setIsLoading, setStatus, onClose} = props;
+  const signIn = useGoogleLogin({
+    onSuccess: (res) => {
+      axios.get('https://www.googleapis.com/oauth2/v1/userinfo', {
+        params:{
+          access_token: res.access_token,
+        }
+      })
+        .then(response => {
+          setTimeout(() => {
+            Cookies.set('accessToken', res.access_token);
+            localStorage.setItem('userinfo', JSON.stringify(response.data));
+            console.log(response.data);
+            history.push("/home");
+            onClose();
+          }, 150);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    onError: (error) =>{
       setTimeout(() => {
         setStatus("loginFailed");
         setIsLoading(false);
       }, 1500);
-    } else {
-      setTimeout(() => {
-        history.push("/soundList");
-        onClose();
-      }, 150);
+      console.log(error);
     }
+  });
+
+  const login = useCallback(() => {
+    setIsLoading(true);
+    setStatus(null);
+    signIn();
   }, [setIsLoading, history, setStatus]);
+
+  return (
+    <div onClick={() => login()} style={{display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center"}}>
+      <img src={`${process.env.PUBLIC_URL}/images/logged_out/google_logo.png`} alt="Login with Google" style={{ cursor: 'pointer', marginRight: "1rem" }} />
+      <Typography variant="h6" component="h2">
+        Login with Google
+      </Typography>
+    </div>
+  );
+};
+
+function LoginDialog(props) {
+  const {
+    setStatus,
+    history,
+    onClose,
+  } = props;
+  const [isLoading, setIsLoading] = useState(false);
+  const clientId = process.env.REACT_APP_CLIENT_ID
 
   return (
     <Fragment>
@@ -66,11 +92,10 @@ function LoginDialog(props) {
         open
         onClose={onClose}
         loading={isLoading}
-        onFormSubmit={(e) => {
-          e.preventDefault();
-          login();
-        }}
         hideBackdrop
+        onFormSubmit={e => {
+          e.preventDefault();
+        }}
         headline="Login"
         content={
           <Fragment>
@@ -81,12 +106,24 @@ function LoginDialog(props) {
         }
         actions={
           <Fragment>
-            <GoogleLoginButton
-              setGoogleRes={setGoogleRes}
-              onSuccess={login}  // 구글 로그인 성공 시 login 함수 호출
-              onFailure={() => setStatus("loginFailed")}  // 구글 로그인 실패 시 상태 설정
-            />
-            {isLoading && <ButtonCircularProgress />}
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="secondary"
+              disabled={isLoading}
+              size="large"
+            >
+              <GoogleOAuthProvider clientId={clientId}>
+                <GoogleLoginButton
+                  history={history}
+                  setIsLoading={setIsLoading}
+                  setStatus={setStatus}
+                  onClose={onClose}
+                />
+              </GoogleOAuthProvider>
+              {isLoading && <ButtonCircularProgress />}
+            </Button>
           </Fragment>
         }
       />
