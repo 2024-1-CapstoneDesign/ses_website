@@ -110,3 +110,4 @@ build/
 #lockfiles
 yarn.lock
 
+.env

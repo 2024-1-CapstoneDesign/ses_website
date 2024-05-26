@@ -79,7 +79,14 @@ function NavBar(props) {
       icon: <LockOpenIcon className="text-white" />,
       src: `${process.env.PUBLIC_URL}/images/logged_out/door.png`,
       color: "#949494"
-    }
+    },
+    {
+      link: "/profile",
+      name: "profile",
+      icon: <BookIcon className="text-white" />,
+      src: `${process.env.PUBLIC_URL}/images/logged_out/profile.png`,
+      color: "#949494"
+    },
   ];
   return (
     <div className={classes.root}>

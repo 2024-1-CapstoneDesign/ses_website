@@ -46,8 +46,14 @@ function Main(props) {
 
   const selectSoundList = useCallback(() => {
     smoothScrollTop();
-    document.title = "WaVer - SoundList";
+    document.title = "SES - SoundList";
     setSelectedTab("SoundList");
+  }, [setSelectedTab]);
+
+  const selectProfile = useCallback(() => {
+    smoothScrollTop();
+    document.title = "SES - Profile";
+    setSelectedTab("Profile");
   }, [setSelectedTab]);
 
   const openLoginDialog = useCallback(() => {
@@ -252,6 +258,7 @@ function Main(props) {
         soundListPosts={soundListPosts}
         selectHome={selectHome}
         selectSoundList={selectSoundList}
+        selectProfile={selectProfile}
         setSoundListPosts={setSoundListPosts}
         setPage={setPage}
         page={page}

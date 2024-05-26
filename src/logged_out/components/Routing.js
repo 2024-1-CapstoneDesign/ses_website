@@ -6,9 +6,10 @@ import Home from "./home/Home";
 import SoundList from "./soundList/SoundList";
 import SoundListPost from "./soundList/SoundListPost";
 import useLocationBlocker from "../../shared/functions/useLocationBlocker";
+import Profile from "./home/Profile";
 
 function Routing(props) {
-  const { soundListPosts, setSoundListPosts, selectSoundList, selectHome, setPage, page, filterList, setFilterList } = props;
+  const { soundListPosts, setSoundListPosts, selectSoundList, selectHome, selectProfile, setPage, page, filterList, setFilterList } = props;
   useLocationBlocker();
   return (
     <Switch>
@@ -43,6 +44,14 @@ function Routing(props) {
         filterList={filterList}
         setFilterList={setFilterList}
       />
+      {
+        JSON.parse(localStorage.getItem("userinfo")) &&
+          <PropsRoute
+            path="/profile"
+            component={Profile}
+            selectProfile={selectProfile}
+          />
+      }
       <PropsRoute path="/" component={Home} selectHome={selectHome} />
     </Switch>
   );
