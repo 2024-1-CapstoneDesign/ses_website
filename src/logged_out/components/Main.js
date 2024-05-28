@@ -35,7 +35,7 @@ function Main(props) {
   const [dialogOpen, setDialogOpen] = useState(null);
   const [isCookieRulesDialogOpen, setIsCookieRulesDialogOpen] = useState(false);
   const [page, setPage] = useState(0);
-  const [filterList, setFilterList] = useState([0, 0, 0, 0, 0, 0, []]);
+  const [filterList, setFilterList] = useState([0, 0, 0, 0, 0, 0, 0, []]);
 
   const selectHome = useCallback(() => {
     smoothScrollTop();
@@ -99,39 +99,39 @@ function Main(props) {
     };
     filterList.forEach((filter, index) => {
       switch (index){
-        case 0:
+        case 1:
           if (filter !== 0){
             resObj.type = filter.value[0];
           }
           break;
-        case 1:
+        case 2:
           if (filter !== 0){
             resObj.fromLen = filter.value[0];
             resObj.toLen = filter.value[1];
           }
           break;
-        case 2:
+        case 3:
           if (filter !== 0){
             resObj.fromFileSize = filter.value[0];
             resObj.toFileSize = filter.value[1];
           }
           break;
-        case 3:
+        case 4:
           if (filter !== 0){
             resObj.sampleRate = filter.value[0];
           }
           break;
-        case 4:
+        case 5:
           if (filter !== 0){
             resObj.bitDepth = filter.value[0];
           }
           break;
-        case 5:
+        case 6:
           if (filter !== 0){
             resObj.channels = filter.value[0];
           }
           break;
-        case 6:
+        case 7:
           if (filter !== []){
             resObj.soundEffectTagId = filter.join();
           }

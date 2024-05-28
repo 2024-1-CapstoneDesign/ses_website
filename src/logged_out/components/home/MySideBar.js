@@ -123,7 +123,7 @@ function MySideBar(props) {
 
   const handleChipClick = ({tagName, tagId}) => {
     const newFilterList = [...filterList];
-    const newSelectedTagIds = new Set(filterList[6]);
+    const newSelectedTagIds = new Set(filterList[7]);
     const newSelectedTags = new Set(selectedTags);
     if (selectedTags.has(tagName)) {
       newSelectedTags.delete(tagName);
@@ -133,7 +133,7 @@ function MySideBar(props) {
       newSelectedTagIds.add(tagId);
     }
     setSelectedTags(newSelectedTags);
-    newFilterList[6] = [...newSelectedTagIds];
+    newFilterList[7] = [...newSelectedTagIds];
     setFilterList(newFilterList);
   };
   const typeElementList = [
@@ -160,7 +160,7 @@ function MySideBar(props) {
   ].map(element => {
     return {
       ...element,
-      id: 0,
+      id: 1,
     }
   });
 
@@ -188,7 +188,7 @@ function MySideBar(props) {
   ].map(element => {
     return {
       ...element,
-      id: 1,
+      id: 2,
     }
   });
 
@@ -216,7 +216,7 @@ function MySideBar(props) {
   ].map(element => {
     return {
       ...element,
-      id: 2,
+      id: 3,
     }
   });
 
@@ -244,7 +244,7 @@ function MySideBar(props) {
   ].map(element => {
     return {
       ...element,
-      id: 3,
+      id: 4,
     }
   });
 
@@ -268,7 +268,7 @@ function MySideBar(props) {
   ].map(element => {
     return {
       ...element,
-      id: 4,
+      id: 5,
     }
   });
 
@@ -280,14 +280,14 @@ function MySideBar(props) {
   ].map(element => {
     return {
       ...element,
-      id: 5,
+      id: 6,
     }
   });
 
 
   return ( //type, duration, filesize, sample rate, bit depth, channels
     <Box className={classes.sidebarContainer}>
-      <MySearchField />
+      <MySearchField id={0}/>
       <MySidebarElement
         elementName={"Type"}
         elementList={typeElementList}
