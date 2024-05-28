@@ -101,44 +101,44 @@ function Main(props) {
     filterList.forEach((filter, index) => {
       switch (index){
         case 0:
-          if (filter !== 0){
+          if (filter !== 0 && filter !== undefined){
             resObj.name = filter.value;
           }
           break;
         case 1:
-          if (filter !== 0){
+          if (filter !== 0 && filter !== undefined && filter.value !== undefined){
             resObj.type = filter.value[0];
           }
           break;
         case 2:
-          if (filter !== 0){
+          if (filter !== 0 && filter !== undefined && filter.value !== undefined){
             resObj.fromLen = filter.value[0];
             resObj.toLen = filter.value[1];
           }
           break;
         case 3:
-          if (filter !== 0){
+          if (filter !== 0 && filter !== undefined && filter.value !== undefined){
             resObj.fromFileSize = filter.value[0];
             resObj.toFileSize = filter.value[1];
           }
           break;
         case 4:
-          if (filter !== 0){
+          if (filter !== 0 && filter !== undefined && filter.value !== undefined){
             resObj.sampleRate = filter.value[0];
           }
           break;
         case 5:
-          if (filter !== 0){
+          if (filter !== 0 && filter !== undefined && filter.value !== undefined){
             resObj.bitDepth = filter.value[0];
           }
           break;
         case 6:
-          if (filter !== 0){
+          if (filter !== 0 && filter !== undefined && filter.value !== undefined){
             resObj.channels = filter.value[0];
           }
           break;
         case 7:
-          if (filter !== []){
+          if (filter !== [] && filter !== undefined){
             resObj.soundEffectTagId = filter.join();
           }
           break;
