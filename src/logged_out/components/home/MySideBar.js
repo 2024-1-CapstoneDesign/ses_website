@@ -287,7 +287,12 @@ function MySideBar(props) {
 
   return ( //type, duration, filesize, sample rate, bit depth, channels
     <Box className={classes.sidebarContainer}>
-      <MySearchField id={0}/>
+      <MySearchField
+        id={0}
+        filterList={filterList}
+        setFilterList={setFilterList}
+        selectSoundList={selectSoundList}
+      />
       <MySidebarElement
         elementName={"Type"}
         elementList={typeElementList}

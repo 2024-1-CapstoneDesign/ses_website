@@ -96,9 +96,15 @@ function Main(props) {
       sampleRate: "",
       bitDepth: "",
       channels: "",
+      name: "",
     };
     filterList.forEach((filter, index) => {
       switch (index){
+        case 0:
+          if (filter !== 0){
+            resObj.name = filter.value;
+          }
+          break;
         case 1:
           if (filter !== 0){
             resObj.type = filter.value[0];
@@ -143,12 +149,12 @@ function Main(props) {
 
   const fetchSoundList = async () => {
     const {type, fromLen, toLen, fromFileSize, toFileSize,
-      sampleRate, bitDepth, channels, soundEffectTagId} = getURLQueryString(filterList);
+      sampleRate, bitDepth, channels, soundEffectTagId, name} = getURLQueryString(filterList);
     let url;
     if (soundEffectTagId){
-      url = `https://soundeffect-search.p-e.kr/api/v1/soundeffect?type=${type}&fromLength=${fromLen}&toLength=${toLen}&fromFileSize=${fromFileSize}&toFileSize=${toFileSize}&sampleRate=${sampleRate}&bitDepth=${bitDepth}&channels=${channels}&soundEffectTagId=${soundEffectTagId}&page=${page}&size=${PAGESIZE}`
+      url = `https://soundeffect-search.p-e.kr/api/v1/soundeffect?type=${type}&fromLength=${fromLen}&toLength=${toLen}&fromFileSize=${fromFileSize}&toFileSize=${toFileSize}&sampleRate=${sampleRate}&bitDepth=${bitDepth}&channels=${channels}&name=${name}&soundEffectTagId=${soundEffectTagId}&page=${page}&size=${PAGESIZE}`
     } else {
-      url = `https://soundeffect-search.p-e.kr/api/v1/soundeffect?type=${type}&fromLength=${fromLen}&toLength=${toLen}&fromFileSize=${fromFileSize}&toFileSize=${toFileSize}&sampleRate=${sampleRate}&bitDepth=${bitDepth}&channels=${channels}&page=${page}&size=${PAGESIZE}`
+      url = `https://soundeffect-search.p-e.kr/api/v1/soundeffect?type=${type}&fromLength=${fromLen}&toLength=${toLen}&fromFileSize=${fromFileSize}&toFileSize=${toFileSize}&sampleRate=${sampleRate}&bitDepth=${bitDepth}&channels=${channels}&name=${name}&page=${page}&size=${PAGESIZE}`
     }
     try {
       const axiosRes = await axios.get(url);

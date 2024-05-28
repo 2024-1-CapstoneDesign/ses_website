@@ -2,6 +2,7 @@ import withStyles from "@mui/styles/withStyles";
 import {alpha} from "@mui/material";
 import SearchIcon from '@mui/icons-material/Search';
 import InputBase from '@mui/material/InputBase';
+import React, {useEffect, useState} from "react";
 
 const styles = (theme) => ({
   searchContainer: {
@@ -49,7 +50,25 @@ const styles = (theme) => ({
 
 
 function MySearchField(props) {
-  const {classes} = props;
+  const {classes, filterList, setFilterList, selectSoundList} = props;
+  const [value, setValue] = useState('');
+
+  const handleChange = (e) => {
+    const newFilterList = [...filterList];
+    newFilterList[0] = {
+      value: e.target.value,
+    }
+    setFilterList(newFilterList);
+  };
+
+  useEffect(() => {
+    selectSoundList()
+  }, [selectSoundList]);
+
+  useEffect(() => {
+    setValue(filterList[0].value);
+  }, [filterList]);
+
   return (
     <div className={classes.searchContainer}>
       <div className={classes.searchIconWrapper}>
@@ -59,6 +78,8 @@ function MySearchField(props) {
         className={classes.searchInput}
         placeholder={"Search..."}
         inputProps={{'aria-label': 'search'}}
+        value={value}
+        onChange={handleChange}
       />
     </div>
   );
