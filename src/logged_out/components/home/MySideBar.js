@@ -4,6 +4,7 @@ import { withStyles } from "@mui/styles";
 import { Box, Typography, Chip } from "@mui/material";
 import ButtonBase from "@mui/material/ButtonBase";
 import MySidebarElement from "./MySidebarElement";
+import MySearchField from "./MySearchField";
 
 function shadeColor(color, percent) {
 
@@ -286,6 +287,7 @@ function MySideBar(props) {
 
   return ( //type, duration, filesize, sample rate, bit depth, channels
     <Box className={classes.sidebarContainer}>
+      <MySearchField />
       <MySidebarElement
         elementName={"Type"}
         elementList={typeElementList}
