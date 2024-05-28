@@ -49,6 +49,13 @@ function MySidebarElement(props) {
 
   useEffect(() => {
     selectSoundList();
+    const newChecked = [...checked];
+    elementList.forEach((element, index) => {
+      if (JSON.stringify(element) === JSON.stringify(filterList[elementList[index].id])){
+        newChecked[index] = true;
+      }
+    });
+    setChecked(newChecked);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectSoundList]);
 

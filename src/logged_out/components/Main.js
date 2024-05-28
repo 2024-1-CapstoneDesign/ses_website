@@ -224,7 +224,7 @@ function Main(props) {
         setFilterList([0, 0, 0, 0, 0, 0, []]);
       }
     }
-  }, [location, history]);
+  }, [location, history, filterList]);
 
   return (
     <div className={classes.wrapper}>
