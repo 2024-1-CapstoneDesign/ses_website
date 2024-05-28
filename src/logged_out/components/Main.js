@@ -35,7 +35,7 @@ function Main(props) {
   const [dialogOpen, setDialogOpen] = useState(null);
   const [isCookieRulesDialogOpen, setIsCookieRulesDialogOpen] = useState(false);
   const [page, setPage] = useState(0);
-  const [filterList, setFilterList] = useState([0, 0, 0, 0, 0, 0, []]);
+  const [filterList, setFilterList] = useState([0, 0, 0, 0, 0, 0, 0, []]);
 
   const selectHome = useCallback(() => {
     smoothScrollTop();
@@ -96,43 +96,49 @@ function Main(props) {
       sampleRate: "",
       bitDepth: "",
       channels: "",
+      name: "",
     };
     filterList.forEach((filter, index) => {
       switch (index){
         case 0:
-          if (filter !== 0){
-            resObj.type = filter.value[0];
+          if (filter !== 0 && filter !== undefined){
+            resObj.name = filter.value;
           }
           break;
         case 1:
-          if (filter !== 0){
+          if (filter !== 0 && filter !== undefined && filter.value !== undefined){
+            resObj.type = filter.value[0];
+          }
+          break;
+        case 2:
+          if (filter !== 0 && filter !== undefined && filter.value !== undefined){
             resObj.fromLen = filter.value[0];
             resObj.toLen = filter.value[1];
           }
           break;
-        case 2:
-          if (filter !== 0){
+        case 3:
+          if (filter !== 0 && filter !== undefined && filter.value !== undefined){
             resObj.fromFileSize = filter.value[0];
             resObj.toFileSize = filter.value[1];
           }
           break;
-        case 3:
-          if (filter !== 0){
+        case 4:
+          if (filter !== 0 && filter !== undefined && filter.value !== undefined){
             resObj.sampleRate = filter.value[0];
           }
           break;
-        case 4:
-          if (filter !== 0){
+        case 5:
+          if (filter !== 0 && filter !== undefined && filter.value !== undefined){
             resObj.bitDepth = filter.value[0];
           }
           break;
-        case 5:
-          if (filter !== 0){
+        case 6:
+          if (filter !== 0 && filter !== undefined && filter.value !== undefined){
             resObj.channels = filter.value[0];
           }
           break;
-        case 6:
-          if (filter !== []){
+        case 7:
+          if (filter !== [] && filter !== undefined){
             resObj.soundEffectTagId = filter.join();
           }
           break;
@@ -143,12 +149,12 @@ function Main(props) {
 
   const fetchSoundList = async () => {
     const {type, fromLen, toLen, fromFileSize, toFileSize,
-      sampleRate, bitDepth, channels, soundEffectTagId} = getURLQueryString(filterList);
+      sampleRate, bitDepth, channels, soundEffectTagId, name} = getURLQueryString(filterList);
     let url;
     if (soundEffectTagId){
-      url = `https://soundeffect-search.p-e.kr/api/v1/soundeffect?type=${type}&fromLength=${fromLen}&toLength=${toLen}&fromFileSize=${fromFileSize}&toFileSize=${toFileSize}&sampleRate=${sampleRate}&bitDepth=${bitDepth}&channels=${channels}&soundEffectTagId=${soundEffectTagId}&page=${page}&size=${PAGESIZE}`
+      url = `https://soundeffect-search.p-e.kr/api/v1/soundeffect?type=${type}&fromLength=${fromLen}&toLength=${toLen}&fromFileSize=${fromFileSize}&toFileSize=${toFileSize}&sampleRate=${sampleRate}&bitDepth=${bitDepth}&channels=${channels}&name=${name}&soundEffectTagId=${soundEffectTagId}&page=${page}&size=${PAGESIZE}`
     } else {
-      url = `https://soundeffect-search.p-e.kr/api/v1/soundeffect?type=${type}&fromLength=${fromLen}&toLength=${toLen}&fromFileSize=${fromFileSize}&toFileSize=${toFileSize}&sampleRate=${sampleRate}&bitDepth=${bitDepth}&channels=${channels}&page=${page}&size=${PAGESIZE}`
+      url = `https://soundeffect-search.p-e.kr/api/v1/soundeffect?type=${type}&fromLength=${fromLen}&toLength=${toLen}&fromFileSize=${fromFileSize}&toFileSize=${toFileSize}&sampleRate=${sampleRate}&bitDepth=${bitDepth}&channels=${channels}&name=${name}&page=${page}&size=${PAGESIZE}`
     }
     try {
       const axiosRes = await axios.get(url);
@@ -224,7 +230,7 @@ function Main(props) {
         setFilterList([0, 0, 0, 0, 0, 0, []]);
       }
     }
-  }, [location, history]);
+  }, [location, history, filterList]);
 
   return (
     <div className={classes.wrapper}>
