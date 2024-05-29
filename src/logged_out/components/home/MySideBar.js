@@ -93,7 +93,7 @@ const styles = (theme) => ({
 });
 
 function MySideBar(props) {
-  const { classes, soundListPosts, selectSoundList, setSoundListPosts, filterList, setFilterList, setPage } = props;
+  const { classes, soundListPosts, selectSoundList, filterList, setFilterList, setPage } = props;
   const [selectedTags, setSelectedTags] = useState(new Set());
 
   const uniqueTagList = [
@@ -104,20 +104,8 @@ function MySideBar(props) {
     ).values()
   ];
 
-  const resetVisibility = () => {
-    const updatedSoundListPosts = soundListPosts.map(sound => {
-      return {
-        ...sound,
-        soundVisible: true
-      };
-    });
-    setSoundListPosts(updatedSoundListPosts);
-  }
-
   useEffect(() => {
     selectSoundList();
-    setSelectedTags(new Set());
-    resetVisibility();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectSoundList]);
 

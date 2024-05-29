@@ -9,7 +9,7 @@ import useLocationBlocker from "../../shared/functions/useLocationBlocker";
 import Profile from "./home/Profile";
 
 function Routing(props) {
-  const { soundListPosts, setSoundListPosts, selectSoundList, selectHome, selectProfile, setPage, page, filterList, setFilterList } = props;
+  const { soundListPosts, selectSoundList, selectHome, selectProfile, setPage, page, filterList, setFilterList } = props;
   useLocationBlocker();
   return (
     <Switch>
@@ -38,7 +38,6 @@ function Routing(props) {
         component={SoundList}
         selectSoundList={selectSoundList}
         soundListPosts={soundListPosts}
-        setSoundListPosts={setSoundListPosts}
         setPage={setPage}
         page={page}
         filterList={filterList}

@@ -253,7 +253,7 @@ function Main(props) {
       />
       <NavBar
         selectedTab={selectedTab}
-        selectTab={setSelectedTab} // 여기서 확인하는듯
+        selectTab={setSelectedTab}
         openLoginDialog={openLoginDialog}
         openRegisterDialog={openRegisterDialog}
         mobileDrawerOpen={isMobileDrawerOpen}
@@ -265,7 +265,6 @@ function Main(props) {
         selectHome={selectHome}
         selectSoundList={selectSoundList}
         selectProfile={selectProfile}
-        setSoundListPosts={setSoundListPosts}
         setPage={setPage}
         page={page}
         filterList={filterList}

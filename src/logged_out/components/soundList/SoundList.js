@@ -68,8 +68,7 @@ function getVerticalSoundListPosts(isWidthUpSm, isWidthUpMd, soundListPosts) {
 }
 
 function SoundList(props) {
-  const { classes, soundListPosts, setSoundListPosts,
-      selectSoundList, setPage, theme, page, filterList, setFilterList } = props;
+  const { classes, soundListPosts, selectSoundList, setPage, theme, page, filterList, setFilterList } = props;
   const handleChange = (event, value) => {
     setPage(value - 1);
   };
@@ -92,7 +91,6 @@ function SoundList(props) {
       <MySideBar
         selectSoundList={selectSoundList}
         soundListPosts={soundListPosts}
-        setSoundListPosts={setSoundListPosts}
         filterList={filterList}
         setFilterList={setFilterList}
         setPage={setPage}
