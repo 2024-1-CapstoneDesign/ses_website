@@ -142,6 +142,16 @@ function Main(props) {
             resObj.soundEffectTagId = filter.join();
           }
           break;
+        default:
+          resObj.type = "";
+          resObj.fromLen =  "";
+          resObj.toLen = "";
+          resObj.fromFileSize =  "";
+          resObj.toFileSize =  "";
+          resObj.sampleRate = "";
+          resObj.bitDepth = "";
+          resObj.channels = "";
+          resObj.name = "";
       }
     });
     return resObj;

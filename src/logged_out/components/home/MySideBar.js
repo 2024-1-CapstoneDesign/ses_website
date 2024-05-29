@@ -113,6 +113,7 @@ function MySideBar(props) {
         newSelectedTag.add(res.tagName);
     });
     setSelectedTags(newSelectedTag);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectSoundList]);
 
   const handleChipClick = ({tagName, tagId}) => {
