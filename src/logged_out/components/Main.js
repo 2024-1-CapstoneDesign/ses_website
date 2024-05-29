@@ -142,6 +142,16 @@ function Main(props) {
             resObj.soundEffectTagId = filter.join();
           }
           break;
+        default:
+          resObj.type = "";
+          resObj.fromLen =  "";
+          resObj.toLen = "";
+          resObj.fromFileSize =  "";
+          resObj.toFileSize =  "";
+          resObj.sampleRate = "";
+          resObj.bitDepth = "";
+          resObj.channels = "";
+          resObj.name = "";
       }
     });
     return resObj;
@@ -253,7 +263,7 @@ function Main(props) {
       />
       <NavBar
         selectedTab={selectedTab}
-        selectTab={setSelectedTab} // 여기서 확인하는듯
+        selectTab={setSelectedTab}
         openLoginDialog={openLoginDialog}
         openRegisterDialog={openRegisterDialog}
         mobileDrawerOpen={isMobileDrawerOpen}
@@ -265,7 +275,6 @@ function Main(props) {
         selectHome={selectHome}
         selectSoundList={selectSoundList}
         selectProfile={selectProfile}
-        setSoundListPosts={setSoundListPosts}
         setPage={setPage}
         page={page}
         filterList={filterList}
