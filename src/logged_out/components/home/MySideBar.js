@@ -106,7 +106,13 @@ function MySideBar(props) {
 
   useEffect(() => {
     selectSoundList();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const newSelectedTag = new Set();
+    filterList[7].forEach(id => {
+      const res = uniqueTagList.find(({tagId}) => tagId === id);
+      if (res)
+        newSelectedTag.add(res.tagName);
+    });
+    setSelectedTags(newSelectedTag);
   }, [selectSoundList]);
 
   const handleChipClick = ({tagName, tagId}) => {
