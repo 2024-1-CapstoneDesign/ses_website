@@ -1,13 +1,17 @@
-# React SaaS Template
-Remains of a SaaS business I once tried to build. Now transformed into a template for building an SaaS/admin application using React + Material-UI.
+# AULO
+When you receive a sound effect file or give a specific section on YouTube,   
+it is a service that searches for the most similar sound effect
 
-[**Check out the demo**](https://reactsaastemplate.com)
+[**Check out the demo**](https://ses-website.vercel.app/)
 
 ![Node.js CI](https://github.com/dunky11/react-saas-template/workflows/Node.js%20CI/badge.svg)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 
 [<img src="/.github/gifs/showcase.gif">](https://reactsaastemplate.com "Go to demo website")
 
+## Features
+* search with mp3 sound source file for direct similarity search
+* search with The YouTube URL and the specific section targeted for the similarity search
 
 ## Getting Started
 
@@ -21,21 +25,27 @@ Remains of a SaaS business I once tried to build. Now transformed into a templat
    sudo apt install nodejs npm
    ```
 
-* Windows or macOS:
+* Windows:
 
    https://nodejs.org/en/
+
+* MacOs:
+
+   ```
+   brew install nodejs npm
+   ```
 
 ### Installing
 
 1. Clone the repository
 
    ```
-   git clone https://github.com/dunky11/react-saas-template
+   git clone https://github.com/2024-1-CapstoneDesign/ses_website
    ```
 2. Install dependencies, this can take a minute
 
    ```
-   cd react-saas-template
+   cd ses_website
    npm install
    ```
 3. Start the local server
@@ -72,18 +82,16 @@ It will create a folder named build with your compiled project inside. After tha
 * [Pace](https://github.com/HubSpot/pace) - Loading bar at the top
 * [Emoji-Mart](https://github.com/missive/emoji-mart) - Picker for the emojis
 * [React-Dropzone](https://github.com/react-dropzone/react-dropzone) - File drop component for uploads
-* [Recharts](https://github.com/recharts/recharts) - Charting library I used for the statistics
 * [Aos](https://github.com/michalsnik/aos) - Animations based on viewport
 * [React-Cropper](https://github.com/roadmanfong/react-cropper) - Cropper for the image uploads
 * [React-Stripe-js](https://github.com/stripe/react-stripe-js) - Stripes payment elements
+* [react-oauth/google](https://github.com/MomenSherif/react-oauth) - Google OAuth2 using the new Google Identity Services SDK for React
 
 ## Contribute
 Show your support by ⭐ the project. Pull requests are always welcome.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/dunky11/react-saas-template/blob/master/LICENSE) file for details.
-
-
-## Reference Site
-https://velog.io/@phrygia/2021-11-25-mui-react
+This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/dunky11/react-saas-template/blob/master/LICENSE) file for details.  
+This project also based on [**github repository**](https://github.com/dunky11/react-saas-template).  
+Thanks for dunky11 to open your project public.
