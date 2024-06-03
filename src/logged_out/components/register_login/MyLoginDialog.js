@@ -32,16 +32,45 @@ const styles = (theme) => ({
 
 const GoogleLoginButton = (props) => {
   const {history, setIsLoading, setStatus, onClose} = props;
-  const clientId = process.env.REACT_APP_CLIENT_ID
   const redirectUrI = process.env.REACT_APP_REDIRECT_URI;
 
-  const signIn = () => {
-    window.location.href = "https://accounts.google.com/o/oauth2/auth?" +
-      `client_id=${clientId}&`+
-      `redirect_uri=${redirectUrI}&`+
-      `&response_type=code` +
-      `&scope=email+profile`;
-  };
+  const signIn = useGoogleLogin({
+    onSuccess: (res) => {
+      console.dir(res);
+      axios.post(
+        `https://soundeffect-search.p-e.kr:8443/accounts/google/callback/re/?code=${res?.code}`
+      )
+        .then(
+        response => {
+          const {access_token, refresh_token} = response.data.token;
+          const userData = response.data.user;
+
+          setTimeout(() => {
+            Cookies.set('accessToken', access_token);
+            Cookies.set('refreshToken', refresh_token);
+            localStorage.setItem('userinfo', JSON.stringify(userData));
+            console.log(response.data);
+            history.push("/");
+            onClose();
+          }, 150);
+        }
+      )
+        .catch(error => {
+          console.log(error);
+          onClose();
+        });
+    },
+    onError: (error) =>{
+      setTimeout(() => {
+        setStatus("loginFailed");
+        setIsLoading(false);
+      }, 1500);
+      console.log(error);
+    },
+    flow: "auth-code",
+    redirect_uri: redirectUrI,
+  });
+
   const login = useCallback(() => {
     setIsLoading(true);
     setStatus(null);
