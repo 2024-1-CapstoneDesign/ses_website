@@ -1,13 +1,13 @@
 import {
   Box,
-  Button, Divider,
+  Button, CircularProgress, Divider,
   IconButton,
   Input,
   Modal,
   TextField,
   Typography
 } from "@mui/material";
-import React, {useState} from "react";
+import React, {useRef, useState} from "react";
 import withStyles from "@mui/styles/withStyles";
 import axios from "axios";
 import CloseIcon from "@mui/icons-material/Close";
@@ -119,8 +119,13 @@ const InputModal = (props) => {
   const [minuteTo, setMinuteTo] = useState('');
   const [secondTo, setSecondTo] = useState('');
   const [selectedFile, setSelectedFile] = useState(null);
+  const [progress, setProgress] = useState(false);
+  const cancelTokenSource = useRef(null);
 
   const handleModalClose = () => {
+    if (cancelTokenSource.current) {
+      cancelTokenSource.current.cancel('Request canceled by the user.');
+    }
     setModalOpen(false);
     setYoutubeURL('');
     setMinuteFrom('');
@@ -134,21 +139,40 @@ const InputModal = (props) => {
 
   const handleSubmit = (e)=> {
     e.preventDefault();
-    const axiosConfig = {
-      headers: {
-        "Content-Type": "multipart/form-data",
+    if (selectedFile && !(youtubeURL && minuteFrom && minuteTo && secondFrom && secondTo)) {
+      const axiosConfig = {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+        cancelToken: cancelTokenSource.current.token,
+      };
+
+      const formData = new FormData();
+      formData.append("file", selectedFile)
+
+      setProgress(true);
+      axios.post(
+        "https://soundeffect-search.p-e.kr/api/v1/soundeffect/search", formData, axiosConfig
+      ).then(response => {
+        console.dir(response);
+        setProgress(false);
+      }).catch(() => {
+        alert("file search failed. Please try again.");
+        setSelectedFile(null);
+        setProgress(false);
+      });
+    } else if (!selectedFile && (youtubeURL || minuteFrom || minuteTo || secondFrom || secondTo)){
+      const youtubeURLRegex = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/(watch\?v=|embed\/|v\/|.+\?v=)?([^&=%\?]{11})$/;
+      if (youtubeURLRegex.test(youtubeURL) === false){
+        alert("Invalid youtubeURL");
       }
+
+      if ((youtubeURL && minuteFrom && minuteTo && secondFrom && secondTo) === false){
+        alert("Fill all field");
+      }
+    } else {
+      alert("cannot input both Youtube URL field and file Upload field")
     }
-    const body = {
-      file: selectedFile
-    };
-    axios.post(
-      "https://soundeffect-search.p-e.kr/api/v1/soundeffect/search", body, axiosConfig
-    ).then(response => {
-      console.dir(response);
-    }).catch(e => {
-      console.error(e);
-    });
 
 
     // const regex = /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/;
@@ -263,7 +287,7 @@ const InputModal = (props) => {
           </Box>
           <Box sx={{height: "15%", width: "100%"}}>
             <Button type="submit" fullWidth variant="contained">
-              Submit
+              {progress ? <CircularProgress color="info" size={20}/> : "Submit"}
             </Button>
           </Box>
         </Box>
