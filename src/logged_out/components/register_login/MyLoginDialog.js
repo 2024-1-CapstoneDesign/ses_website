@@ -32,35 +32,16 @@ const styles = (theme) => ({
 
 const GoogleLoginButton = (props) => {
   const {history, setIsLoading, setStatus, onClose} = props;
-  const signIn = useGoogleLogin({
-    onSuccess: (res) => {
-      axios.get('https://www.googleapis.com/oauth2/v1/userinfo', {
-        params:{
-          access_token: res.access_token,
-        }
-      })
-        .then(response => {
-          setTimeout(() => {
-            Cookies.set('accessToken', res.access_token);
-            localStorage.setItem('userinfo', JSON.stringify(response.data));
-            console.log(response.data);
-            history.push("/home");
-            onClose();
-          }, 150);
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    },
-    onError: (error) =>{
-      setTimeout(() => {
-        setStatus("loginFailed");
-        setIsLoading(false);
-      }, 1500);
-      console.log(error);
-    }
-  });
+  const clientId = process.env.REACT_APP_CLIENT_ID
+  const redirectUrI = process.env.REACT_APP_REDIRECT_URI;
 
+  const signIn = () => {
+    window.location.href = "https://accounts.google.com/o/oauth2/auth?" +
+      `client_id=${clientId}&`+
+      `redirect_uri=${redirectUrI}&`+
+      `&response_type=code` +
+      `&scope=email+profile`;
+  };
   const login = useCallback(() => {
     setIsLoading(true);
     setStatus(null);
