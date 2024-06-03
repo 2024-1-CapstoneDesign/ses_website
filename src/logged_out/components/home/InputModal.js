@@ -132,22 +132,36 @@ const InputModal = (props) => {
   const handleURLChange = (e) => setYoutubeURL(e.target.value);
   const handleFileChange = (e) => setSelectedFile(e.target.files[0]);
 
-  const handleSubmit = async (e)=> {
+  const handleSubmit = (e)=> {
     e.preventDefault();
-    const body = {
-      title: youtubeURL
-    };
-    const regex = /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/;
-    if (regex.test(minuteFrom) && regex.test(secondFrom)) {
-      const res = await axios.post('https://dummyjson.com/products/add', body,{
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-      console.dir(res.data);
-    } else {
-      alert("start and end need to HH:MM:SS format")
+    const axiosConfig = {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      }
     }
+    const body = {
+      file: selectedFile
+    };
+    axios.post(
+      "https://soundeffect-search.p-e.kr/api/v1/soundeffect/search", body, axiosConfig
+    ).then(response => {
+      console.dir(response);
+    }).catch(e => {
+      console.error(e);
+    });
+
+
+    // const regex = /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/;
+    // if (regex.test(minuteFrom) && regex.test(secondFrom)) {
+    //   const res = await axios.post('https://dummyjson.com/products/add', body,{
+    //     headers: {
+    //       'Content-Type': 'application/json'
+    //     }
+    //   });
+    //   console.dir(res.data);
+    // } else {
+    //   alert("start and end need to HH:MM:SS format")
+    // }
   };
 
   return (
