@@ -241,9 +241,7 @@ function Footer(props) {
             </Typography>
             <Typography style={{ color: "#8f9296" }} paragraph>
               Are you ready for a revolution
-              in finding sound effects?
-            </Typography>
-            <Typography style={{ color: "#8f9296" }} paragraph>
+              in finding sound effects? <br/>
               Let’s experience the full sound effects of Aulo!
             </Typography>
             <Box display="flex">
