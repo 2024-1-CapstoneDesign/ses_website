@@ -162,30 +162,24 @@ const InputModal = (props) => {
         setProgress(false);
       });
     } else if (!selectedFile && (youtubeURL || minuteFrom || minuteTo || secondFrom || secondTo)){
-      const youtubeURLRegex = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/(watch\?v=|embed\/|v\/|.+\?v=)?([^&=%\?]{11})$/;
+      const youtubeURLRegex = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/(watch\?v=|embed\/|v\/|.+\?v=)?([^&=%?]{11})$/;
       if (youtubeURLRegex.test(youtubeURL) === false){
         alert("Invalid youtubeURL");
+      } else if (minuteFrom === "" || minuteTo === "" || secondFrom === "" || secondTo === ""){
+        alert("Fill all field");
+      } else {
+        console.dir(youtubeURL);
+        console.dir(minuteFrom);
+        console.dir(minuteTo);
+        console.dir(secondFrom);
+        console.dir(secondTo);
       }
 
-      if ((youtubeURL && minuteFrom && minuteTo && secondFrom && secondTo) === false){
-        alert("Fill all field");
-      }
+    } else if (!selectedFile && !(youtubeURL && minuteFrom && minuteTo && secondFrom && secondTo)){
+      alert("input either Youtube URL field and file Upload field")
     } else {
       alert("cannot input both Youtube URL field and file Upload field")
     }
-
-
-    // const regex = /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/;
-    // if (regex.test(minuteFrom) && regex.test(secondFrom)) {
-    //   const res = await axios.post('https://dummyjson.com/products/add', body,{
-    //     headers: {
-    //       'Content-Type': 'application/json'
-    //     }
-    //   });
-    //   console.dir(res.data);
-    // } else {
-    //   alert("start and end need to HH:MM:SS format")
-    // }
   };
 
   return (
