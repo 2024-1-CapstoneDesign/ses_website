@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import PropTypes from "prop-types";
 import {
   Grid,
@@ -157,6 +157,14 @@ const socialIcons = [
 function Footer(props) {
   const { classes, theme } = props;
   const isWidthUpMd = useMediaQuery(theme.breakpoints.up("md"));
+  const [emailContent, setEmailContent] = useState("");
+  const handleEmailChange = (e) => {
+    setEmailContent(e.target.value);
+  };
+  const handleSendEmail = (e) => {
+    e.preventDefault();
+    window.location.href = `mailto:info@example.com?subject=To whom it may concern&body=${encodeURIComponent(emailContent)}`;
+  };
 
   return (
     <footer className="lg-p-top">
@@ -168,7 +176,7 @@ function Footer(props) {
       <div className={classes.footerInner}>
         <Grid container spacing={isWidthUpMd ? 10 : 5}>
           <Grid item xs={12} md={6} lg={4}>
-            <form>
+            <form onSubmit={handleSendEmail}>
               <Box display="flex" flexDirection="column">
                 <Box mb={1}>
                   <TextField
@@ -182,6 +190,8 @@ function Footer(props) {
                     rows={4}
                     fullWidth
                     required
+                    value={emailContent}
+                    onChange={handleEmailChange}
                   />
                 </Box>
                 <ColoredButton
