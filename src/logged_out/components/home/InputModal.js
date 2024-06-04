@@ -7,7 +7,7 @@ import {
   TextField,
   Typography
 } from "@mui/material";
-import React, {useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import { useHistory } from 'react-router-dom';
 import withStyles from "@mui/styles/withStyles";
 import axios from "axios";
@@ -110,6 +110,14 @@ const styles = (theme) => ({
     },
     width: "90%",
   },
+  middleProgressContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '50%',
+    width: '100%',
+  }
 });
 
 const InputModal = (props) => {
@@ -123,6 +131,7 @@ const InputModal = (props) => {
   const [progress, setProgress] = useState(false);
   const cancelTokenSource = useRef(null);
   const history = useHistory();
+  const [progressValue, setProgressValue] = useState(10);
 
 
   const handleModalClose = () => {
@@ -194,6 +203,15 @@ const InputModal = (props) => {
     }
   };
 
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setProgressValue((prevProgress) => (prevProgress >= 100 ? 0 : prevProgress + 10));
+    }, 800);
+    return () => {
+      clearInterval(timer);
+    };
+  }, []);
+
   return (
     <Modal
       open={modalOpen}
@@ -201,103 +219,135 @@ const InputModal = (props) => {
       aria-labelledby="modal-title"
       aria-describedby="modal-description"
     >
-      <Box
-        component="form"
-        noValidate
-        onSubmit={handleSubmit}
-        className={classes.modalStyle}
-      >
-        <Box className={classes.modalTopContainer}>
-          <Box className={classes.modalTopTextContainer}>
-            <Box sx={{display: "flex", flexDirection: "row", alignItems: "center"}} ml={-1}>
-              <img src={`${process.env.PUBLIC_URL}/images/logged_out/youtube.png`} alt={"youtube logo"}/>
-              <Typography variant="h6" component="h2">
-                Youtube Full URL
+      {
+        progress ?
+          <Box className={classes.modalStyle}>
+            <Box className={classes.modalTopContainer}>
+              <Box className={classes.modalTopTextContainer}>
+                <Box ml={-1}>
+                  <Typography variant="h6" component="h2">
+                    Uploading File
+                  </Typography>
+                  <Typography variant="body" sx={{color:"gray"}}>
+                    Please wait while your file is being uploaded.
+                  </Typography>
+                </Box>
+                <IconButton onClick={handleModalClose} sx={{bottom: '1rem'}}>
+                  <CloseIcon/>
+                </IconButton>
+              </Box>
+            </Box>
+            <Box className={classes.middleProgressContainer}>
+              <CircularProgress variant={"determinate"} value={progressValue} size={100} sx={{color: "#000000"}}/>
+              <Typography variant="h2" component="div" color="text.secondary" mt={5}>
+                {`${Math.round(progressValue)}%`}
               </Typography>
             </Box>
-            <IconButton onClick={handleModalClose} sx={{bottom: '1rem'}}>
-              <CloseIcon/>
-            </IconButton>
+            <Box className={classes.modalBottomContainer}>
+              <Typography variant="h6" component="h2">
+                Uploading your File...
+              </Typography>
+            </Box>
           </Box>
-          <TextField
-            label="www.example.com"
-            type="search"
-            className={classes.roundedTextField}
-            value={youtubeURL}
-            onChange={handleURLChange}
-            sx={{marginTop: theme.spacing(-3)}}
-          />
-        </Box>
-        <Box className={classes.modalMiddleContainer}>
-          <Box className={classes.modalMiddleTextContainer}>
-            <Typography variant="h6" component="h2">
-              From
-            </Typography>
+          :
+          <Box
+            component="form"
+            noValidate
+            onSubmit={handleSubmit}
+            className={classes.modalStyle}
+          >
+            <Box className={classes.modalTopContainer}>
+              <Box className={classes.modalTopTextContainer}>
+                <Box sx={{display: "flex", flexDirection: "row", alignItems: "center"}} ml={-1}>
+                  <img src={`${process.env.PUBLIC_URL}/images/logged_out/youtube.png`} alt={"youtube logo"}/>
+                  <Typography variant="h6" component="h2">
+                    Youtube Full URL
+                  </Typography>
+                </Box>
+                <IconButton onClick={handleModalClose} sx={{bottom: '1rem'}}>
+                  <CloseIcon/>
+                </IconButton>
+              </Box>
+              <TextField
+                label="www.example.com"
+                type="search"
+                className={classes.roundedTextField}
+                value={youtubeURL}
+                onChange={handleURLChange}
+                sx={{marginTop: theme.spacing(-3)}}
+              />
+            </Box>
+            <Box className={classes.modalMiddleContainer}>
+              <Box className={classes.modalMiddleTextContainer}>
+                <Typography variant="h6" component="h2">
+                  From
+                </Typography>
+              </Box>
+              <Box className={classes.modalMiddleInputContainer}>
+                <MyTimePicker
+                  inputLabelId={"from-minute-label"}
+                  labelId={"from-minute-"}
+                  value={minuteFrom}
+                  setValue={setMinuteFrom}
+                  text={"minutes"}
+                  inputLabel={"min"}
+                />
+                <MyTimePicker
+                  inputLabelId={"from-second-label"}
+                  labelId={"from-second"}
+                  value={secondFrom}
+                  setValue={setSecondFrom}
+                  text={"seconds"}
+                  inputLabel={"sec"}
+                />
+              </Box>
+              <Box className={classes.modalMiddleTextContainer}>
+                <Typography variant="h6" component="h2">
+                  To
+                </Typography>
+              </Box>
+              <Box className={classes.modalMiddleInputContainer}>
+                <MyTimePicker
+                  inputLabelId={"to-minute-label"}
+                  labelId={"to-minute"}
+                  value={minuteTo}
+                  setValue={setMinuteTo}
+                  text={"minutes"}
+                  inputLabel={"min"}
+                />
+                <MyTimePicker
+                  inputLabelId={"to-second-label"}
+                  labelId={"to-second"}
+                  value={secondTo}
+                  setValue={setSecondTo}
+                  text={"seconds"}
+                  inputLabel={"sec"}
+                />
+              </Box>
+              <Box sx={{width: "100%", height: "20%"}}/>
+              <Divider sx={{width: "90%"}} />
+            </Box>
+            <Box className={classes.modalBottomContainer}>
+              <Box sx={{height: "85%", display: "flex", alignItems: "center"}}>
+                <Button
+                  component="label"
+                  role={undefined}
+                  variant="contained"
+                  tabIndex={-1}
+                  startIcon={<CloudUploadIcon />}
+                >
+                  {selectedFile ? 'file Selected' : 'Upload file'}
+                  <Input className={classes.visuallyHiddenInputStyle} type="file" onChange={handleFileChange}/>
+                </Button>
+              </Box>
+              <Box sx={{height: "15%", width: "100%"}}>
+                <Button type="submit" fullWidth variant="contained">
+                  Submit
+                </Button>
+              </Box>
+            </Box>
           </Box>
-          <Box className={classes.modalMiddleInputContainer}>
-            <MyTimePicker
-              inputLabelId={"from-minute-label"}
-              labelId={"from-minute-"}
-              value={minuteFrom}
-              setValue={setMinuteFrom}
-              text={"minutes"}
-              inputLabel={"min"}
-            />
-            <MyTimePicker
-              inputLabelId={"from-second-label"}
-              labelId={"from-second"}
-              value={secondFrom}
-              setValue={setSecondFrom}
-              text={"seconds"}
-              inputLabel={"sec"}
-            />
-          </Box>
-          <Box className={classes.modalMiddleTextContainer}>
-            <Typography variant="h6" component="h2">
-              To
-            </Typography>
-          </Box>
-          <Box className={classes.modalMiddleInputContainer}>
-            <MyTimePicker
-              inputLabelId={"to-minute-label"}
-              labelId={"to-minute"}
-              value={minuteTo}
-              setValue={setMinuteTo}
-              text={"minutes"}
-              inputLabel={"min"}
-            />
-            <MyTimePicker
-              inputLabelId={"to-second-label"}
-              labelId={"to-second"}
-              value={secondTo}
-              setValue={setSecondTo}
-              text={"seconds"}
-              inputLabel={"sec"}
-            />
-          </Box>
-          <Box sx={{width: "100%", height: "20%"}}/>
-          <Divider sx={{width: "90%"}} />
-        </Box>
-        <Box className={classes.modalBottomContainer}>
-          <Box sx={{height: "85%", display: "flex", alignItems: "center"}}>
-            <Button
-              component="label"
-              role={undefined}
-              variant="contained"
-              tabIndex={-1}
-              startIcon={<CloudUploadIcon />}
-            >
-              {selectedFile ? 'file Selected' : 'Upload file'}
-              <Input className={classes.visuallyHiddenInputStyle} type="file" onChange={handleFileChange}/>
-            </Button>
-          </Box>
-          <Box sx={{height: "15%", width: "100%"}}>
-            <Button type="submit" fullWidth variant="contained">
-              {progress ? <CircularProgress color="info" size={20}/> : "Submit"}
-            </Button>
-          </Box>
-        </Box>
-      </Box>
+      }
     </Modal>
   );
 }
