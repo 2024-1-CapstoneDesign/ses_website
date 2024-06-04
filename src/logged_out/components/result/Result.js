@@ -2,9 +2,13 @@ import React, {useEffect} from "react";
 import withStyles from "@mui/styles/withStyles";
 import {useLocation} from "react-router-dom";
 import formatDateTime from "../home/formatDateTime";
-import {Box, Grid} from "@mui/material";
+import {Box, Divider, Grid, IconButton, Input, Typography} from "@mui/material";
 import SoundListCard from "../soundList/SoundListCard";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import classNames from "classnames";
+import MenuIcon from "@mui/icons-material/Menu";
+import InputBase from "@mui/material/InputBase";
+import SearchIcon from "@mui/icons-material/Search";
 
 const styles = (theme) => ({
   blogContentWrapper: {
@@ -14,16 +18,32 @@ const styles = (theme) => ({
       marginLeft: theme.spacing(4),
       marginRight: theme.spacing(4),
     },
-    maxWidth: 1280,
-    width: "100%",
   },
   wrapper: {
     minHeight: "60vh",
   },
-  noDecoration: {
-    textDecoration: "none !important",
+  titleContainer: {
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
+    marginBottom: theme.spacing(5),
+    [theme.breakpoints.up("sm")]: {
+      marginLeft: theme.spacing(4),
+      marginRight: theme.spacing(4),
+    },
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
   },
+  searchBorder: {
+    border: "1px solid rgb(229 231 235)",
+    display: "flex",
+    justifyContent: "space-evenly",
+  }
 });
+
+function DirectionsIcon() {
+  return null;
+}
 
 function Result(props) {
   const {classes, theme, setSoundListPosts} = props;
@@ -60,8 +80,6 @@ function Result(props) {
       soundSnippet: soundEffect.summary,
     }
   });
-  console.log("res")
-  console.dir(resSoundList);
   const soundListPosts = resSoundList.map((soundListPost) => {
     let title = soundListPost.soundName;
     title = title.toLowerCase();
@@ -75,13 +93,11 @@ function Result(props) {
     soundListPost.params = `?id=${soundListPost.soundId}`;
     return soundListPost;
   });
-  console.log("posts")
-  console.dir(soundListPosts)
   let index = 0;
   soundListPosts.forEach((soundListPost) => {
     gridRows.push(
       <Grid key={soundListPost.soundId} item xs={12}>
-        <Box mb={3} sx={{border: "1px red solid"}}>
+        <Box mb={3}>
           <SoundListCard
             title={soundListPost.soundName}
             snippet={soundListPost.soundSnippet}
@@ -102,18 +118,44 @@ function Result(props) {
 
 
   return (
-    <div>
-      <h1>Result Page</h1>
-      <Grid container spacing={3}>
-        {gridRows &&
-          gridRows.map((element, index) => (
-            <Grid key={index} item xs={xs}>
-              {element}
-            </Grid>
-          ))
-        }
-      </Grid>
-    </div>
+    <Box
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+      flexDirection="column"
+      className={classNames(classes.wrapper, "lg-p-top")}
+    >
+      <div className={classes.titleContainer}>
+        <Typography
+          variant="h2"
+          component="h2"
+          fontWeight="200"
+        >
+          SoundEffect Results
+        </Typography>
+        <Box className={classes.searchBorder}>
+          <InputBase
+            sx={{ ml: 1, flex: 1 }}
+            value={"hello world"}
+            disabled
+          />
+          <IconButton type="button" sx={{ p: '10px' }} aria-label="search" disabled>
+            <SearchIcon />
+          </IconButton>
+        </Box>
+      </div>
+      <div className={classes.blogContentWrapper}>
+        <Grid container spacing={3}>
+          {gridRows &&
+            gridRows.map((element, index) => (
+              <Grid key={index} item xs={xs}>
+                {element}
+              </Grid>
+            ))
+          }
+        </Grid>
+      </div>
+    </Box>
   );
 
 
