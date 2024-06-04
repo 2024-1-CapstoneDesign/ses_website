@@ -8,6 +8,7 @@ import {
   Typography
 } from "@mui/material";
 import React, {useRef, useState} from "react";
+import { useHistory } from 'react-router-dom';
 import withStyles from "@mui/styles/withStyles";
 import axios from "axios";
 import CloseIcon from "@mui/icons-material/Close";
@@ -121,6 +122,8 @@ const InputModal = (props) => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [progress, setProgress] = useState(false);
   const cancelTokenSource = useRef(null);
+  const history = useHistory();
+
 
   const handleModalClose = () => {
     if (cancelTokenSource.current) {
@@ -140,6 +143,7 @@ const InputModal = (props) => {
   const handleSubmit = (e)=> {
     e.preventDefault();
     if (selectedFile && !(youtubeURL && minuteFrom && minuteTo && secondFrom && secondTo)) {
+      cancelTokenSource.current = axios.CancelToken.source();
       const axiosConfig = {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -154,8 +158,13 @@ const InputModal = (props) => {
       axios.post(
         "https://soundeffect-search.p-e.kr/api/v1/soundeffect/search", formData, axiosConfig
       ).then(response => {
-        console.dir(response);
         setProgress(false);
+        handleModalClose();
+        // history를 사용하여 /result 페이지로 라우팅하면서 state를 전달합니다.
+        history.push({
+          pathname: '/result',
+          state: { data: response.data }
+        });
       }).catch(() => {
         alert("file search failed. Please try again.");
         setSelectedFile(null);
