@@ -36,7 +36,7 @@ function MyTimePicker(props){
             <em>None</em>
           </MenuItem>
           {[...Array(60).keys()].map(i => (
-            <MenuItem value={i + 1}>{i + 1}</MenuItem>
+            <MenuItem key={i} value={i + 1}>{i + 1}</MenuItem>
           ))}
         </Select>
       </FormControl>
