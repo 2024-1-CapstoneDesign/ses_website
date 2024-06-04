@@ -47,6 +47,7 @@ function Result(props) {
   const isWidthUpMd = useMediaQuery(theme.breakpoints.up("md"));
   const location = useLocation();
   const data = location.state?.data;
+  const targetName = location.state?.targetName;
 
   let xs;
   if (isWidthUpMd) {
@@ -131,7 +132,7 @@ function Result(props) {
         <Box className={classes.searchBorder}>
           <InputBase
             sx={{ ml: 1, flex: 1 }}
-            value={"hello world"}
+            value={targetName}
             disabled
           />
           <IconButton type="button" sx={{ p: '10px' }} aria-label="search" disabled>

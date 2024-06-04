@@ -163,7 +163,10 @@ const InputModal = (props) => {
         // history를 사용하여 /result 페이지로 라우팅하면서 state를 전달합니다.
         history.push({
           pathname: '/result',
-          state: { data: response.data.data }
+          state: {
+            data: response.data.data,
+            targetName: selectedFile.name,
+          }
         });
       }).catch(() => {
         alert("file search failed. Please try again.");
