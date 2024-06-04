@@ -1,12 +1,10 @@
-import React from "react";
+import React, {useEffect} from "react";
 import withStyles from "@mui/styles/withStyles";
-import {Switch, useLocation} from "react-router-dom";
+import {useLocation} from "react-router-dom";
 import formatDateTime from "../home/formatDateTime";
 import {Box, Grid} from "@mui/material";
 import SoundListCard from "../soundList/SoundListCard";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import PropsRoute from "../../../shared/components/PropsRoute";
-import SoundListPost from "../soundList/SoundListPost";
 
 const styles = (theme) => ({
   blogContentWrapper: {
@@ -28,7 +26,7 @@ const styles = (theme) => ({
 });
 
 function Result(props) {
-  const {classes, theme} = props;
+  const {classes, theme, setSoundListPosts} = props;
   const gridRows = [];
   const isWidthUpSm = useMediaQuery(theme.breakpoints.up("sm"));
   const isWidthUpMd = useMediaQuery(theme.breakpoints.up("md"));
@@ -98,30 +96,14 @@ function Result(props) {
     index++;
   });
 
+  useEffect(() => {
+    setSoundListPosts(soundListPosts);
+  }, [data]);
+
+
   return (
     <div>
       <h1>Result Page</h1>
-      <Switch>
-        {soundListPosts.map((post) => (
-          <PropsRoute
-            path={post.url}
-            component={SoundListPost}
-            title={post.soundName}
-            key={post.soundName}
-            src={post.soundURL}
-            date={post.soundCreateAt}
-            tagList={post.soundTagList}
-            type={post.soundType}
-            length={post.soundLength}
-            sampleRate={post.soundSampleRate}
-            bitDepth={post.soundBitDepth}
-            channels={post.soundChannels}
-            fileSize={post.soundFileSize}
-            content={post.soundDescription}
-            id={post.soundId}
-          />
-        ))}
-      </Switch>
       <Grid container spacing={3}>
         {gridRows &&
           gridRows.map((element, index) => (
