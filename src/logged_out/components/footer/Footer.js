@@ -79,11 +79,11 @@ const styles = (theme) => ({
 const infos = [
   {
     icon: <PhoneIcon />,
-    description: "+1 555 123456",
+    description: "+8210 1234 5678",
   },
   {
     icon: <MailIcon />,
-    description: "support@company.com",
+    description: "aluo@site.com",
   },
 ];
 
@@ -102,7 +102,7 @@ const socialIcons = [
       </svg>
     ),
     label: "Github",
-    href: "https://github.com/dunky11/react-saas-template",
+    href: "https://github.com/2024-1-CapstoneDesign/ses_website",
   },
   {
     icon: (
@@ -227,11 +227,14 @@ function Footer(props) {
           </Hidden>
           <Grid item xs={12} md={6} lg={4}>
             <Typography variant="h6" paragraph className="text-white">
-              About the Company
+              About the AULO
             </Typography>
             <Typography style={{ color: "#8f9296" }} paragraph>
-              Lorem ipsum dolor sit amet, consectateur adispicing elit. Fusce
-              euismod convallis velit, eu auctor lacus vehicula sit amet.
+              Are you ready for a revolution
+              in finding sound effects?
+            </Typography>
+            <Typography style={{ color: "#8f9296" }} paragraph>
+              Let’s experience the full sound effects of Aulo!
             </Typography>
             <Box display="flex">
               {socialIcons.map((socialIcon, index) => (
