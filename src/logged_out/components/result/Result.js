@@ -2,11 +2,10 @@ import React, {useEffect} from "react";
 import withStyles from "@mui/styles/withStyles";
 import {useLocation} from "react-router-dom";
 import formatDateTime from "../home/formatDateTime";
-import {Box, Divider, Grid, IconButton, Input, Typography} from "@mui/material";
+import {Box, Grid, IconButton, Typography} from "@mui/material";
 import SoundListCard from "../soundList/SoundListCard";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import classNames from "classnames";
-import MenuIcon from "@mui/icons-material/Menu";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
 
@@ -40,10 +39,6 @@ const styles = (theme) => ({
     justifyContent: "space-evenly",
   }
 });
-
-function DirectionsIcon() {
-  return null;
-}
 
 function Result(props) {
   const {classes, theme, setSoundListPosts} = props;
@@ -129,7 +124,7 @@ function Result(props) {
         <Typography
           variant="h2"
           component="h2"
-          fontWeight="200"
+          fontWeight="400"
         >
           SoundEffect Results
         </Typography>
