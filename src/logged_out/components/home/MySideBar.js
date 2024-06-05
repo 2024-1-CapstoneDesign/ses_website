@@ -107,7 +107,7 @@ function MySideBar(props) {
   useEffect(() => {
     selectSoundList();
     const newSelectedTag = new Set();
-    filterList[7].forEach(id => {
+    filterList[7]?.forEach(id => {
       const res = uniqueTagList.find(({tagId}) => tagId === id);
       if (res)
         newSelectedTag.add(res.tagName);
@@ -116,6 +116,7 @@ function MySideBar(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectSoundList]);
 
+  // http://localhost:3000/soundList/card/oh-hell-no
   const handleChipClick = ({tagName, tagId}) => {
     const newFilterList = [...filterList];
     const newSelectedTagIds = new Set(filterList[7]);

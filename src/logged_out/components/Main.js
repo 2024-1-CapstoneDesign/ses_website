@@ -272,6 +272,7 @@ function Main(props) {
       />
       <Routing
         soundListPosts={soundListPosts}
+        setSoundListPosts={setSoundListPosts}
         selectHome={selectHome}
         selectSoundList={selectSoundList}
         selectProfile={selectProfile}
