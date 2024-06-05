@@ -2,7 +2,7 @@ import {useEffect, useRef, useState} from "react";
 import WaveSurfer from "wavesurfer.js";
 import {Box, IconButton} from "@mui/material";
 import {PauseCircle, PlayCircle, Star, StarOutline} from "@mui/icons-material";
-
+import { useLocation } from "react-router-dom";
 import withStyles from "@mui/styles/withStyles";
 import theme from "../../../theme";
 import Cookies from "js-cookie";
@@ -46,6 +46,7 @@ const WaveSurferComponent = (props) => {
   const wavesurfer = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isStared, setIsStared] = useState(isLiked);
+  const location = useLocation();
 
   useEffect(() => {
     if(waveform.current){
@@ -114,7 +115,9 @@ const WaveSurferComponent = (props) => {
         }
       })
         .then(res => {
-        console.dir(res);
+          if (location.pathname === "/profile") {
+            window.location.reload();
+          }
       }).catch(e => {
         console.error(e);
       });
@@ -126,7 +129,10 @@ const WaveSurferComponent = (props) => {
         }
       })
         .then(res => {
-          console.dir(res);
+          console.log(location.pathname === "/profile")
+          if (location.pathname === "/profile") {
+            window.location.reload();
+          }
         }).catch(e => {
         console.error(e);
       });
