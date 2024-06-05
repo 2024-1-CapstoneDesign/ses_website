@@ -38,7 +38,7 @@ const styles = (theme) => ({
     height: theme.spacing(16),
   },
   favoriteSoundContainer: {
-    marginTop: theme.spacing(2),
+    marginTop: theme.spacing(5),
   },
   bottomProfileContainer: {
     height: "10%",
@@ -171,7 +171,7 @@ function Profile(props) {
           </Grid>
         </Grid>
         <Box className={classes.favoriteSoundContainer}>
-          <Typography variant="h6" component="div" sx={{display: "flex", justifyContent: "center"}}>
+          <Typography variant="h6" component="div" sx={{display: "flex", justifyContent: "left"}}>
             Favorite Sound
           </Typography>
           <Box className={classes.root}>
