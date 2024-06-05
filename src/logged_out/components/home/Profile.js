@@ -75,7 +75,7 @@ const styles = (theme) => ({
 });
 
 function Profile(props) {
-  const { classes, selectProfile} = props;
+  const { classes, selectProfile, setSoundListPosts} = props;
   const userObj = JSON.parse(localStorage.getItem("userinfo"));
   const access_token = Cookies.get('accessToken');
   console.log(access_token);
@@ -175,8 +175,8 @@ function Profile(props) {
         e.params = `?id=${e.soundId}`;
         return e;
       });
-      console.dir(res);
       setLikeSoundList(res);
+      setSoundListPosts(res);
     })
   }, []);
 

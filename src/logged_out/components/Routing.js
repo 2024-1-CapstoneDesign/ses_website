@@ -52,6 +52,7 @@ function Routing(props) {
             path="/profile"
             component={Profile}
             selectProfile={selectProfile}
+            setSoundListPosts={setSoundListPosts}
           />
       }
       <PropsRoute path="/result" component={Result} setSoundListPosts={setSoundListPosts} />
