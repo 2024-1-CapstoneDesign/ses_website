@@ -132,8 +132,9 @@ const InputModal = (props) => {
   const [progress, setProgress] = useState(false);
   const cancelTokenSource = useRef(null);
   const history = useHistory();
-  const [progressValue, setProgressValue] = useState(10);
+  const [progressValue, setProgressValue] = useState(0);
   const access_token = Cookies.get('accessToken');
+  const [progressSpeed, setProgressSpeed] = useState(10);
 
 
   const handleModalClose = () => {
@@ -170,6 +171,7 @@ const InputModal = (props) => {
 
       setProgress(true);
       setProgressValue(0);
+      setProgressSpeed(10);
       axios.post(
         "https://soundeffect-search.p-e.kr/api/v1/soundeffect/search", formData, axiosConfig
       ).then(response => {
@@ -199,6 +201,7 @@ const InputModal = (props) => {
         cancelTokenSource.current = axios.CancelToken.source();
         const axiosConfig = {
           cancelToken: cancelTokenSource.current.token,
+          headers: {}
         };
 
         if (access_token) {
@@ -219,6 +222,7 @@ const InputModal = (props) => {
 
         setProgress(true);
         setProgressValue(0);
+        setProgressSpeed(2);
         axios.get(
           `https://soundeffect-search.p-e.kr/api/v1/soundeffect/youtube?url=${youtubeURL}&from=${from}&to=${to}`, axiosConfig
         ).then(response => {
@@ -256,12 +260,12 @@ const InputModal = (props) => {
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setProgressValue((prevProgress) => (prevProgress >= 100 ? 0 : prevProgress + 2));
+      setProgressValue((prevProgress) => (prevProgress >= 100 ? 0 : prevProgress + progressSpeed));
     }, 800);
     return () => {
       clearInterval(timer);
     };
-  }, []);
+  }, [progressSpeed]);
 
   return (
     <Modal
