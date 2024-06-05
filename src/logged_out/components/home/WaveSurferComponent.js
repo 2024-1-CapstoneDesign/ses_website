@@ -108,7 +108,6 @@ const WaveSurferComponent = (props) => {
     setIsStared(!isStared);
     // 좋아요를 누른 경우
     if (!isStared){
-      console.dir(access_token);
       axios.put(`https://soundeffect-search.p-e.kr/api/v1/soundeffect/999/like`, {},{
         headers: {
           Authorization: `Bearer ${access_token}`,
@@ -122,7 +121,6 @@ const WaveSurferComponent = (props) => {
     } //그렇지 않은 경우
     else {
       console.log("not stared!");
-      console.dir(access_token);
       axios.put(`https://soundeffect-search.p-e.kr/api/v1/soundeffect/999/unlike`, {},{
         headers: {
           Authorization: `Bearer ${access_token}`,

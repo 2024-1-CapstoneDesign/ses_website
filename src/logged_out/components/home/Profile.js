@@ -32,7 +32,7 @@ const styles = (theme) => ({
     boxShadow: theme.shadows[5],
     borderRadius: theme.shape.borderRadius,
     padding: theme.spacing(6),
-    maxWidth: 600,
+    maxWidth: 1200,
   },
   avatar: {
     width: theme.spacing(16),
@@ -77,6 +77,8 @@ const styles = (theme) => ({
 function Profile(props) {
   const { classes, selectProfile} = props;
   const userObj = JSON.parse(localStorage.getItem("userinfo"));
+  const access_token = Cookies.get('accessToken');
+  console.log(access_token);
   const history = useHistory();
   const [likeSoundList, setLikeSoundList] = useState(null);
   const sliderRef = useRef(null);
@@ -84,8 +86,34 @@ function Profile(props) {
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
+    slidesToShow: 3,
+    slidesToScroll: 3,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+          infinite: true,
+          dots: true
+        }
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          initialSlide: 1
+        }
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1
+        }
+      }
+    ]
   };
 
   const logoutHandler = () => {
@@ -98,12 +126,17 @@ function Profile(props) {
 
   const fetchLikeSoundList = useCallback(() => {
     async function fetchLikeData() {
-      const url = `https://soundeffect-search.p-e.kr/api/v1/soundeffect?page=1&size=2`
+      const url = `https://soundeffect-search.p-e.kr/api/v1/soundeffect/like`
       try {
-        const axiosRes = await axios.get(url);
+        const axiosRes = await axios.get(url, {
+          headers: {
+            Authorization: `Bearer ${access_token}`,
+          }
+        });
         const resData = axiosRes.data; //fetchResult
+        console.dir(resData);
         if (resData.result === "SUCCESS"){
-          return resData.data.soundEffectDtos.map((soundEffect) => {
+          return resData.data.map((soundEffect) => {
             return {
               soundId: soundEffect.soundEffectId,
               soundName: soundEffect.soundEffectName,
