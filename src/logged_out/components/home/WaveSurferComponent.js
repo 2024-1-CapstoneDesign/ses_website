@@ -114,7 +114,7 @@ const WaveSurferComponent = (props) => {
           Authorization: `Bearer ${access_token}`,
         }
       })
-        .then(res => {
+        .then(() => {
           if (location.pathname === "/profile") {
             window.location.reload();
           }
@@ -128,8 +128,7 @@ const WaveSurferComponent = (props) => {
           Authorization: `Bearer ${access_token}`,
         }
       })
-        .then(res => {
-          console.log(location.pathname === "/profile")
+        .then(() => {
           if (location.pathname === "/profile") {
             window.location.reload();
           }
