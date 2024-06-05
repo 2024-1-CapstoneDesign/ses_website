@@ -178,6 +178,7 @@ function Profile(props) {
       setLikeSoundList(res);
       setSoundListPosts(res);
     })
+    //eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(fetchLikeSoundList, [fetchLikeSoundList]);

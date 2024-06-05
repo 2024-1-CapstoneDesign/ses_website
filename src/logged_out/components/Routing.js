@@ -33,6 +33,8 @@ function Routing(props) {
           content={post.soundDescription}
           soundId={post.soundId}
           isLiked={post.isLiked}
+          setSoundListPosts={setSoundListPosts}
+          soundListPosts={soundListPosts}
         />
       ))}
       <PropsRoute

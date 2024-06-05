@@ -68,7 +68,7 @@ const styles = (theme) => ({
 
 function SoundListPost(props) {
   const { classes, date, title, src, content, tagList,
-      type, length, sampleRate, bitDepth, channels, fileSize, soundId, isLiked } = props;
+      type, length, sampleRate, bitDepth, channels, fileSize, soundId, isLiked, setSoundListPosts, soundListPosts } = props;
   const [relativeSoundEffects, setRelativeSoundEffects] = useState([])
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -120,7 +120,7 @@ function SoundListPost(props) {
       }
     }
     fetchData().then(data => {
-      const soundListPosts = data.map((e) => {
+      const relativeSoundListPosts = data.map((e) => {
         let title = e.soundName;
         title = title.toLowerCase();
         /* Remove unwanted characters, only accept alphanumeric and space */
@@ -133,8 +133,10 @@ function SoundListPost(props) {
         e.params = `?id=${e.soundId}`;
         return e;
       });
-      setRelativeSoundEffects(soundListPosts)
+      setRelativeSoundEffects(relativeSoundListPosts)
+      setSoundListPosts([...soundListPosts, ...relativeSoundListPosts]);
     })
+    //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [soundId]);
 
   useEffect(fetchRelativeSoundList, [fetchRelativeSoundList]);
