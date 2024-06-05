@@ -76,6 +76,7 @@ const GoogleLoginButton = (props) => {
     setIsLoading(true);
     setStatus(null);
     signIn();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setIsLoading, history, setStatus]);
 
   return (

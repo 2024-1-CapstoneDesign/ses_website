@@ -2,7 +2,6 @@ import React, { useState, useCallback, Fragment } from "react";
 import PropTypes from "prop-types";
 import RegisterDialog from "./RegisterDialog";
 import TermsOfServiceDialog from "./TermsOfServiceDialog";
-import LoginDialog from "./LoginDialog";
 import ChangePasswordDialog from "./ChangePasswordDialog";
 import ModalBackdrop from "../../../shared/components/ModalBackdrop";
 import MyLoginDialog from "./MyLoginDialog";
