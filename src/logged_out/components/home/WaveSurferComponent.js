@@ -96,14 +96,16 @@ const WaveSurferComponent = (props) => {
 
   const starButtonClick = (event) => {
     event.preventDefault();
-    setIsStared(!isStared);
     const userObj = JSON.parse(localStorage.getItem("userinfo"));
     const access_token = Cookies.get('accessToken');
     const refresh_token = Cookies.get('refreshToken');
     // there are no login or no access_token or no refresh token
-    if (userObj === null || access_token === null || refresh_token === null)
+    if (userObj === null || access_token === null || refresh_token === null) {
+      alert("You need to log in to use this feature")
       return;
+    }
 
+    setIsStared(!isStared);
     // 좋아요를 누른 경우
     if (!isStared){
       console.dir(access_token);
