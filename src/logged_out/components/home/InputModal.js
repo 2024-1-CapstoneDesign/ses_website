@@ -194,11 +194,30 @@ const InputModal = (props) => {
         const axiosConfig = {
           cancelToken: cancelTokenSource.current.token,
         };
-        console.dir(youtubeURL);
-        console.dir(minuteFrom);
-        console.dir(minuteTo);
-        console.dir(secondFrom);
-        console.dir(secondTo);
+
+        const from = parseInt(minuteFrom) * 60 + parseInt(secondFrom);
+        const to = parseInt(minuteTo) * 60 + parseInt(secondTo);
+
+        setProgress(true);
+        axios.get(
+          `https://soundeffect-search.p-e.kr/api/v1/soundeffect/youtube?url=${youtubeURL}&from=${from}&to=${to}`, axiosConfig
+        ).then(response => {
+          setProgress(false);
+          handleModalClose();
+          // history를 사용하여 /result 페이지로 라우팅하면서 state를 전달합니다.
+          history.push({
+            pathname: '/result',
+            state: {
+              data: response.data.data,
+              targetName: youtubeURL,
+            }
+          });
+        }).catch((e) => {
+          console.error(e);
+          alert("file search failed. Please try again.");
+          setSelectedFile(null);
+          setProgress(false);
+        });
       }
 
     } else if (!selectedFile && !(youtubeURL && minuteFrom && minuteTo && secondFrom && secondTo)){
