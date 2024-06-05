@@ -183,12 +183,17 @@ const InputModal = (props) => {
         setProgress(false);
       });
     } else if (!selectedFile && (youtubeURL || minuteFrom || minuteTo || secondFrom || secondTo)){
-      const youtubeURLRegex = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/(watch\?v=|embed\/|v\/|.+\?v=)?([^&=%?]{11})$/;
-      if (youtubeURLRegex.test(youtubeURL) === false){
+      const youtubeURLRegex = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/(watch\?v=|embed\/|v\/|.+\?v=)?([^&=%\?]{11})(&.*)?$/;
+
+      if (youtubeURLRegex.test(decodeURIComponent(youtubeURL)) === false){
         alert("Invalid youtubeURL");
       } else if (minuteFrom === "" || minuteTo === "" || secondFrom === "" || secondTo === ""){
         alert("Fill all field");
       } else {
+        cancelTokenSource.current = axios.CancelToken.source();
+        const axiosConfig = {
+          cancelToken: cancelTokenSource.current.token,
+        };
         console.dir(youtubeURL);
         console.dir(minuteFrom);
         console.dir(minuteTo);
