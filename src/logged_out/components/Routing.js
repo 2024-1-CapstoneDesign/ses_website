@@ -32,6 +32,7 @@ function Routing(props) {
           fileSize={post.soundFileSize}
           content={post.soundDescription}
           id={post.soundId}
+          isLiked={post.isLiked}
         />
       ))}
       <PropsRoute

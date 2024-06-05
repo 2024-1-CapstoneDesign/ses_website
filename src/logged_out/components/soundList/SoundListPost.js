@@ -10,6 +10,7 @@ import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 import SoundDetailPaper from "./SoundDetailPaper";
 import axios from "axios";
 import formatDateTime from "../home/formatDateTime";
+import Cookies from "js-cookie";
 
 const styles = (theme) => ({
   blogContentWrapper: {
@@ -67,10 +68,11 @@ const styles = (theme) => ({
 
 function SoundListPost(props) {
   const { classes, date, title, src, content, tagList,
-      type, length, sampleRate, bitDepth, channels, fileSize, id } = props;
+      type, length, sampleRate, bitDepth, channels, fileSize, id, isLiked } = props;
   const [relativeSoundEffects, setRelativeSoundEffects] = useState([])
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
+  const access_token = Cookies.get('accessToken');
 
   useEffect(() => {
     document.title = `AuLo - ${title}`;
@@ -81,7 +83,16 @@ function SoundListPost(props) {
     async function fetchData() {
       const url = `https://soundeffect-search.p-e.kr/api/v1/soundeffect/${id}/relative`
       try {
-        const axiosRes = await axios.get(url);
+        let axiosRes;
+        if (access_token) {
+          axiosRes = await axios.get(url, {
+            headers: {
+              Authorization: `Bearer ${access_token}`,
+            }
+          });
+        } else {
+          axiosRes = await axios.get(url);
+        }
         const resData = axiosRes.data; //fetchResult
         if (resData.result === "SUCCESS"){
           return resData.data.map((soundEffect) => {
@@ -96,6 +107,7 @@ function SoundListPost(props) {
               soundCreateBy: soundEffect.createBy,
               soundCreateAt: formatDateTime(soundEffect.createdAt),
               soundSnippet: soundEffect.summary,
+              isLiked: soundEffect.isLiked
             }
           });
         }
@@ -178,6 +190,7 @@ function SoundListPost(props) {
                   audioURL={src}
                   setCurrentTime={setCurrentTime}
                   setDuration={setDuration}
+                  isLiked={isLiked}
                 />
               </Box>
               <Box pt={1} pr={3} pl={3} className={classes.titleContainer}>
@@ -266,6 +279,7 @@ function SoundListPost(props) {
                   date={blogPost.soundCreateAt}
                   src={blogPost.soundURL}
                   url={`${blogPost.url}${blogPost.params}`}
+                  isLiked={blogPost.isLiked}
                 />
               </Box>
             ))}

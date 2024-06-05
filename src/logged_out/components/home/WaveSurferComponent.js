@@ -41,11 +41,11 @@ const styles = () => ({
 });
 
 const WaveSurferComponent = (props) => {
-  const {classes, audioURL, setCurrentTime, setDuration} = props
+  const {classes, audioURL, setCurrentTime, setDuration, isLiked} = props
   const waveform = useRef(null);
   const wavesurfer = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [isStared, setIsStared] = useState(false);
+  const [isStared, setIsStared] = useState(isLiked);
 
   useEffect(() => {
     if(waveform.current){

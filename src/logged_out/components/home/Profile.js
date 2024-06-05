@@ -148,6 +148,7 @@ function Profile(props) {
               soundCreateBy: soundEffect.createBy,
               soundCreateAt: formatDateTime(soundEffect.createdAt),
               soundSnippet: soundEffect.summary,
+              isLiked: soundEffect.isLiked,
             }
           });
         }
@@ -221,6 +222,7 @@ function Profile(props) {
                       url={element.url}
                       src={element.soundURL}
                       tagList={element.soundTagList}
+                      isLiked={element.isLiked}
                     />
                   )
                 })
