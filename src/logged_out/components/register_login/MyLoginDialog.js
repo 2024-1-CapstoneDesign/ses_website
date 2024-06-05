@@ -52,6 +52,7 @@ const GoogleLoginButton = (props) => {
             console.log(response.data);
             history.push("/");
             onClose();
+            window.location.reload();
           }, 150);
         }
       )

@@ -5,8 +5,11 @@ import {
   Paper,
   Typography,
   Avatar,
-  Grid
+  Grid, Box, Button
 } from "@mui/material";
+import classNames from "classnames";
+import {Logout} from "@mui/icons-material";
+import {useHistory} from "react-router-dom";
 
 const styles = (theme) => ({
   container: {
@@ -28,19 +31,30 @@ const styles = (theme) => ({
     width: theme.spacing(16),
     height: theme.spacing(16),
   },
+  favoriteSoundContainer: {
+    width: "100%",
+    height: "50%",
+  },
 });
 
 function Profile(props) {
   const { classes, selectProfile} = props;
   const userObj = JSON.parse(localStorage.getItem("userinfo"));
+  const history = useHistory();
   console.dir(userObj);
+
+  const logoutHandler = () => {
+    localStorage.removeItem("userinfo");
+    history.push("/");
+    window.location.reload();
+  }
 
   useEffect(() => {
     selectProfile();
   }, [selectProfile]);
 
   return (
-    <Container className={classes.container}>
+    <Container className={classNames(classes.container, "lg-p-top")}>
       <Paper className={classes.paper}>
         <Grid container spacing={4} alignItems="center" justifyContent="center">
           <Grid item>
@@ -59,6 +73,23 @@ function Profile(props) {
             </Typography>
           </Grid>
         </Grid>
+        <Box className={classes.favoriteSoundContainer}>
+          <Typography variant="h6" component="div">
+            Favorite Sound
+          </Typography>
+        </Box>
+        <Box>
+          <Button
+            component="label"
+            role={undefined}
+            variant="contained"
+            tabIndex={-1}
+            startIcon={<Logout />}
+            onClick={logoutHandler}
+          >
+            Logout
+          </Button>
+        </Box>
       </Paper>
     </Container>
   );
