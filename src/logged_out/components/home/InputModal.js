@@ -164,6 +164,7 @@ const InputModal = (props) => {
       formData.append("file", selectedFile)
 
       setProgress(true);
+      setProgressValue(0);
       axios.post(
         "https://soundeffect-search.p-e.kr/api/v1/soundeffect/search", formData, axiosConfig
       ).then(response => {
@@ -197,13 +198,30 @@ const InputModal = (props) => {
 
         const from = parseInt(minuteFrom) * 60 + parseInt(secondFrom);
         const to = parseInt(minuteTo) * 60 + parseInt(secondTo);
+        if (from > to){
+          alert("from cannot exceed to value. try again")
+          return;
+        }
+
+        if (to - from > 25){
+          alert("soundEffect duration cannot exceed 25 seconds. try again")
+          return;
+        }
 
         setProgress(true);
+        setProgressValue(0);
         axios.get(
           `https://soundeffect-search.p-e.kr/api/v1/soundeffect/youtube?url=${youtubeURL}&from=${from}&to=${to}`, axiosConfig
         ).then(response => {
           setProgress(false);
           handleModalClose();
+          if (response.data.data === null || response.data.result === "FAIL") {
+            console.error(e);
+            alert("file search failed. Please try again.");
+            setSelectedFile(null);
+            setProgress(false);
+            return;
+          }
           // history를 사용하여 /result 페이지로 라우팅하면서 state를 전달합니다.
           history.push({
             pathname: '/result',
@@ -229,7 +247,7 @@ const InputModal = (props) => {
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setProgressValue((prevProgress) => (prevProgress >= 100 ? 0 : prevProgress + 10));
+      setProgressValue((prevProgress) => (prevProgress >= 100 ? 0 : prevProgress + 2));
     }, 800);
     return () => {
       clearInterval(timer);
@@ -250,10 +268,10 @@ const InputModal = (props) => {
               <Box className={classes.modalTopTextContainer}>
                 <Box ml={-1}>
                   <Typography variant="h6" component="h2">
-                    Uploading File
+                    Getting search results
                   </Typography>
                   <Typography variant="body" sx={{color:"gray"}}>
-                    Please wait while your file is being uploaded.
+                    Please wait until getting the results.
                   </Typography>
                 </Box>
                 <IconButton onClick={handleModalClose} sx={{bottom: '1rem'}}>
