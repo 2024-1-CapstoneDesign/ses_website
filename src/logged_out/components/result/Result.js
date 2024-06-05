@@ -89,7 +89,6 @@ function Result(props) {
     soundListPost.params = `?id=${soundListPost.soundId}`;
     return soundListPost;
   });
-  let index = 0;
   soundListPosts.forEach((soundListPost) => {
     gridRows.push(
       <Grid key={soundListPost.soundId} item xs={12}>
@@ -105,11 +104,11 @@ function Result(props) {
         </Box>
       </Grid>
     );
-    index++;
   });
 
   useEffect(() => {
     setSoundListPosts(soundListPosts);
+    //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
 
