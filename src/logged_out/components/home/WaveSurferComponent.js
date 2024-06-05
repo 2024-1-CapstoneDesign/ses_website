@@ -6,6 +6,7 @@ import {PauseCircle, PlayCircle, Star, StarOutline} from "@mui/icons-material";
 import withStyles from "@mui/styles/withStyles";
 import theme from "../../../theme";
 import Cookies from "js-cookie";
+import axios from "axios";
 
 const styles = () => ({
   waveSurferContainer: {
@@ -102,14 +103,34 @@ const WaveSurferComponent = (props) => {
     // there are no login or no access_token or no refresh token
     if (userObj === null || access_token === null || refresh_token === null)
       return;
+
     // 좋아요를 누른 경우
     if (!isStared){
-      console.log(userObj);
-      console.log(access_token);
-      console.log(refresh_token);
+      console.dir(access_token);
+      axios.put(`https://soundeffect-search.p-e.kr/api/v1/soundeffect/999/like`, {},{
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        }
+      })
+        .then(res => {
+        console.dir(res);
+      }).catch(e => {
+        console.error(e);
+      });
     } //그렇지 않은 경우
     else {
       console.log("not stared!");
+      console.dir(access_token);
+      axios.put(`https://soundeffect-search.p-e.kr/api/v1/soundeffect/999/unlike`, {},{
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        }
+      })
+        .then(res => {
+          console.dir(res);
+        }).catch(e => {
+        console.error(e);
+      });
     }
   }
 
