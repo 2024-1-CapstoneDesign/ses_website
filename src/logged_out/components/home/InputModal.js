@@ -222,7 +222,7 @@ const InputModal = (props) => {
 
         setProgress(true);
         setProgressValue(0);
-        setProgressSpeed(2);
+        setProgressSpeed(5);
         axios.get(
           `https://soundeffect-search.p-e.kr/api/v1/soundeffect/youtube?url=${youtubeURL}&from=${from}&to=${to}`, axiosConfig
         ).then(response => {
