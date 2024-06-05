@@ -32,7 +32,7 @@ const styles = (theme) => ({
     boxShadow: theme.shadows[5],
     borderRadius: theme.shape.borderRadius,
     padding: theme.spacing(6),
-    maxWidth: 1200,
+    width: "80vw",
   },
   avatar: {
     width: theme.spacing(16),
@@ -49,7 +49,7 @@ const styles = (theme) => ({
     justifyContent: "center"
   },
   root: {
-    maxWidth: 600,
+    width: "70vw",
     margin: "0 auto",
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
@@ -84,37 +84,34 @@ function Profile(props) {
   const sliderRef = useRef(null);
   const settings = {
     dots: true,
-    infinite: true,
+    infinite: false,
     speed: 500,
-    slidesToShow: 3, //이게 3개라서 계속 중복되는게 보이는듯
-    slidesToScroll: 3,
+    slidesToShow: Math.min(likeSoundList ? likeSoundList.length : 3, 3),
+    slidesToScroll: 1,
     responsive: [
       {
         breakpoint: 1024,
         settings: {
-          slidesToShow: 2,
-          slidesToScroll: 2,
-          infinite: true,
-          dots: true
+          slidesToShow: Math.min(likeSoundList ? likeSoundList.length : 2, 2),
         }
       },
       {
         breakpoint: 600,
         settings: {
           slidesToShow: 1,
-          slidesToScroll: 1,
-          initialSlide: 1
+          initialSlide: 1,
         }
       },
       {
         breakpoint: 480,
         settings: {
           slidesToShow: 1,
-          slidesToScroll: 1
+          initialSlide: 1,
         }
       }
     ]
   };
+
 
   const logoutHandler = () => {
     localStorage.removeItem("userinfo");
@@ -134,7 +131,6 @@ function Profile(props) {
           }
         });
         const resData = axiosRes.data; //fetchResult
-        console.dir(resData);
         if (resData.result === "SUCCESS"){
           return resData.data.map((soundEffect) => {
             return {

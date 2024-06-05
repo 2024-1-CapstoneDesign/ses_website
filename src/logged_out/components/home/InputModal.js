@@ -189,7 +189,7 @@ const InputModal = (props) => {
         setProgress(false);
       });
     } else if (!selectedFile && (youtubeURL || minuteFrom || minuteTo || secondFrom || secondTo)){
-      const youtubeURLRegex = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/(watch\?v=|embed\/|v\/|.+\?v=)?([^&=%\?]{11})(&.*)?$/;
+      const youtubeURLRegex = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/(watch\?v=|embed\/|v\/|.+\?v=)?([^&=%?]{11})(&.*)?$/;
 
       if (youtubeURLRegex.test(decodeURIComponent(youtubeURL)) === false){
         alert("Invalid youtubeURL");
