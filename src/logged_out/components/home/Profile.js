@@ -79,7 +79,6 @@ function Profile(props) {
   const history = useHistory();
   const [likeSoundList, setLikeSoundList] = useState(null);
   const sliderRef = useRef(null);
-  console.dir(userObj);
   const settings = {
     dots: true,
     infinite: true,
