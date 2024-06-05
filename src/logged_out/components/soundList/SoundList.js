@@ -106,7 +106,7 @@ function SoundList(props) {
               color="primary"
               onChange={handleChange}
               page={page + 1}
-              siblingCount={5}
+              siblingCount={4}
               boundaryCount={3}
             />
           }
