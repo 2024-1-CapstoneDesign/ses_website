@@ -5,6 +5,7 @@ import {PauseCircle, PlayCircle, Star, StarOutline} from "@mui/icons-material";
 
 import withStyles from "@mui/styles/withStyles";
 import theme from "../../../theme";
+import Cookies from "js-cookie";
 
 const styles = () => ({
   waveSurferContainer: {
@@ -95,13 +96,28 @@ const WaveSurferComponent = (props) => {
   const starButtonClick = (event) => {
     event.preventDefault();
     setIsStared(!isStared);
+    const userObj = JSON.parse(localStorage.getItem("userinfo"));
+    const access_token = Cookies.get('accessToken');
+    const refresh_token = Cookies.get('refreshToken');
+    // there are no login or no access_token or no refresh token
+    if (userObj === null || access_token === null || refresh_token === null)
+      return;
+    // 좋아요를 누른 경우
+    if (!isStared){
+      console.log(userObj);
+      console.log(access_token);
+      console.log(refresh_token);
+    } //그렇지 않은 경우
+    else {
+      console.log("not stared!");
+    }
   }
 
   return (
     <Box className={classes.waveSurferContainer}>
       <Box className={classes.topButtonBox}>
         <IconButton onClick={starButtonClick}>
-          {isStared ? <Star/> : <StarOutline/>}
+          {isStared ? <Star sx={{color: "#FFBF00"}}/> : <StarOutline/>}
         </IconButton>
       </Box>
       <Box className={classes.waveformBox} ref={waveform} />
