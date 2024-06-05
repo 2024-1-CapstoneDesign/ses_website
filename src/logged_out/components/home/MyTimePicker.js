@@ -32,11 +32,8 @@ function MyTimePicker(props){
           onChange={handleChange}
           sx={{ borderRadius: '16px' }}
         >
-          <MenuItem value="">
-            <em>None</em>
-          </MenuItem>
-          {[...Array(60).keys()].map(i => (
-            <MenuItem key={i} value={i + 1}>{i + 1}</MenuItem>
+          {[...Array(61).keys()].map(i => (
+            <MenuItem key={i} value={i}>{i}</MenuItem>
           ))}
         </Select>
       </FormControl>
