@@ -16,6 +16,7 @@ import formatDateTime from "./formatDateTime";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
+import Cookies from "js-cookie";
 
 
 const styles = (theme) => ({
@@ -89,6 +90,8 @@ function Profile(props) {
 
   const logoutHandler = () => {
     localStorage.removeItem("userinfo");
+    Cookies.remove('accessToken');
+    Cookies.remove('refreshToken');
     history.push("/");
     window.location.reload();
   }
