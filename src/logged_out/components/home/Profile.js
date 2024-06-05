@@ -31,7 +31,7 @@ const styles = (theme) => ({
     boxShadow: theme.shadows[5],
     borderRadius: theme.shape.borderRadius,
     padding: theme.spacing(6),
-    maxWidth: 400,
+    maxWidth: 600,
   },
   avatar: {
     width: theme.spacing(16),
