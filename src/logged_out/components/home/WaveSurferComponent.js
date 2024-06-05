@@ -41,7 +41,7 @@ const styles = () => ({
 });
 
 const WaveSurferComponent = (props) => {
-  const {classes, audioURL, setCurrentTime, setDuration, isLiked} = props
+  const {classes, audioURL, setCurrentTime, setDuration, isLiked, soundId} = props
   const waveform = useRef(null);
   const wavesurfer = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -108,7 +108,7 @@ const WaveSurferComponent = (props) => {
     setIsStared(!isStared);
     // 좋아요를 누른 경우
     if (!isStared){
-      axios.put(`https://soundeffect-search.p-e.kr/api/v1/soundeffect/999/like`, {},{
+      axios.put(`https://soundeffect-search.p-e.kr/api/v1/soundeffect/${soundId}/like`, {},{
         headers: {
           Authorization: `Bearer ${access_token}`,
         }
@@ -120,8 +120,7 @@ const WaveSurferComponent = (props) => {
       });
     } //그렇지 않은 경우
     else {
-      console.log("not stared!");
-      axios.put(`https://soundeffect-search.p-e.kr/api/v1/soundeffect/999/unlike`, {},{
+      axios.put(`https://soundeffect-search.p-e.kr/api/v1/soundeffect/${soundId}/unlike`, {},{
         headers: {
           Authorization: `Bearer ${access_token}`,
         }

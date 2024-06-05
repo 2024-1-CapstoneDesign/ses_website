@@ -86,7 +86,7 @@ function Profile(props) {
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 3,
+    slidesToShow: 3, //이게 3개라서 계속 중복되는게 보이는듯
     slidesToScroll: 3,
     responsive: [
       {
@@ -223,6 +223,7 @@ function Profile(props) {
                       src={element.soundURL}
                       tagList={element.soundTagList}
                       isLiked={element.isLiked}
+                      soundId={element.soundId}
                     />
                   )
                 })

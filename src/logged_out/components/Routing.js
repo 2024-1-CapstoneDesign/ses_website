@@ -31,7 +31,7 @@ function Routing(props) {
           channels={post.soundChannels}
           fileSize={post.soundFileSize}
           content={post.soundDescription}
-          id={post.soundId}
+          soundId={post.soundId}
           isLiked={post.isLiked}
         />
       ))}

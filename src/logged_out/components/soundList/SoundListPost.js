@@ -68,7 +68,7 @@ const styles = (theme) => ({
 
 function SoundListPost(props) {
   const { classes, date, title, src, content, tagList,
-      type, length, sampleRate, bitDepth, channels, fileSize, id, isLiked } = props;
+      type, length, sampleRate, bitDepth, channels, fileSize, soundId, isLiked } = props;
   const [relativeSoundEffects, setRelativeSoundEffects] = useState([])
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -81,7 +81,7 @@ function SoundListPost(props) {
 
   const fetchRelativeSoundList = useCallback(() => {
     async function fetchData() {
-      const url = `https://soundeffect-search.p-e.kr/api/v1/soundeffect/${id}/relative`
+      const url = `https://soundeffect-search.p-e.kr/api/v1/soundeffect/${soundId}/relative`
       try {
         let axiosRes;
         if (access_token) {
@@ -135,7 +135,7 @@ function SoundListPost(props) {
       });
       setRelativeSoundEffects(soundListPosts)
     })
-  }, [id]);
+  }, [soundId]);
 
   useEffect(fetchRelativeSoundList, [fetchRelativeSoundList]);
 
@@ -191,6 +191,7 @@ function SoundListPost(props) {
                   setCurrentTime={setCurrentTime}
                   setDuration={setDuration}
                   isLiked={isLiked}
+                  soundId={soundId}
                 />
               </Box>
               <Box pt={1} pr={3} pl={3} className={classes.titleContainer}>
@@ -280,6 +281,7 @@ function SoundListPost(props) {
                   src={blogPost.soundURL}
                   url={`${blogPost.url}${blogPost.params}`}
                   isLiked={blogPost.isLiked}
+                  soundId={blogPost.soundId}
                 />
               </Box>
             ))}

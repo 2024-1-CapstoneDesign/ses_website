@@ -14,6 +14,7 @@ import axios from "axios";
 import CloseIcon from "@mui/icons-material/Close";
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import MyTimePicker from "./MyTimePicker";
+import Cookies from "js-cookie";
 
 const styles = (theme) => ({
   modalStyle: {
@@ -132,6 +133,7 @@ const InputModal = (props) => {
   const cancelTokenSource = useRef(null);
   const history = useHistory();
   const [progressValue, setProgressValue] = useState(10);
+  const access_token = Cookies.get('accessToken');
 
 
   const handleModalClose = () => {
@@ -159,6 +161,9 @@ const InputModal = (props) => {
         },
         cancelToken: cancelTokenSource.current.token,
       };
+      if (access_token) {
+        axiosConfig.Authorization = `Bearer ${access_token}`
+      }
 
       const formData = new FormData();
       formData.append("file", selectedFile)
@@ -195,6 +200,10 @@ const InputModal = (props) => {
         const axiosConfig = {
           cancelToken: cancelTokenSource.current.token,
         };
+
+        if (access_token) {
+          axiosConfig.Authorization = `Bearer ${access_token}`
+        }
 
         const from = parseInt(minuteFrom) * 60 + parseInt(secondFrom);
         const to = parseInt(minuteTo) * 60 + parseInt(secondTo);

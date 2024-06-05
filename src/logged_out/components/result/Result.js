@@ -102,6 +102,7 @@ function Result(props) {
             src={soundListPost.soundURL}
             tagList={soundListPost.soundTagList}
             isLiked={soundListPost.isLiked}
+            soundId={soundListPost.soundId}
           />
         </Box>
       </Grid>

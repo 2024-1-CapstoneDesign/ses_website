@@ -66,12 +66,12 @@ const styles = (theme) => ({
 });
 
 function SoundListCard(props) {
-  const { classes, url, src, date, title, snippet, tagList, isLiked } = props;
+  const { classes, url, src, date, title, snippet, tagList, isLiked, soundId } = props;
 
   return (
     <Card className={classes.card}>
       <div className={classes.gradientContainer}>
-        {src && <WaveSurferComponent audioURL={src} isLiked={isLiked}/>}
+        {src && <WaveSurferComponent audioURL={src} isLiked={isLiked} soundId={soundId}/>}
       </div>
       <Link to={url} tabIndex={-1} className={classes.noDecoration}>
         <Box p={2}>
