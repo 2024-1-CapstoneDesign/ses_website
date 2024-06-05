@@ -162,8 +162,9 @@ const InputModal = (props) => {
         cancelToken: cancelTokenSource.current.token,
       };
       if (access_token) {
-        axiosConfig.Authorization = `Bearer ${access_token}`
+        axiosConfig.headers.Authorization = `Bearer ${access_token}`
       }
+      console.log(axiosConfig);
 
       const formData = new FormData();
       formData.append("file", selectedFile)
@@ -202,7 +203,7 @@ const InputModal = (props) => {
         };
 
         if (access_token) {
-          axiosConfig.Authorization = `Bearer ${access_token}`
+          axiosConfig.headers.Authorization = `Bearer ${access_token}`
         }
 
         const from = parseInt(minuteFrom) * 60 + parseInt(secondFrom);
