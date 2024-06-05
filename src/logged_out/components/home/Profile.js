@@ -50,6 +50,9 @@ const styles = (theme) => ({
   root: {
     maxWidth: 600,
     margin: "0 auto",
+    backgroundColor: theme.palette.background.paper,
+    boxShadow: theme.shadows[5],
+    borderRadius: theme.shape.borderRadius,
   },
   slider: {
     "& .slick-prev": {
