@@ -33,7 +33,7 @@ function shadeColor(color, percent) {
 
 const styles = (theme) => ({
   sidebarContainer: {
-    width: "30%",
+    width: "25vw",
     display: "flex",
     flexDirection: "column",
     backgroundColor: theme.palette.background.default,

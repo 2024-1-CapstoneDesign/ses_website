@@ -113,7 +113,7 @@ const WaveSurferComponent = (props) => {
         }
       })
         .then(() => {
-          if (location.pathname === "/profile" || location.pathname === "/result" || location.pathname.includes("/card")) {
+          if (location.pathname === "/profile") {
             window.location.reload();
           }
       }).catch(e => {
@@ -127,7 +127,7 @@ const WaveSurferComponent = (props) => {
         }
       })
         .then(() => {
-          if (location.pathname === "/profile" || location.pathname === "/result" || location.pathname.includes("/card")) {
+          if (location.pathname === "/profile") {
             window.location.reload();
           }
         }).catch(e => {

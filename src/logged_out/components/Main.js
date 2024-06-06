@@ -17,7 +17,7 @@ import Cookies from "js-cookie";
 
 AOS.init({ once: true });
 
-const PAGESIZE = 15;
+const PAGESIZE = 20;
 
 const styles = (theme) => ({
   wrapper: {
