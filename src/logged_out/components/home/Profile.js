@@ -5,11 +5,11 @@ import {
   Paper,
   Typography,
   Avatar,
-  Grid, Box, Button
+  Grid, Box, Button, SvgIcon
 } from "@mui/material";
 import classNames from "classnames";
 import {Logout} from "@mui/icons-material";
-import {useHistory} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 import SoundListCard from "../soundList/SoundListCard";
 import axios from "axios";
 import formatDateTime from "./formatDateTime";
@@ -73,6 +73,39 @@ const styles = (theme) => ({
     textAlign: "center",
     padding: theme.spacing(2),
   },
+  emptySoundContainer: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    height: "400px",
+    px: 4,
+    textAlign: "center",
+  },
+  emptySoundButton: {
+    marginTop: theme.spacing(2),
+    height: 36,
+    px: 2,
+    py: 1,
+    fontSize: "0.875rem",
+    fontWeight: "medium",
+    backgroundColor: "#212121",
+    color: "grey.50",
+    boxShadow: 1,
+    "&:hover": {
+      backgroundColor: "#212121",
+      opacity: 0.9,
+    },
+    "&:focusVisible": {
+      outline: "none",
+      ring: 1,
+      ringColor: "#121212",
+    },
+    "&.Mui-disabled": {
+      pointerEvents: "none",
+      opacity: 0.5,
+    },
+  },
 });
 
 function Profile(props) {
@@ -87,13 +120,13 @@ function Profile(props) {
     dots: true,
     infinite: false,
     speed: 500,
-    slidesToShow: Math.min(likeSoundList ? likeSoundList.length : 3, 3),
+    slidesToShow: (likeSoundList && likeSoundList.length === 0 ? 1 : Math.min(likeSoundList ? likeSoundList.length : 3, 3)),
     slidesToScroll: 1,
     responsive: [
       {
         breakpoint: 1024,
         settings: {
-          slidesToShow: Math.min(likeSoundList ? likeSoundList.length : 2, 2),
+          slidesToShow: likeSoundList && likeSoundList.length === 0 ? 1 : Math.min(likeSoundList ? likeSoundList.length : 2, 2),
         }
       },
       {
@@ -184,6 +217,21 @@ function Profile(props) {
     selectProfile();
   }, [selectProfile]);
 
+  const HeadphonesIcon = (props) => {
+    return (
+      <SvgIcon {...props} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <path
+          d="M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a9 9 0 0 1 18 0v7a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </SvgIcon>
+    );
+  }
+
   return (
     <Container className={classNames(classes.container, "lg-p-top")}>
       <Paper className={classes.paper}>
@@ -211,7 +259,7 @@ function Profile(props) {
           <Box className={classes.root}>
             <Slider ref={sliderRef} {...settings} className={classes.slider}>
               {likeSoundList &&
-                likeSoundList.map(element => {
+                likeSoundList.length !== 0 ? likeSoundList.map(element => {
                   return (
                     <SoundListCard
                       title={element.soundName}
@@ -224,7 +272,35 @@ function Profile(props) {
                       soundId={element.soundId}
                     />
                   )
-                })
+                }) : (
+                  <Paper sx={{width: "100%", height: "100%"}}>
+                    <Container className={classes.emptySoundContainer}>
+                      <Box sx={{ maxWidth: "md", spaceY: 4 }}>
+                        <HeadphonesIcon
+                          sx={{
+                            mx: "auto",
+                            height: "48px",
+                            width: "48px",
+                            color: "text.secondary",
+                          }}
+                        />
+                        <Typography variant="h4" component="h2" fontWeight="bold">
+                          Your Favorite Sounds List is Empty
+                        </Typography>
+                        <Typography color="text.secondary">
+                          It looks like you haven't added any favorite sounds yet. <br/>
+                          Why don't you explore our library and find some tunes you love? <br/>
+                          We can't wait to hear what you discover!
+                        </Typography>
+                        <Link to="/">
+                          <Button variant="contained" className={classes.emptySoundButton}>
+                            Explore Sounds
+                          </Button>
+                        </Link>
+                      </Box>
+                    </Container>
+                  </Paper>
+              )
               }
             </Slider>
           </Box>
