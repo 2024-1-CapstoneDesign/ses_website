@@ -217,12 +217,6 @@ function SoundListPost(props) {
                   </Typography>
                   <Box sx={{display: 'flex'}}>
                     <Typography variant="body1" color="textSecondary" sx={{padding: '0px 5px'}}>
-                      Downloads 133,333
-                    </Typography>
-                    <Typography variant="body1">
-                      |
-                    </Typography>
-                    <Typography variant="body1" color="textSecondary" sx={{padding: '0px 5px'}}>
                       {date}
                     </Typography>
                   </Box>
