@@ -5,7 +5,6 @@ import {AppBar, Toolbar, Typography, Button, Hidden, IconButton,  Stack} from "@
 import withStyles from '@mui/styles/withStyles';
 import MenuIcon from "@mui/icons-material/Menu";
 import HomeIcon from "@mui/icons-material/Home";
-import HowToRegIcon from "@mui/icons-material/HowToReg";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
 import BookIcon from "@mui/icons-material/Book";
 import NavigationDrawer from "../../../shared/components/NavigationDrawer";
@@ -44,7 +43,6 @@ const styles = theme => ({
 function NavBar(props) {
   const {
     classes, //위에 있는 style을 추가로 default 내보낼때 사용함
-    openRegisterDialog,
     openLoginDialog,
     handleMobileDrawerOpen,
     handleMobileDrawerClose,
@@ -64,13 +62,6 @@ function NavBar(props) {
       name: "soundList",
       icon: <BookIcon className="text-white" />,
       src: `${process.env.PUBLIC_URL}/images/logged_out/soundlist.png`,
-      color: "#949494"
-    },
-    {
-      name: "Register",
-      onClick: openRegisterDialog,
-      icon: <HowToRegIcon className="text-white" />,
-      src: `${process.env.PUBLIC_URL}/images/logged_out/register.png`,
       color: "#949494"
     },
     {

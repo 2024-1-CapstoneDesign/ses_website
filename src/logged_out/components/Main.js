@@ -13,6 +13,7 @@ import smoothScrollTop from "../../shared/functions/smoothScrollTop";
 import axios from "axios";
 import formatDateTime from "./home/formatDateTime";
 import {useHistory, useLocation} from "react-router-dom";
+import Cookies from "js-cookie";
 
 AOS.init({ once: true });
 
@@ -36,6 +37,7 @@ function Main(props) {
   const [isCookieRulesDialogOpen, setIsCookieRulesDialogOpen] = useState(false);
   const [page, setPage] = useState(0);
   const [filterList, setFilterList] = useState([0, 0, 0, 0, 0, 0, 0, []]);
+  const access_token = Cookies.get('accessToken');
 
   const selectHome = useCallback(() => {
     smoothScrollTop();
@@ -167,7 +169,16 @@ function Main(props) {
       url = `https://soundeffect-search.p-e.kr/api/v1/soundeffect?type=${type}&fromLength=${fromLen}&toLength=${toLen}&fromFileSize=${fromFileSize}&toFileSize=${toFileSize}&sampleRate=${sampleRate}&bitDepth=${bitDepth}&channels=${channels}&name=${name}&page=${page}&size=${PAGESIZE}`
     }
     try {
-      const axiosRes = await axios.get(url);
+      let axiosRes;
+      if (access_token){
+        axiosRes = await axios.get(url, {
+          headers: {
+            Authorization: `Bearer ${access_token}`,
+          }
+        });
+      } else {
+        axiosRes = await axios.get(url);
+      }
       const resData = axiosRes.data; //fetchResult
       if (resData.result === "SUCCESS"){
         return resData.data.soundEffectDtos.map((soundEffect) => {
@@ -187,7 +198,8 @@ function Main(props) {
             soundCreateAt: formatDateTime(soundEffect.createdAt),
             soundSnippet: soundEffect.summary,
             soundVisible: true,
-            pageCnt: resData.data.totalPages
+            pageCnt: resData.data.totalPages,
+            isLiked: soundEffect.isLiked,
           }
         });
       }

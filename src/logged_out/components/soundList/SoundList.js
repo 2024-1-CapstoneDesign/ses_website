@@ -53,6 +53,8 @@ function getVerticalSoundListPosts(isWidthUpSm, isWidthUpMd, soundListPosts) {
               url={soundListPost.url}
               src={soundListPost.soundURL}
               tagList={soundListPost.soundTagList}
+              isLiked={soundListPost.isLiked}
+              soundId={soundListPost.soundId}
             />
           </Box>
         </Grid>

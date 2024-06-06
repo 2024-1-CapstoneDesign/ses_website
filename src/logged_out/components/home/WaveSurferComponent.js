@@ -2,9 +2,11 @@ import {useEffect, useRef, useState} from "react";
 import WaveSurfer from "wavesurfer.js";
 import {Box, IconButton} from "@mui/material";
 import {PauseCircle, PlayCircle, Star, StarOutline} from "@mui/icons-material";
-
+import { useLocation } from "react-router-dom";
 import withStyles from "@mui/styles/withStyles";
 import theme from "../../../theme";
+import Cookies from "js-cookie";
+import axios from "axios";
 
 const styles = () => ({
   waveSurferContainer: {
@@ -25,7 +27,6 @@ const styles = () => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'end',
-    // border: '1px solid red',
     zIndex: 5
   },
   bottomButtonBox: {
@@ -33,17 +34,17 @@ const styles = () => ({
     height: "100%",
     display: 'flex',
     alignItems: 'center',
-    // border: '1px solid red',
     zIndex: 5
   },
 });
 
 const WaveSurferComponent = (props) => {
-  const {classes, audioURL, setCurrentTime, setDuration} = props
+  const {classes, audioURL, setCurrentTime, setDuration, isLiked, soundId} = props
   const waveform = useRef(null);
   const wavesurfer = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [isStared, setIsStared] = useState(false);
+  const [isStared, setIsStared] = useState(isLiked);
+  const location = useLocation();
 
   useEffect(() => {
     if(waveform.current){
@@ -94,14 +95,52 @@ const WaveSurferComponent = (props) => {
 
   const starButtonClick = (event) => {
     event.preventDefault();
+    const userObj = JSON.parse(localStorage.getItem("userinfo"));
+    const access_token = Cookies.get('accessToken');
+    const refresh_token = Cookies.get('refreshToken');
+    // there are no login or no access_token or no refresh token
+    if (userObj === null || access_token === null || refresh_token === null) {
+      alert("You need to log in to use this feature")
+      return;
+    }
+
     setIsStared(!isStared);
+    // 좋아요를 누른 경우
+    if (!isStared){
+      axios.put(`https://soundeffect-search.p-e.kr/api/v1/soundeffect/${soundId}/like`, {},{
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        }
+      })
+        .then(() => {
+          if (location.pathname === "/profile" || location.pathname === "/result" || location.pathname.includes("/card")) {
+            window.location.reload();
+          }
+      }).catch(e => {
+        console.error(e);
+      });
+    } //그렇지 않은 경우
+    else {
+      axios.put(`https://soundeffect-search.p-e.kr/api/v1/soundeffect/${soundId}/unlike`, {},{
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        }
+      })
+        .then(() => {
+          if (location.pathname === "/profile" || location.pathname === "/result" || location.pathname.includes("/card")) {
+            window.location.reload();
+          }
+        }).catch(e => {
+        console.error(e);
+      });
+    }
   }
 
   return (
     <Box className={classes.waveSurferContainer}>
       <Box className={classes.topButtonBox}>
         <IconButton onClick={starButtonClick}>
-          {isStared ? <Star/> : <StarOutline/>}
+          {isStared ? <Star sx={{color: "#FFBF00"}}/> : <StarOutline/>}
         </IconButton>
       </Box>
       <Box className={classes.waveformBox} ref={waveform} />

@@ -32,24 +32,33 @@ const styles = (theme) => ({
 
 const GoogleLoginButton = (props) => {
   const {history, setIsLoading, setStatus, onClose} = props;
+  const redirectUrI = process.env.REACT_APP_REDIRECT_URI;
+
   const signIn = useGoogleLogin({
     onSuccess: (res) => {
-      axios.get('https://www.googleapis.com/oauth2/v1/userinfo', {
-        params:{
-          access_token: res.access_token,
-        }
-      })
-        .then(response => {
+      console.dir(res);
+      axios.post(
+        `https://soundeffect-search.p-e.kr:8443/accounts/google/callback/re/?code=${res?.code}`
+      )
+        .then(
+        response => {
+          const {access_token, refresh_token} = response.data.token;
+          const userData = response.data.user;
+
           setTimeout(() => {
-            Cookies.set('accessToken', res.access_token);
-            localStorage.setItem('userinfo', JSON.stringify(response.data));
+            Cookies.set('accessToken', access_token);
+            Cookies.set('refreshToken', refresh_token);
+            localStorage.setItem('userinfo', JSON.stringify(userData));
             console.log(response.data);
-            history.push("/home");
+            history.push("/");
             onClose();
+            window.location.reload();
           }, 150);
-        })
+        }
+      )
         .catch(error => {
           console.log(error);
+          onClose();
         });
     },
     onError: (error) =>{
@@ -58,13 +67,16 @@ const GoogleLoginButton = (props) => {
         setIsLoading(false);
       }, 1500);
       console.log(error);
-    }
+    },
+    flow: "auth-code",
+    redirect_uri: redirectUrI,
   });
 
   const login = useCallback(() => {
     setIsLoading(true);
     setStatus(null);
     signIn();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setIsLoading, history, setStatus]);
 
   return (

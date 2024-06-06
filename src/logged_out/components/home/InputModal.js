@@ -14,6 +14,7 @@ import axios from "axios";
 import CloseIcon from "@mui/icons-material/Close";
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import MyTimePicker from "./MyTimePicker";
+import Cookies from "js-cookie";
 
 const styles = (theme) => ({
   modalStyle: {
@@ -131,7 +132,9 @@ const InputModal = (props) => {
   const [progress, setProgress] = useState(false);
   const cancelTokenSource = useRef(null);
   const history = useHistory();
-  const [progressValue, setProgressValue] = useState(10);
+  const [progressValue, setProgressValue] = useState(0);
+  const access_token = Cookies.get('accessToken');
+  const [progressSpeed, setProgressSpeed] = useState(10);
 
 
   const handleModalClose = () => {
@@ -159,12 +162,16 @@ const InputModal = (props) => {
         },
         cancelToken: cancelTokenSource.current.token,
       };
+      if (access_token) {
+        axiosConfig.headers.Authorization = `Bearer ${access_token}`
+      }
 
       const formData = new FormData();
       formData.append("file", selectedFile)
 
       setProgress(true);
       setProgressValue(0);
+      setProgressSpeed(5);
       axios.post(
         "https://soundeffect-search.p-e.kr/api/v1/soundeffect/search", formData, axiosConfig
       ).then(response => {
@@ -184,7 +191,7 @@ const InputModal = (props) => {
         setProgress(false);
       });
     } else if (!selectedFile && (youtubeURL || minuteFrom || minuteTo || secondFrom || secondTo)){
-      const youtubeURLRegex = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/(watch\?v=|embed\/|v\/|.+\?v=)?([^&=%\?]{11})(&.*)?$/;
+      const youtubeURLRegex = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/(watch\?v=|embed\/|v\/|.+\?v=)?([^&=%?]{11})(&.*)?$/;
 
       if (youtubeURLRegex.test(decodeURIComponent(youtubeURL)) === false){
         alert("Invalid youtubeURL");
@@ -194,7 +201,12 @@ const InputModal = (props) => {
         cancelTokenSource.current = axios.CancelToken.source();
         const axiosConfig = {
           cancelToken: cancelTokenSource.current.token,
+          headers: {}
         };
+
+        if (access_token) {
+          axiosConfig.headers.Authorization = `Bearer ${access_token}`
+        }
 
         const from = parseInt(minuteFrom) * 60 + parseInt(secondFrom);
         const to = parseInt(minuteTo) * 60 + parseInt(secondTo);
@@ -210,6 +222,7 @@ const InputModal = (props) => {
 
         setProgress(true);
         setProgressValue(0);
+        setProgressSpeed(4);
         axios.get(
           `https://soundeffect-search.p-e.kr/api/v1/soundeffect/youtube?url=${youtubeURL}&from=${from}&to=${to}`, axiosConfig
         ).then(response => {
@@ -247,12 +260,12 @@ const InputModal = (props) => {
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setProgressValue((prevProgress) => (prevProgress >= 100 ? 0 : prevProgress + 2));
+      setProgressValue((prevProgress) => (prevProgress >= 100 ? 0 : prevProgress + progressSpeed));
     }, 800);
     return () => {
       clearInterval(timer);
     };
-  }, []);
+  }, [progressSpeed]);
 
   return (
     <Modal

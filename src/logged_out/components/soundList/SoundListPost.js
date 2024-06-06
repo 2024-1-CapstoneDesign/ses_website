@@ -10,6 +10,7 @@ import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 import SoundDetailPaper from "./SoundDetailPaper";
 import axios from "axios";
 import formatDateTime from "../home/formatDateTime";
+import Cookies from "js-cookie";
 
 const styles = (theme) => ({
   blogContentWrapper: {
@@ -67,10 +68,11 @@ const styles = (theme) => ({
 
 function SoundListPost(props) {
   const { classes, date, title, src, content, tagList,
-      type, length, sampleRate, bitDepth, channels, fileSize, id } = props;
+      type, length, sampleRate, bitDepth, channels, fileSize, soundId, isLiked, setSoundListPosts, soundListPosts } = props;
   const [relativeSoundEffects, setRelativeSoundEffects] = useState([])
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
+  const access_token = Cookies.get('accessToken');
 
   useEffect(() => {
     document.title = `AuLo - ${title}`;
@@ -79,10 +81,20 @@ function SoundListPost(props) {
 
   const fetchRelativeSoundList = useCallback(() => {
     async function fetchData() {
-      const url = `https://soundeffect-search.p-e.kr/api/v1/soundeffect/${id}/relative`
+      const url = `https://soundeffect-search.p-e.kr/api/v1/soundeffect/${soundId}/relative`
       try {
-        const axiosRes = await axios.get(url);
+        let axiosRes;
+        if (access_token) {
+          axiosRes = await axios.get(url, {
+            headers: {
+              Authorization: `Bearer ${access_token}`,
+            }
+          });
+        } else {
+          axiosRes = await axios.get(url);
+        }
         const resData = axiosRes.data; //fetchResult
+        console.dir(resData);
         if (resData.result === "SUCCESS"){
           return resData.data.map((soundEffect) => {
             return {
@@ -92,10 +104,16 @@ function SoundListPost(props) {
               soundURL: soundEffect.soundEffectTypes[0].url,
               soundType: soundEffect.soundEffectTypes[0].soundEffectTypeName,
               soundLength: soundEffect.soundEffectTypes[0].length,
+              soundSampleRate: soundEffect.soundEffectTypes[0].sampleRate,
+              soundBitDepth: soundEffect.soundEffectTypes[0].bitDepth,
+              soundChannels: soundEffect.soundEffectTypes[0].channels,
+              soundFileSize: soundEffect.soundEffectTypes[0].fileSize,
               soundDescription: soundEffect.description,
               soundCreateBy: soundEffect.createBy,
               soundCreateAt: formatDateTime(soundEffect.createdAt),
               soundSnippet: soundEffect.summary,
+              soundVisible: true,
+              isLiked: soundEffect.isLiked,
             }
           });
         }
@@ -108,7 +126,7 @@ function SoundListPost(props) {
       }
     }
     fetchData().then(data => {
-      const soundListPosts = data.map((e) => {
+      const relativeSoundListPosts = data.map((e) => {
         let title = e.soundName;
         title = title.toLowerCase();
         /* Remove unwanted characters, only accept alphanumeric and space */
@@ -121,9 +139,11 @@ function SoundListPost(props) {
         e.params = `?id=${e.soundId}`;
         return e;
       });
-      setRelativeSoundEffects(soundListPosts)
+      setRelativeSoundEffects(relativeSoundListPosts)
+      setSoundListPosts([...soundListPosts, ...relativeSoundListPosts]);
     })
-  }, [id]);
+    //eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [soundId]);
 
   useEffect(fetchRelativeSoundList, [fetchRelativeSoundList]);
 
@@ -178,6 +198,8 @@ function SoundListPost(props) {
                   audioURL={src}
                   setCurrentTime={setCurrentTime}
                   setDuration={setDuration}
+                  isLiked={isLiked}
+                  soundId={soundId}
                 />
               </Box>
               <Box pt={1} pr={3} pl={3} className={classes.titleContainer}>
@@ -194,12 +216,6 @@ function SoundListPost(props) {
                     <b>{title}</b>
                   </Typography>
                   <Box sx={{display: 'flex'}}>
-                    <Typography variant="body1" color="textSecondary" sx={{padding: '0px 5px'}}>
-                      Downloads 133,333
-                    </Typography>
-                    <Typography variant="body1">
-                      |
-                    </Typography>
                     <Typography variant="body1" color="textSecondary" sx={{padding: '0px 5px'}}>
                       {date}
                     </Typography>
@@ -262,10 +278,13 @@ function SoundListPost(props) {
               <Box key={blogPost.soundId} mb={3}>
                 <SoundListCard
                   title={blogPost.soundName}
-                  snippet={blogPost.summary}
+                  snippet={blogPost.soundSnippet}
                   date={blogPost.soundCreateAt}
+                  url={blogPost.url}
                   src={blogPost.soundURL}
-                  url={`${blogPost.url}${blogPost.params}`}
+                  tagList={blogPost.soundTagList}
+                  isLiked={blogPost.isLiked}
+                  soundId={blogPost.soundId}
                 />
               </Box>
             ))}
