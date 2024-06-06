@@ -171,7 +171,7 @@ const InputModal = (props) => {
 
       setProgress(true);
       setProgressValue(0);
-      setProgressSpeed(10);
+      setProgressSpeed(8);
       axios.post(
         "https://soundeffect-search.p-e.kr/api/v1/soundeffect/search", formData, axiosConfig
       ).then(response => {
@@ -222,7 +222,7 @@ const InputModal = (props) => {
 
         setProgress(true);
         setProgressValue(0);
-        setProgressSpeed(5);
+        setProgressSpeed(4);
         axios.get(
           `https://soundeffect-search.p-e.kr/api/v1/soundeffect/youtube?url=${youtubeURL}&from=${from}&to=${to}`, axiosConfig
         ).then(response => {
