@@ -116,7 +116,6 @@ function MySideBar(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectSoundList]);
 
-  // http://localhost:3000/soundList/card/oh-hell-no
   const handleChipClick = ({tagName, tagId}) => {
     const newFilterList = [...filterList];
     const newSelectedTagIds = new Set(filterList[7]);
@@ -131,6 +130,7 @@ function MySideBar(props) {
     setSelectedTags(newSelectedTags);
     newFilterList[7] = [...newSelectedTagIds];
     setFilterList(newFilterList);
+    setPage(0);
   };
   const typeElementList = [
     {
@@ -287,6 +287,7 @@ function MySideBar(props) {
         filterList={filterList}
         setFilterList={setFilterList}
         selectSoundList={selectSoundList}
+        setPage={setPage}
       />
       <MySidebarElement
         elementName={"Type"}
