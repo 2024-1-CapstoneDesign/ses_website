@@ -27,7 +27,6 @@ const styles = () => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'end',
-    // border: '1px solid red',
     zIndex: 5
   },
   bottomButtonBox: {
@@ -35,7 +34,6 @@ const styles = () => ({
     height: "100%",
     display: 'flex',
     alignItems: 'center',
-    // border: '1px solid red',
     zIndex: 5
   },
 });
@@ -115,7 +113,7 @@ const WaveSurferComponent = (props) => {
         }
       })
         .then(() => {
-          if (location.pathname === "/profile") {
+          if (location.pathname === "/profile" || location.pathname === "/result" || location.pathname.includes("/card")) {
             window.location.reload();
           }
       }).catch(e => {
@@ -129,7 +127,7 @@ const WaveSurferComponent = (props) => {
         }
       })
         .then(() => {
-          if (location.pathname === "/profile") {
+          if (location.pathname === "/profile" || location.pathname === "/result" || location.pathname.includes("/card")) {
             window.location.reload();
           }
         }).catch(e => {
