@@ -42,19 +42,19 @@ function Main(props) {
   const selectHome = useCallback(() => {
     smoothScrollTop();
     document.title =
-      "SES - Awesome Side effect sound Search WebSite";
+      "AULO - Awesome Side effect sound Search WebSite";
     setSelectedTab("Home");
   }, [setSelectedTab]);
 
   const selectSoundList = useCallback(() => {
     smoothScrollTop();
-    document.title = "SES - SoundList";
+    document.title = "AULO - SoundList";
     setSelectedTab("SoundList");
   }, [setSelectedTab]);
 
   const selectProfile = useCallback(() => {
     smoothScrollTop();
-    document.title = "SES - Profile";
+    document.title = "AULO - Profile";
     setSelectedTab("Profile");
   }, [setSelectedTab]);
 
