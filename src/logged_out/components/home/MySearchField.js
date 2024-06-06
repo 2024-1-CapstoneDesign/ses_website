@@ -50,7 +50,7 @@ const styles = (theme) => ({
 
 
 function MySearchField(props) {
-  const {classes, filterList, setFilterList, selectSoundList} = props;
+  const {classes, filterList, setFilterList, selectSoundList, setPage} = props;
   const [value, setValue] = useState('');
 
   const handleChange = (e) => {
@@ -59,6 +59,7 @@ function MySearchField(props) {
       value: e.target.value,
     }
     setFilterList(newFilterList);
+    setPage(0);
   };
 
   useEffect(() => {
