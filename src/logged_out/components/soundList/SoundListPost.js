@@ -94,6 +94,7 @@ function SoundListPost(props) {
           axiosRes = await axios.get(url);
         }
         const resData = axiosRes.data; //fetchResult
+        console.dir(resData);
         if (resData.result === "SUCCESS"){
           return resData.data.map((soundEffect) => {
             return {
@@ -103,11 +104,16 @@ function SoundListPost(props) {
               soundURL: soundEffect.soundEffectTypes[0].url,
               soundType: soundEffect.soundEffectTypes[0].soundEffectTypeName,
               soundLength: soundEffect.soundEffectTypes[0].length,
+              soundSampleRate: soundEffect.soundEffectTypes[0].sampleRate,
+              soundBitDepth: soundEffect.soundEffectTypes[0].bitDepth,
+              soundChannels: soundEffect.soundEffectTypes[0].channels,
+              soundFileSize: soundEffect.soundEffectTypes[0].fileSize,
               soundDescription: soundEffect.description,
               soundCreateBy: soundEffect.createBy,
               soundCreateAt: formatDateTime(soundEffect.createdAt),
               soundSnippet: soundEffect.summary,
-              isLiked: soundEffect.isLiked
+              soundVisible: true,
+              isLiked: soundEffect.isLiked,
             }
           });
         }
@@ -278,10 +284,11 @@ function SoundListPost(props) {
               <Box key={blogPost.soundId} mb={3}>
                 <SoundListCard
                   title={blogPost.soundName}
-                  snippet={blogPost.summary}
+                  snippet={blogPost.soundSnippet}
                   date={blogPost.soundCreateAt}
+                  url={blogPost.url}
                   src={blogPost.soundURL}
-                  url={`${blogPost.url}${blogPost.params}`}
+                  tagList={blogPost.soundTagList}
                   isLiked={blogPost.isLiked}
                   soundId={blogPost.soundId}
                 />
