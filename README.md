@@ -78,6 +78,17 @@ npm run build
 
 It will create a folder named build with your compiled project inside. After that copy its content into your webroot and you are ready to go.
 
+## How to use our website?
+* entering the search modal to press the Let's search button
+* select wav file or select youtube url duration to get similar soundEffect Sound
+* After waiting few second later (almost 5~10 second), You get top 5 similar soundEffect!
+* In soundList Tab, Find lots of soundEffects.
+* Each SoundEffect displays several information such as duration, extension type, etc..
+* If You liked it that soundEffect, click the download button and get your local computer
+* If You cannot find your favoriate soundEffect, click relative sound section. This section shows relative soundEffect relative to tagList.
+* If you find your favoriate soundEffect, Just login!
+* In Login State Adding favoriate sound feature is also provided. Its Awesome!
+
 ## Built With
 
 * [Create-React-App](https://github.com/facebook/create-react-app) - Used to bootstrap the development
