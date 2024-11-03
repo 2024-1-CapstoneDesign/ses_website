@@ -23,13 +23,20 @@ function MyTimePicker(props){
       mr={1}
     >
       <FormControl sx={{ m: 1, minWidth: 75 }} size="small">
-        <InputLabel id="from-minute-label">{inputLabel}</InputLabel>
+        <InputLabel id={inputLabelId}>{inputLabel}</InputLabel>
         <Select
           labelId={inputLabelId}
           id={labelId}
           value={value}
           label={inputLabel}
           onChange={handleChange}
+          MenuProps={{
+            PaperProps: {
+              style: {
+                maxHeight: 200, // set max height of dropdown menu
+              },
+            },
+          }}
           sx={{ borderRadius: '16px' }}
         >
           {[...Array(61).keys()].map(i => (
