@@ -396,10 +396,10 @@ const InputModal = (props) => {
                 </Button>
                 {selectedFile?.name && (
                     <Box sx={{display: "flex", justifyContent: "center", marginTop: "5px", width: "100%"}}>
-                      <Typography variant="caption" color="textSecondary">
+                      <Typography variant="caption" color="textSecondary" sx={{textAlign: 'center'}}>
                         File name:
                       </Typography>
-                      <Typography variant="caption" color="textSecondary" sx={{marginLeft: "5px"}}>
+                      <Typography variant="caption" color="textSecondary" sx={{textAlign: 'center'}}>
                         {selectedFile.name}
                       </Typography>
                     </Box>
