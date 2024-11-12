@@ -235,7 +235,6 @@ const InputModal = (props) => {
             setProgress(false);
             return;
           }
-          // history를 사용하여 /result 페이지로 라우팅하면서 state를 전달합니다.
           history.push({
             pathname: '/result',
             state: {
@@ -396,10 +395,10 @@ const InputModal = (props) => {
                 </Button>
                 {selectedFile?.name && (
                     <Box sx={{display: "flex", justifyContent: "center", marginTop: "5px", width: "100%"}}>
-                      <Typography variant="caption" color="textSecondary">
+                      <Typography variant="caption" color="textSecondary" sx={{textAlign: 'center'}}>
                         File name:
                       </Typography>
-                      <Typography variant="caption" color="textSecondary" sx={{marginLeft: "5px"}}>
+                      <Typography variant="caption" color="textSecondary" sx={{textAlign: 'center'}}>
                         {selectedFile.name}
                       </Typography>
                     </Box>
