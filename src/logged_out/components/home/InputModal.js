@@ -235,7 +235,6 @@ const InputModal = (props) => {
             setProgress(false);
             return;
           }
-          // history를 사용하여 /result 페이지로 라우팅하면서 state를 전달합니다.
           history.push({
             pathname: '/result',
             state: {
@@ -383,7 +382,7 @@ const InputModal = (props) => {
               <Divider sx={{width: "90%"}} />
             </Box>
             <Box className={classes.modalBottomContainer}>
-              <Box sx={{height: "85%", display: "flex", alignItems: "center"}}>
+              <Box sx={{height: "85%", display: "flex", alignItems: "center", flexDirection: "column", justifyContent: "center"}}>
                 <Button
                   component="label"
                   role={undefined}
@@ -394,6 +393,17 @@ const InputModal = (props) => {
                   {selectedFile ? 'file Selected' : 'Upload file'}
                   <Input className={classes.visuallyHiddenInputStyle} type="file" onChange={handleFileChange}/>
                 </Button>
+                {selectedFile?.name && (
+                    <Box sx={{display: "flex", justifyContent: "center", marginTop: "5px", width: "100%"}}>
+                      <Typography variant="caption" color="textSecondary" sx={{textAlign: 'center'}}>
+                        File name:
+                      </Typography>
+                      <Typography variant="caption" color="textSecondary" sx={{textAlign: 'center'}}>
+                        {selectedFile.name}
+                      </Typography>
+                    </Box>
+                  )
+                }
               </Box>
               <Box sx={{height: "15%", width: "100%"}}>
                 <Button type="submit" fullWidth variant="contained">
