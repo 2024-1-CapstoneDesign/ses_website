@@ -37,18 +37,16 @@ const GoogleLoginButton = (props) => {
   const signIn = useGoogleLogin({
     onSuccess: (res) => {
       axios.get(
-        `https://soundeffect-search.p-e.kr/api/v1/oauth/login?accessToken=${res?.code}` // 수정 필요
+        `https://soundeffect-search.p-e.kr/api/v1/oauth/login?accessToken=${res?.access_token}`
       )
         .then(
         response => {
-          const {access_token, refresh_token} = response.data.token;
-          const userData = response.data.user;
-
+          const {accessToken, refreshToken} = response.data.data.authTokens;
+          const userData = response.data.data.memberResponse;
           setTimeout(() => {
-            Cookies.set('accessToken', access_token);
-            Cookies.set('refreshToken', refresh_token);
+            Cookies.set('accessToken', accessToken);
+            Cookies.set('refreshToken', refreshToken);
             localStorage.setItem('userinfo', JSON.stringify(userData));
-            console.log(response.data);
             history.push("/");
             onClose();
             window.location.reload();
@@ -67,7 +65,7 @@ const GoogleLoginButton = (props) => {
       }, 1500);
       console.log(error);
     },
-    flow: "auth-code",
+    flow: "implicit",
     redirect_uri: redirectUrI,
   });
 
