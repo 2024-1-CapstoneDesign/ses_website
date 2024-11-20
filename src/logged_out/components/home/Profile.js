@@ -245,7 +245,7 @@ function Profile(props) {
             <Avatar
               alt="User Avatar"
               className={classes.avatar}
-              src={userObj.picture}
+              src={userObj.profile}
             />
           </Grid>
           <Grid item>
