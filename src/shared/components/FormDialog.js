@@ -10,7 +10,8 @@ const styles = theme => ({
     flexDirection: "column",
     alignItems: "center",
     paddingBottom: theme.spacing(3),
-    maxWidth: 420
+    maxWidth: 420,
+    height: "70vh",
   },
   actions: {
     marginTop: theme.spacing(2)

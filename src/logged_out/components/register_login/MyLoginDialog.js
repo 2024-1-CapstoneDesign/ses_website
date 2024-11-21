@@ -1,7 +1,7 @@
 import React, { useState, useCallback, Fragment } from "react";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
-import { Button,  Typography } from "@mui/material";
+import {Box, Button, Typography} from "@mui/material";
 import withStyles from '@mui/styles/withStyles';
 import FormDialog from "../../../shared/components/FormDialog";
 import ButtonCircularProgress from "../../../shared/components/ButtonCircularProgress";
@@ -36,20 +36,17 @@ const GoogleLoginButton = (props) => {
 
   const signIn = useGoogleLogin({
     onSuccess: (res) => {
-      console.dir(res);
-      axios.post(
-        `https://soundeffect-search.p-e.kr:8443/accounts/google/callback/re/?code=${res?.code}`
+      axios.get(
+        `https://soundeffect-search.p-e.kr/api/v1/oauth/login?accessToken=${res?.access_token}`
       )
         .then(
         response => {
-          const {access_token, refresh_token} = response.data.token;
-          const userData = response.data.user;
-
+          const {accessToken, refreshToken} = response.data.data.authTokens;
+          const userData = response.data.data.memberResponse;
           setTimeout(() => {
-            Cookies.set('accessToken', access_token);
-            Cookies.set('refreshToken', refresh_token);
+            Cookies.set('accessToken', accessToken);
+            Cookies.set('refreshToken', refreshToken);
             localStorage.setItem('userinfo', JSON.stringify(userData));
-            console.log(response.data);
             history.push("/");
             onClose();
             window.location.reload();
@@ -68,7 +65,7 @@ const GoogleLoginButton = (props) => {
       }, 1500);
       console.log(error);
     },
-    flow: "auth-code",
+    flow: "implicit",
     redirect_uri: redirectUrI,
   });
 
@@ -82,8 +79,8 @@ const GoogleLoginButton = (props) => {
   return (
     <div onClick={() => login()} style={{display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center"}}>
       <img src={`${process.env.PUBLIC_URL}/images/logged_out/google_logo.png`} alt="Login with Google" style={{ cursor: 'pointer', marginRight: "1rem" }} />
-      <Typography variant="h6" component="h2">
-        Login with Google
+      <Typography variant="button" component="h2" sx={{fontWeight: 'bold'}}>
+        Continue with Google
       </Typography>
     </div>
   );
@@ -110,11 +107,24 @@ function LoginDialog(props) {
         }}
         headline="Login"
         content={
-          <Fragment>
-            <Typography sx={{ fontWeight: 'bold' }}>
-              Sign With Google
+          <Box sx={{marginBottom: "5rem",}}>
+            <Box
+              component="img"
+              src={`${process.env.PUBLIC_URL}/images/logged_out/headPhones.jpg`}
+              alt="Login with Google"
+              sx={{
+                marginRight: '1rem',
+                width: '100%', // 원하는 너비로 설정
+                height: 'auto' // 높이를 자동으로 맞춤
+              }}
+            />
+            <Typography variant="h5" sx={{fontWeight: 'bold'}}>
+              Log in to unlock
             </Typography>
-          </Fragment>
+            <Typography variant="h5" sx={{fontWeight: 'bold'}}>
+              the best of ALUO
+            </Typography>
+          </Box>
         }
         actions={
           <Fragment>
@@ -122,9 +132,18 @@ function LoginDialog(props) {
               type="submit"
               fullWidth
               variant="contained"
-              color="secondary"
               disabled={isLoading}
               size="large"
+              sx={{
+                backgroundColor: 'white',
+                color: 'black',
+                border: '1px solid black',
+                borderRadius: '50px',
+                '&:hover': {
+                  backgroundColor: 'white',
+                  borderColor: 'black',
+                },
+              }}
             >
               <GoogleOAuthProvider clientId={clientId}>
                 <GoogleLoginButton
