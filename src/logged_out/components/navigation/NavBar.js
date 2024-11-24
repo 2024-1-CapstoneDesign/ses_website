@@ -65,6 +65,13 @@ function NavBar(props) {
       color: "#949494"
     },
     {
+      link: "/soundGen",
+      name: "soundGen",
+      icon: <BookIcon className="text-white" />,
+      src: `${process.env.PUBLIC_URL}/images/logged_out/soundGen.png`,
+      color: "#949494"
+    },
+    {
       name: "Login",
       onClick: openLoginDialog,
       icon: <LockOpenIcon className="text-white" />,

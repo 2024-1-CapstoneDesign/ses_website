@@ -52,6 +52,12 @@ function Main(props) {
     setSelectedTab("SoundList");
   }, [setSelectedTab]);
 
+  const selectSoundGen = useCallback(() => {
+    smoothScrollTop();
+    document.title = "AULO - SoundGen";
+    setSelectedTab("SoundGen");
+  }, [setSelectedTab]);
+
   const selectProfile = useCallback(() => {
     smoothScrollTop();
     document.title = "AULO - Profile";
@@ -288,6 +294,7 @@ function Main(props) {
         selectHome={selectHome}
         selectSoundList={selectSoundList}
         selectProfile={selectProfile}
+        selectSoundGen={selectSoundGen}
         setPage={setPage}
         page={page}
         filterList={filterList}
