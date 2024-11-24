@@ -6,7 +6,9 @@ import withStyles from '@mui/styles/withStyles';
 import MenuIcon from "@mui/icons-material/Menu";
 import HomeIcon from "@mui/icons-material/Home";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
-import BookIcon from "@mui/icons-material/Book";
+import LyricsIcon from '@mui/icons-material/Lyrics';
+import AudioFileIcon from '@mui/icons-material/AudioFile';
+import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 import NavigationDrawer from "../../../shared/components/NavigationDrawer";
 
 const styles = theme => ({
@@ -60,14 +62,14 @@ function NavBar(props) {
     {
       link: "/soundList",
       name: "soundList",
-      icon: <BookIcon className="text-white" />,
+      icon: <AudioFileIcon className="text-white" />,
       src: `${process.env.PUBLIC_URL}/images/logged_out/soundlist.png`,
       color: "#949494"
     },
     {
       link: "/soundGen",
       name: "soundGen",
-      icon: <BookIcon className="text-white" />,
+      icon: <LyricsIcon className="text-white" />,
       src: `${process.env.PUBLIC_URL}/images/logged_out/soundGen.png`,
       color: "#949494"
     },
@@ -81,7 +83,7 @@ function NavBar(props) {
     {
       link: "/profile",
       name: "profile",
-      icon: <BookIcon className="text-white" />,
+      icon: <AssignmentIndIcon className="text-white" />,
       src: `${process.env.PUBLIC_URL}/images/logged_out/profile.png`,
       color: "#949494"
     },
@@ -90,7 +92,6 @@ function NavBar(props) {
     <div className={classes.root}>
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar className={classes.toolbar}>
-          {/* 2 * 2 pixel size*/}
           <div className={classes.logoWrapper}>
             <img
               src={`${process.env.PUBLIC_URL}/images/logged_out/radio.png`}
