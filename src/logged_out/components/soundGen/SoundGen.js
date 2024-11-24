@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import withStyles from "@mui/styles/withStyles";
-import {Box} from "@mui/material";
+import {Box, Typography} from "@mui/material";
+import axios from "axios";
 
 const styles = () => ({
   container: {
@@ -14,9 +15,13 @@ const styles = () => ({
   headingContainer: {
     width: "800px",
     textAlign: "center",
+    display: "flex",
+    justifyContent: "center",
   },
-  googleLogo: {
-    width: "25%"
+  logoContainer: {
+    width: "100%",
+    fontFamily: "'Orbitron', cursive",
+    fontWeight: 500
   },
   innerContainer: {
     width: "50%",
@@ -58,8 +63,16 @@ const styles = () => ({
 function SoundGen(props) {
   const {classes,  selectSoundGen} = props;
   const [input, setInput] = useState("");
-  const inputChange = (e) => {
-    setInput(e.target.value);
+  const inputChange = (event) => {
+    setInput(event.target.value);
+  }
+  const sendToServer = async (event) => {
+    if (event.key === "Enter") {
+      const url = "https://jsonplaceholder.typicode.com/comments"
+      const resData = await axios.get(url);
+      console.dir(resData);
+      console.dir(input);
+    }
   }
 
   useEffect(() => {
@@ -69,11 +82,15 @@ function SoundGen(props) {
   return (
     <Box className={classes.container}>
       <Box className={classes.headingContainer}>
-        <img
-          src="https://assets.ccbp.in/frontend/react-js/google-logo.png"
-          className={classes.googleLogo}
-          alt="google logo"
-        />
+        <Typography
+          className={classes.logoContainer}
+          variant="h1"
+        >
+          <span style={{color: '#4285F4'}}>A</span>
+          <span style={{color: '#EA4335'}}>u</span>
+          <span style={{color: '#FBBC05'}}>L</span>
+          <span style={{color: '#34A853'}}>o</span>
+        </Typography>
       </Box>
       <Box className={classes.innerContainer}>
         <Box className={classes.searchContainer}>
@@ -86,8 +103,9 @@ function SoundGen(props) {
             type="search"
             className={classes.searchBar}
             value={input}
-            placeholder="Search Google"
+            placeholder="Search Aulo"
             onChange={inputChange}
+            onKeyDown={sendToServer}
           />
         </Box>
       </Box>
