@@ -11,7 +11,9 @@ const styles = theme => ({
     alignItems: "center",
     paddingBottom: theme.spacing(3),
     maxWidth: 420,
-    height: "70vh",
+    height: "580px",
+    maxHeight: 580,
+    minHeight: 580
   },
   actions: {
     marginTop: theme.spacing(2)
