@@ -8,20 +8,32 @@ import axios from "axios";
 import {useQuery} from "react-query";
 import SoundCard from "./SoundCard";
 import MoreButton from "./MoreButton";
+import Cookies from "js-cookie";
 
 const mdDelayList = ["0", "200", "400"]
 const smDelayList = ["0", "200"]
 
 const fetchSoundList = async () => {
-  const url = "https://soundeffect-search.p-e.kr/api/v1/soundeffect"
+  const url = "https://soundeffect-search.p-e.kr/api/v1/soundeffect" //accessToken을 줘야 받아오지 ㅂㅅ아
+  const access_token = Cookies.get('accessToken');
   try {
-    const axiosRes = await axios.get(url);
+    let axiosRes;
+    if (access_token) {
+      axiosRes = await axios.get(url, {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        }
+      });
+    } else {
+      axiosRes = await axios.get(url);
+    }
     const resData = axiosRes.data; //fetchResult
     if (resData.result === "SUCCESS"){
-      const resSoundList = resData.data.soundEffectDtos.map(({soundEffectId, soundEffectName, soundEffectTags, soundEffectTypes}, idx) => {
+      const resSoundList = resData.data.soundEffectDtos.map(({soundEffectId, isLiked, soundEffectName, soundEffectTags, soundEffectTypes}, idx) => {
         return {
           soundId: soundEffectId,
           soundName: soundEffectName,
+          isLiked: isLiked,
           soundTagList: soundEffectTags,
           soundURL: soundEffectTypes[0].url,
           soundLength: soundEffectTypes[0].length,
@@ -38,7 +50,7 @@ const fetchSoundList = async () => {
     };
   } catch (e){
     console.error(e);
-    throw e;
+    return [];
   }
 }
 
@@ -52,7 +64,11 @@ function FeatureSection(props) {
     isError,
     data: response
   } = useQuery('soundList', fetchSoundList, {
-    refetchOnWindowFocus: false
+    staleTime: 0,               // 데이터가 항상 오래된 것으로 간주됨
+    refetchOnWindowFocus: true, // 윈도우가 포커스될 때마다 다시 fetch
+    refetchOnMount: true,       // 컴포넌트가 마운트될 때마다 다시 fetch
+    refetchOnReconnect: true,   // 네트워크가 다시 연결될 때마다 다시 fetch
+    cacheTime: 0                // 데이터를 캐싱하지 않음
   });
 
   return (
@@ -89,6 +105,8 @@ function FeatureSection(props) {
                     soundTagList={element.soundTagList}
                     soundURL={element.soundURL}
                     soundLength={element.soundLength}
+                    soundId={element.soundId}
+                    isLiked={element.isLiked}
                   />
                 </Grid>
               )}
