@@ -107,7 +107,7 @@ function LoginDialog(props) {
         }}
         headline="Login"
         content={
-          <Box sx={{marginBottom: "5rem",}}>
+          <Box sx={{marginBottom: "5rem"}}>
             <Box
               component="img"
               src={`${process.env.PUBLIC_URL}/images/logged_out/headPhones.jpg`}
