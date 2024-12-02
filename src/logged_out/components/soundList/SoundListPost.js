@@ -94,7 +94,6 @@ function SoundListPost(props) {
           axiosRes = await axios.get(url);
         }
         const resData = axiosRes.data; //fetchResult
-        console.dir(resData);
         if (resData.result === "SUCCESS"){
           return resData.data.map((soundEffect) => {
             return {
@@ -122,7 +121,7 @@ function SoundListPost(props) {
         };
       } catch (e){
         console.error(e);
-        throw e;
+        return []
       }
     }
     fetchData().then(data => {

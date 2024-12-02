@@ -112,7 +112,6 @@ function Profile(props) {
   const { classes, selectProfile, setSoundListPosts} = props;
   const userObj = JSON.parse(localStorage.getItem("userinfo"));
   const access_token = Cookies.get('accessToken');
-  console.log(access_token);
   const history = useHistory();
   const [likeSoundList, setLikeSoundList] = useState(null);
   const sliderRef = useRef(null);
@@ -264,7 +263,7 @@ function Profile(props) {
           <Box className={classes.root}>
             <Slider ref={sliderRef} {...settings} className={classes.slider}>
               {likeSoundList &&
-                likeSoundList.length !== 0 ? likeSoundList.map(element => {
+                likeSoundList.length !== 0 ? likeSoundList.map((element, index) => {
                   return (
                     <SoundListCard
                       title={element.soundName}
@@ -275,6 +274,7 @@ function Profile(props) {
                       tagList={element.soundTagList}
                       isLiked={element.isLiked}
                       soundId={element.soundId}
+                      key={index}
                     />
                   )
                 }) : (

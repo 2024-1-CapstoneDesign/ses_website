@@ -38,10 +38,15 @@ function convertSecondToMMSS(seconds) {
 }
 
 function SoundCard(props) {
-  const { classes, soundName, soundTagList, soundURL, soundLength } = props;
+  const { classes, soundName, soundTagList, soundURL, soundLength, isLiked, soundId } = props;
   return (
     <Box className={classes.soundCardContainer}>
-      <WaveSurferComponent audioURL={soundURL} className={classes.waveSurferContainer} />
+      <WaveSurferComponent
+        audioURL={soundURL}
+        className={classes.waveSurferContainer}
+        isLiked={isLiked}
+        soundId={soundId}
+      />
       <Typography variant="h5" paragraph sx={{margin: '5px'}}>
         {soundName}
       </Typography>
