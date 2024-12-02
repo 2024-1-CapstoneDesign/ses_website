@@ -14,7 +14,7 @@ const mdDelayList = ["0", "200", "400"]
 const smDelayList = ["0", "200"]
 
 const fetchSoundList = async () => {
-  const url = "https://soundeffect-search.p-e.kr/api/v1/soundeffect" //accessToken을 줘야 받아오지 ㅂㅅ아
+  const url = "https://soundeffect-search.p-e.kr/api/v1/soundeffect"
   const access_token = Cookies.get('accessToken');
   try {
     let axiosRes;
@@ -27,7 +27,7 @@ const fetchSoundList = async () => {
     } else {
       axiosRes = await axios.get(url);
     }
-    const resData = axiosRes.data; //fetchResult
+    const resData = axiosRes.data;
     if (resData.result === "SUCCESS"){
       const resSoundList = resData.data.soundEffectDtos.map(({soundEffectId, isLiked, soundEffectName, soundEffectTags, soundEffectTypes}, idx) => {
         return {
@@ -64,11 +64,11 @@ function FeatureSection(props) {
     isError,
     data: response
   } = useQuery('soundList', fetchSoundList, {
-    staleTime: 0,               // 데이터가 항상 오래된 것으로 간주됨
-    refetchOnWindowFocus: true, // 윈도우가 포커스될 때마다 다시 fetch
-    refetchOnMount: true,       // 컴포넌트가 마운트될 때마다 다시 fetch
-    refetchOnReconnect: true,   // 네트워크가 다시 연결될 때마다 다시 fetch
-    cacheTime: 0                // 데이터를 캐싱하지 않음
+    staleTime: 0,               // data is always old version
+    refetchOnWindowFocus: true, // fetch when window focused
+    refetchOnMount: true,       // fetch when component mounted
+    refetchOnReconnect: true,   // fetch when network reconnected
+    cacheTime: 0                // do not cached data
   });
 
   return (

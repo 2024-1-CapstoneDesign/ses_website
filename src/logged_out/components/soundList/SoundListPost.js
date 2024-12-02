@@ -121,7 +121,7 @@ function SoundListPost(props) {
         };
       } catch (e){
         console.error(e);
-        throw e;
+        return []
       }
     }
     fetchData().then(data => {
