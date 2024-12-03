@@ -44,8 +44,8 @@ const GoogleLoginButton = (props) => {
           const {accessToken, refreshToken} = response.data.data.authTokens;
           const userData = response.data.data.memberResponse;
           setTimeout(() => {
-            Cookies.set('accessToken', accessToken);
-            Cookies.set('refreshToken', refreshToken);
+            Cookies.set('accessToken', accessToken, { expires: 1 });
+            Cookies.set('refreshToken', refreshToken, { expires: 1 });
             localStorage.setItem('userinfo', JSON.stringify(userData));
             history.push("/");
             onClose();
