@@ -191,7 +191,7 @@ function Profile(props) {
         };
       } catch (e){
         console.error(e);
-        throw e;
+        return []
       }
     }
     fetchLikeData()
