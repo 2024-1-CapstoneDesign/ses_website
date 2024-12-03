@@ -1,7 +1,17 @@
 import React, {useEffect, useState} from "react";
 import withStyles from "@mui/styles/withStyles";
-import {Box, Typography} from "@mui/material";
+import {Box, keyframes, Typography} from "@mui/material";
 import axios from "axios";
+import {styled} from "@mui/material/styles";
+
+const jump = keyframes`
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+`;
 
 const styles = () => ({
   container: {
@@ -60,9 +70,16 @@ const styles = () => ({
   },
 });
 
+const Letter = styled('span')(({ delay, animate }) => ({
+  display: 'inline-block',
+  animation: animate ? `${jump} 4s infinite` : 'none',
+  animationDelay: delay,
+}));
+
 function SoundGen(props) {
   const {classes,  selectSoundGen} = props;
   const [input, setInput] = useState("");
+  const [animate, setAnimate] = useState(false);
   const inputChange = (event) => {
     setInput(event.target.value);
   }
@@ -77,9 +94,8 @@ function SoundGen(props) {
 
       const url = "https://soundeffect-search.p-e.kr/api/v1/soundeffect"
       try{
-        const resData = await axios.post(url, {
-          input: input,
-        });
+        setAnimate(true);
+        const resData = await axios.post(url, { input });
         if (resData.status !== 200) return;
         const {file: soundEffectBytes, soundEffectName, soundEffectTypes} = resData.data.data;
         // Base64 디코딩 및 Blob 생성
@@ -105,6 +121,8 @@ function SoundGen(props) {
         window.URL.revokeObjectURL(link.href);
       } catch (error) {
         console.error(error);
+      } finally {
+        setAnimate(false); // 애니메이션 종료
       }
     }
   }
@@ -120,10 +138,10 @@ function SoundGen(props) {
           className={classes.logoContainer}
           variant="h1"
         >
-          <span style={{color: '#4285F4'}}>A</span>
-          <span style={{color: '#EA4335'}}>u</span>
-          <span style={{color: '#FBBC05'}}>L</span>
-          <span style={{color: '#34A853'}}>o</span>
+          <Letter style={{ color: '#4285F4' }} delay="0s" animate={animate}>A</Letter>
+          <Letter style={{ color: '#EA4335' }} delay="1s" animate={animate}>u</Letter>
+          <Letter style={{ color: '#FBBC05' }} delay="2s" animate={animate}>L</Letter>
+          <Letter style={{ color: '#34A853' }} delay="3s" animate={animate}>o</Letter>
         </Typography>
       </Box>
       <Box className={classes.innerContainer}>
