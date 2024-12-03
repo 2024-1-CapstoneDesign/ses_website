@@ -68,10 +68,44 @@ function SoundGen(props) {
   }
   const sendToServer = async (event) => {
     if (event.key === "Enter") {
-      const url = "https://jsonplaceholder.typicode.com/comments"
-      const resData = await axios.get(url);
-      console.dir(resData);
-      console.dir(input);
+      const englishRegex = /^[a-zA-Z\s.,!?'"]+$/;
+      if (!englishRegex.test(input)) {
+        alert("This service is available English only");
+        setInput("");
+        return;
+      }
+
+      const url = "https://soundeffect-search.p-e.kr/api/v1/soundeffect"
+      try{
+        const resData = await axios.post(url, {
+          input: input,
+        });
+        if (resData.status !== 200) return;
+        const {file: soundEffectBytes, soundEffectName, soundEffectTypes} = resData.data.data;
+        // Base64 디코딩 및 Blob 생성
+        const byteCharacters = atob(soundEffectBytes);
+        const byteNumbers = new Array(byteCharacters.length)
+        for (let i = 0; i < byteCharacters.length; i++) {
+          byteNumbers[i] = byteCharacters.charCodeAt(i);
+        }
+        const byteArray = new Uint8Array(byteNumbers);
+        const blob = new Blob([byteArray], { type: 'audio/wav' });
+
+        // 다운로드 링크 생성
+        const link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.download = soundEffectName;
+
+        // 링크 클릭 및 정리
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+        // Blob URL 해제
+        window.URL.revokeObjectURL(link.href);
+      } catch (error) {
+        console.error(error);
+      }
     }
   }
 
