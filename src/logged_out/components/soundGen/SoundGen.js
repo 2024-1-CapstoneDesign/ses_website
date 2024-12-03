@@ -121,10 +121,11 @@ function SoundGen(props) {
   const [soundEffectName, setSoundEffectName] = useState("");
   const [soundEffectTypes, setSoundEffectTypes] = useState([]);
   const [description, setDescription] = useState("");
+
   const formatTime = (timeInSeconds) => {
-    const hours = Math.floor(timeInSeconds / 3600);
     const minutes = Math.floor((timeInSeconds % 3600) / 60);
     const seconds = Math.floor(timeInSeconds % 60);
+    const hours = Math.floor(timeInSeconds / 3600);
 
     // 시, 분, 초를 두 자리수로 표시하고 앞에 0을 붙임
     const formattedHours = hours.toString().padStart(2, '0');
@@ -133,9 +134,11 @@ function SoundGen(props) {
 
     return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
   };
+
   const inputChange = (event) => {
     setInput(event.target.value);
   }
+
   const sendToServer = async (event) => {
     if (event.key === "Enter") {
       const englishRegex = /^[a-zA-Z\s.,!?'"]+$/;
@@ -164,26 +167,29 @@ function SoundGen(props) {
         const byteArray = new Uint8Array(byteNumbers);
         const blob = new Blob([byteArray], { type: 'audio/wav' });
         setSoundBlob(blob); // soundBlob 상태 업데이트
-
-        // // 다운로드 링크 생성
-        // const link = document.createElement('a');
-        // link.href = window.URL.createObjectURL(blob);
-        // link.download = soundEffectName;
-        //
-        // // 링크 클릭 및 정리
-        // document.body.appendChild(link);
-        // link.click();
-        // document.body.removeChild(link);
-        //
-        // // Blob URL 해제
-        // window.URL.revokeObjectURL(link.href);
       } catch (error) {
         console.error(error);
+        alert("Failed SoundGeneration, Please Try Again")
       } finally {
         setAnimate(false); // 애니메이션 종료
       }
     }
   }
+
+  const handleDownload = () => {
+    // 다운로드 링크 생성
+    const link = document.createElement('a');
+    link.href = window.URL.createObjectURL(soundBlob);
+    link.download = soundEffectName;
+
+    // 링크 클릭 및 정리
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    // Blob URL 해제
+    window.URL.revokeObjectURL(link.href);
+  };
 
   useEffect(() => {
     selectSoundGen();
@@ -252,7 +258,7 @@ function SoundGen(props) {
                       variant="contained"
                       tabIndex={-1}
                       startIcon={<CloudDownloadIcon />}
-                      // onClick={handleDownload}
+                      onClick={handleDownload}
                     >
                       Download
                     </Button>
